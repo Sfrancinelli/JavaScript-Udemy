@@ -134,3 +134,67 @@ if (BMIMark > BMIJohn) {
     console.log(`John's BMI (${BMIJohn}) is higher than Mark's (${BMIMark})!`)
 }
 */
+
+/*
+// Type conversion
+const inputYear = '1991';
+console.log(Number(inputYear));
+console.log(Number(inputYear) + 18);
+
+console.log(Number('Jonas')); // NaN
+console.log(typeof NaN);
+
+console.log(String(23), 23);
+
+// Type coercion
+console.log('I am ' + 23 + ' years old');
+console.log('23' - '10' - 3);
+*/
+
+/*
+// Falsy values: 0, '', undefined, null, NaN
+console.log(Boolean(0));
+console.log(Boolean(undefined));
+console.log(Boolean('Jonas'));
+console.log(Boolean({}));
+console.log(Boolean(''));
+
+const money = 0; // Falsy value
+if (money) {
+    console.log("Don't spend ir all ;)");
+} else {
+    console.log('You should get a job!')
+}
+
+let height;
+
+if (height) {
+    console.log('Height is defined');
+} else {
+    console.log('Height is UNDEFINED');
+}
+*/
+
+/*
+const age = 18;
+
+if (age === 18) console.log('Adult');
+
+const input = prompt('This is an input')
+
+const numberInput = Number(prompt('This is a number input'))
+
+console.log(typeof input, input, typeof numberInput, numberInput)
+
+if (numberInput === 23) {
+    console.log('You entered 23')
+} else if (numberInput === 7) {
+    console.log('You entered 7')
+} else if (numberInput === 9) {
+    console.log('You entered 9')
+} else {
+    console.log('Im bored')
+}
+
+if (numberInput !== 23) console.log('El número no es 23')
+*/
