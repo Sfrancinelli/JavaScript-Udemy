@@ -198,3 +198,29 @@ if (numberInput === 23) {
 
 if (numberInput !== 23) console.log('El número no es 23')
 */
+
+/*
+const hasDriverLicense = true;
+const hasGoodVision = true;
+
+console.log(hasDriverLicense && hasGoodVision);
+console.log(hasDriverLicense || hasGoodVision);
+console.log(hasDriverLicense);
+
+if (hasDriverLicense && hasGoodVision) {
+    console.log('Able to drive');
+} else {
+    console.log('Cant drive')
+}
+
+const isTired = true;
+console.log(hasDriverLicense || hasGoodVision || isTired);
+console.log(hasDriverLicense && hasGoodVision && isTired);
+
+if (hasDriverLicense && hasGoodVision && !isTired) {
+    console.log('Able to drive');
+} else {
+    console.log('Cant drive')
+}
+*/
+
