@@ -285,3 +285,22 @@ if (day === 'monday') {
     console.log('Not a valid day')
 }
 */
+
+const age = 18;
+// VALUE OPERATOR VALUE (CONDITION). After that part it's time for the ternary operator
+// which is represented by "?". So: CONDITION, ? and then goes the operation if that's true
+// so: CONDITION, ?, OPERATION IF TRUE : OPERATION ELSE
+age >= 18 ? console.log('An adult') : console.log('A minor')
+
+const drink = age >= 18 ? 'wine' : 'water';
+console.log(drink)
+// This is the same as the if below:
+let drink2;
+if (age >= 18) {
+    drink2 = 'wine';
+} else {
+    drink2 = 'water';
+}
+console.log(drink2)
+// The ternaty operator can go into template literals (f' strings)
+console.log(`I like to drink ${age >= 18 ? 'wine' : 'water'}`);
