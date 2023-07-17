@@ -48,6 +48,7 @@ const age2 = calcAge2(2000);
 console.log(age1, age2);
 */
 
+/* LECTURE 35
 // Arrow function
 const calcAge3 = birthYear => 2023 - birthYear;
 const age3= calcAge3(2000)
@@ -61,3 +62,25 @@ const yearsUntilRetirement = (birthYear, firstName) => {
 }
 
 console.log(yearsUntilRetirement(2000, 'Sebastián'));
+*/
+
+/*
+// LECTURE 36
+
+function cutFruitPieces(fruit) {
+    return fruit * 4;
+}
+
+function fruitProcessor(apples, oranges) {
+    const applePieces = cutFruitPieces(apples);
+    const orangePieces = cutFruitPieces(oranges);
+
+    const juice = `Juice with ${applePieces} apple pieces and ${orangePieces} orange pieces!`
+    return juice
+}
+
+console.log(fruitProcessor(2,3))
+*/
+
+// Lecture 37
+
