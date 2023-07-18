@@ -238,3 +238,72 @@ console.log(person);
 console.log(`${person.firstName} has ${person.friends.length} friends, and his best friend is called ${person.friends[0]}`)
 */
 
+/*
+// Lecture 43
+const person = {
+    firstName: 'John',
+    lastName: 'Lastname',
+    birthYear: 2000,
+    job: 'teacher', 
+    friends: ['Michael', 'Peter', 'Steven'],
+    hasDriversLicense: true,
+
+    // calcAge: function(birthYear) {
+    //     return 2023 - birthYear
+    // }
+
+    // calcAge: function () {
+    //     // console.log(this);
+    //     return 2023 - this.birthYear;
+    // }
+
+    calcAge: function () {
+        this.age = 2023 - this.birthYear
+        return this.age;
+    },
+
+    getSummary: function() {
+        return `${this.firstName} is a ${this.calcAge()} years old ${this.job}, and he has ${this.hasDriversLicense ? 'a' : 'no'} driver's license.`
+    }
+};
+
+console.log(person.calcAge());
+console.log(person.age);
+// console.log(person['calcAge'](2000))
+
+// "Jonas is a 46 years old teacher, and he has a driver's license"
+console.log(`${person.firstName} is a ${person.age} years old ${person.job}, and he ${person.hasDriversLicense ? 'has' : "doesn't have"} a driver's license`)
+console.log(person.getSummary());
+*/
+
+// Lecture 43 / Exercise
+const mark = {
+    fullName: 'Mark Miller',
+    mass: 78,
+    height: 1.69,
+
+    calcBMI: function () {
+        this.bmi = this.mass / (this.height * this.height);
+        return this.bmi;
+    },
+}
+
+const john = {
+    fullName: 'John Smith',
+    mass: 92,
+    height: 1.95,
+
+    calcBMI: function () {
+        this.bmi = this.mass / (this.height * this.height);
+        return this.bmi;
+    },
+}
+
+john.calcBMI();
+mark.calcBMI();
+
+if (john.calcBMI() > mark.calcBMI()) {
+    console.log(`${john.fullName}'s BMI ${(john.bmi)} is higher than ${mark.fullName}'s (${mark.bmi})!`);
+} else {
+    console.log(`${mark.fullName}'s BMI (${mark.bmi}) is higher than ${john.fullName}'s (${john.bmi})!`);
+}
