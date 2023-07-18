@@ -118,3 +118,81 @@ function checkWinner(avgDolphins, avgKoalas) {
 
 checkWinner(scoreDolphins, scoreKoalas)
 */
+
+/*
+// Lecture 39 - Arrays
+const friend1 = 'Michael';
+const friend2 = 'Steven';
+const friend3 = 'Peter';
+
+const friends = ['Michael', 'Steven', 'Peter'];
+console.log(friends)
+
+const years = new Array(1991, 1984, 2000, 2008, 2020);
+console.log(years)
+
+console.log(friends[0], friends[2], years[3])
+console.log(friends.length)
+console.log(friends[friends.length -1]);
+
+friends[2] = 'Jay';
+console.log(friends);
+*/
+
+/*
+// Lecture 40
+
+// Add elements
+const friends = ['Michael', 'Steven', 'Peter'];
+let newLength = friends.push('Jay');
+console.log(friends, newLength);
+
+newLength = friends.unshift('John');
+console.log(friends, newLength);
+
+// Remove elements
+let removedValue = friends.pop(); // Last
+console.log(friends, removedValue);
+
+removedValue = friends.shift(); // First
+console.log(friends, "///", removedValue);
+
+console.log(friends.indexOf('Steven'));
+console.log(friends.indexOf('Bob')); // Returns -1 cause it doesn't exists.
+
+friends.push(23);
+console.log(friends.includes('Steven')); // true
+console.log(friends.includes('Bob')); // false
+console.log(friends.includes('23')); // false
+console.log(friends.includes(23)); // true
+
+if (friends.includes('Peter')) {
+    console.log('El array contiene a Peter')
+}
+*/
+
+// Exercise:
+let tip;
+
+function calcTip(bill) {
+    if (bill >= 50 && bill <= 300) {
+        tip = bill * 0.15;
+    } else {
+        tip = bill * 0.20;
+    }
+    return tip;
+}
+
+const tip100 = calcTip(100);
+console.log(tip100);
+
+const bills = [125, 555, 44];
+const tips = [];
+
+tips.push(calcTip(bills[0]), calcTip(bills[1]), calcTip(bills[2]));
+console.log(tips);
+
+const totals = [];
+
+totals.push(`${bills[0]} + ${calcTip(bills[0])}`, `${bills[1]} + ${calcTip(bills[1])}`, `${bills[2]} + ${calcTip(bills[2])}`);
+console.log(totals)
