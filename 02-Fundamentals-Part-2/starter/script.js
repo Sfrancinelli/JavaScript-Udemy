@@ -171,6 +171,7 @@ if (friends.includes('Peter')) {
 }
 */
 
+/*
 // Exercise:
 let tip;
 
@@ -196,3 +197,44 @@ const totals = [];
 
 totals.push(`${bills[0]} + ${calcTip(bills[0])}`, `${bills[1]} + ${calcTip(bills[1])}`, `${bills[2]} + ${calcTip(bills[2])}`);
 console.log(totals)
+*/
+
+
+/*
+// Lecture 42
+// Objects (dictionary)
+
+const person = {
+    firstName: 'John',
+    lastName: 'Lastname',
+    age: 2023 - 2000,
+    job: 'teacher', 
+    friends: ['Michael', 'Peter', 'Steven'],
+};
+
+// With bracket notation we can use expressions 
+const nameKey = 'Name';
+console.log(person['first' + nameKey]);
+console.log(person['last' + nameKey]);
+
+// With dot notation we have to use the key name to access the property
+console.log(person.firstName);
+console.log(person.lastName);
+
+const interestedIn = prompt('What do you want to know about this person? Choose between firstName, lastName, age, job and friends.');
+
+if (person[interestedIn]) {
+    console.log(person[interestedIn]);
+} else {
+    console.log('Wrong request!');
+    const interestedIn = prompt('What do you want to know about this person? Choose between firstName, lastName, age, job and friends.');
+}
+
+person.location = 'Portugal';
+person['github'] = 'link de GitHub'
+
+console.log(person);
+
+console.log(`${person.firstName} has ${person.friends.length} friends, and his best friend is called ${person.friends[0]}`)
+*/
+
