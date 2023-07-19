@@ -276,6 +276,7 @@ console.log(`${person.firstName} is a ${person.age} years old ${person.job}, and
 console.log(person.getSummary());
 */
 
+/*
 // Lecture 43 / Exercise
 const mark = {
     fullName: 'Mark Miller',
@@ -306,4 +307,56 @@ if (john.calcBMI() > mark.calcBMI()) {
     console.log(`${john.fullName}'s BMI ${(john.bmi)} is higher than ${mark.fullName}'s (${mark.bmi})!`);
 } else {
     console.log(`${mark.fullName}'s BMI (${mark.bmi}) is higher than ${john.fullName}'s (${john.bmi})!`);
+}
+*/
+
+/*
+// Lecture 46 / Loops
+for (let rep = 1; rep <= 10; rep++) {
+    console.log(`Lifgting weights repetition ${rep} 🏋️‍♂️`)
+}
+*/
+
+// Lecture 47 / Looping arrays
+
+const personArray = [
+    'John',
+    'Lastname',
+    2023 - 2000,
+    'teacher', 
+    ['Michael', 'Peter', 'Steven'],
+    true,
+];
+
+let array = [];
+
+for (let i = 0; i < personArray.length; i++) {
+    console.log(personArray[i]);
+    array.push(typeof personArray[i]);
+    console.log(array[i]);
+}
+
+const years = [1991, 2007, 1969, 2020, 2023];
+const ages = [];
+
+for (let i = 0; i < years.length; i++) {
+    ages.push(2023 - years[i]);
+    console.log(ages);
+};
+
+// continue and break
+// continue makes the current iteration of the loop finish and the next one starts instantly
+console.log('----ONLY STRINGS----')
+for (let i = 0; i < personArray.length; i++) {
+    if(typeof personArray[i] !== 'string') continue;
+    console.log(personArray[i], typeof personArray[i]);
+}
+
+console.log('----BREAK WITH NUMBER----')
+for (let i = 0; i < personArray.length; i++) {
+    console.log(personArray[i], typeof personArray[i]);
+    if(typeof personArray[i] === 'number') {
+        break;
+    } 
+    
 }
