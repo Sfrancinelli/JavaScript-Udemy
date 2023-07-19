@@ -317,8 +317,8 @@ for (let rep = 1; rep <= 10; rep++) {
 }
 */
 
+/*
 // Lecture 47 / Looping arrays
-
 const personArray = [
     'John',
     'Lastname',
@@ -360,3 +360,48 @@ for (let i = 0; i < personArray.length; i++) {
     } 
     
 }
+*/
+
+/*
+// Lecture 48
+const person = [
+    'John',
+    'Lastname',
+    2023 - 2000,
+    'teacher', 
+    ['Michael', 'Peter', 'Steven'],
+    true,
+];
+
+for (let i = person.length - 1; i >= 0; i--) {
+    console.log(person[i])
+}
+
+for (let exercise = 1; exercise < 4; exercise++) {
+    console.log(`--- Starting exercise ${exercise} ---`)
+    for (let i = 0; i <= 6; i++) {
+        console.log(`Rep: ${i} 🏋️‍♂️`)
+    }
+}
+*/
+
+/*
+// Lecture 49 / While loop
+// for (let rep = 1; rep <= 3; rep++) {
+//     console.log(`Lifgting weights repetition ${rep} 🏋️‍♂️`);
+// }
+
+let rep = 1;
+while (rep <= 3) {
+    console.log(`Lifgting weights repetition ${rep} 🏋️‍♂️`);
+    rep++;
+};
+
+let dice = Math.trunc(Math.random() * 6) + 1;
+
+while (dice !== 6) {
+    console.log(`You rolled a ${dice}`);
+    dice = Math.trunc(Math.random() * 6) + 1;
+    if (dice === 6) console.log('Loop is about to end...');
+}
+*/
