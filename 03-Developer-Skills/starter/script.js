@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 // PROBLEM:
 // We work for a company building a smart home thermometer. Our most recent taks is this: "Given an array of temperatures of one day, calculate the temperature amplitud. Keem in mind that sometimes there might be a sensor error".
-
+/*
 const temperatures = [3, -2, -6, -1, 'error', 9, 13, 17, 15, 14, 9, 5];
 
 function tempAmplitud(arr) {
@@ -65,3 +65,27 @@ const calcTempAmplitude = function(t1,t2) {
     return max - min;
 };
 const amplitude = calcTempAmplitude([3, 5, 1], [9, 0, 5]);
+*/
+
+// Exercise #1:
+/* 
+Given an array of forecasted maximun temperaturesm the thermometer displays a string with these temperatures.
+
+Example: [17, 21, 23] will print "... 17°C in 1 days ... 21°C in 2 days ... 23°C in 3 days ..."
+
+Create a function 'printForecast' which takes in an array and logs a string like the above to the console.
+
+TEST DATA 1: [17,21,23]
+TEST DATA 2: [12,5,-5,0,4]
+*/
+
+const printForecast = function (arr) {
+  let sentence = "... ";
+  for (let i = 0; i < arr.length; i++) {
+    sentence += `${arr[i]}°C in ${i + 1} days ... `;
+  }
+  return sentence;
+};
+
+console.log(printForecast([17, 21, 23]));
+console.log(printForecast([12, 5, -5, 0, 4]));
