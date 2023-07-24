@@ -10,47 +10,53 @@ let gameIsOver = false;
 // Another way of setting the style of an element by JS.
 // document.querySelector('body').style.backgroundColor = '#60b347';
 
+const displayMessage = function (message) {
+  document.querySelector('.message').textContent = message;
+};
+
+const displayNumber = function (number) {
+  document.querySelector('.number').textContent = number;
+};
+
 let againFunc = function () {
   document.querySelector('.score').textContent = 20;
   randomNum = Math.trunc(Math.random() * 20) + 1;
   document.querySelector('.guess').value = '';
-  document.querySelector('.message').textContent = 'Start guessing...';
+  displayMessage('Start guessing...');
   cuerpo.classList.remove('win');
   document.querySelector('.number').style.width = '15rem';
-  document.querySelector('.number').textContent = '?';
+  displayNumber('?');
   gameIsOver = false;
 };
 
 let checkFunc = function () {
   let highscore = document.querySelector('.highscore').textContent;
   let input = Number(document.querySelector('.guess').value);
-  let number = document.querySelector('.number').textContent;
   score = Number(document.querySelector('.score').textContent);
   console.log(randomNum);
 
   if (input !== randomNum) {
     if (score > 1) {
       if (!input) {
-        document.querySelector('.message').textContent = '⛔ No number!';
+        displayMessage('⛔ No number!');
       } else if (input > randomNum) {
-        document.querySelector('.message').textContent = 'Too high!';
+        displayMessage('Too high!');
       } else if (input < randomNum) {
-        document.querySelector('.message').textContent = 'Too low!';
+        displayMessage('Too low!');
       }
-      number = input;
       score--;
       document.querySelector('.score').textContent = score;
-      document.querySelector('.number').textContent = number;
+      displayNumber(input);
     } else {
-      document.querySelector('.message').textContent = '💥 You lost!';
+      displayMessage('💥 You lost!');
       document.querySelector('.score').textContent = 0;
       gameIsOver = true;
     }
   } else if (input === randomNum && gameIsOver === false) {
     cuerpo.classList.add('win');
-    document.querySelector('.number').textContent = input;
+    displayNumber(input);
     document.querySelector('.number').style.width = '30rem';
-    document.querySelector('.message').textContent = '🎉 Correct Number!';
+    displayMessage('🎉 Correct Number!');
 
     if (Number(highscore) < score) {
       document.querySelector('.highscore').textContent = score;
