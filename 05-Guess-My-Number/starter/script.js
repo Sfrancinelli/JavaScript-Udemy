@@ -2,14 +2,12 @@
 
 let randomNum = Math.trunc(Math.random() * 20) + 1;
 
-let highscore = document.querySelector('.highscore').textContent;
 let score = Number(document.querySelector('.score').textContent);
 console.log(randomNum);
 let cuerpo = document.getElementsByTagName('body')[0];
 console.log(cuerpo.classList);
 
 let againFunc = function () {
-  highscore = document.querySelector('.highscore').textContent;
   document.querySelector('.score').textContent = 20;
   randomNum = Math.trunc(Math.random() * 20) + 1;
   document.querySelector('.guess').value = '';
@@ -19,7 +17,7 @@ let againFunc = function () {
 };
 
 let checkFunc = function () {
-  highscore = document.querySelector('.highscore').textContent;
+  let highscore = document.querySelector('.highscore').textContent;
   let input = Number(document.querySelector('.guess').value);
   let number = document.querySelector('.number').textContent;
   score = Number(document.querySelector('.score').textContent);
@@ -39,6 +37,7 @@ let checkFunc = function () {
     document.querySelector('.number').textContent = number;
   } else if (input === randomNum) {
     cuerpo.classList.add('win');
+    document.querySelector('.number').textContent = input;
     document.querySelector('.message').textContent = '🎉 Correct Number!';
 
     if (Number(highscore) < score) {
