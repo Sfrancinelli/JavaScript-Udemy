@@ -5,7 +5,7 @@ let randomNum = Math.trunc(Math.random() * 20) + 1;
 let score = Number(document.querySelector('.score').textContent);
 console.log(randomNum);
 let cuerpo = document.getElementsByTagName('body')[0];
-console.log(cuerpo.classList);
+let gameIsOver = false;
 
 let againFunc = function () {
   document.querySelector('.score').textContent = 20;
@@ -14,6 +14,7 @@ let againFunc = function () {
   document.querySelector('.message').textContent = 'Start guessing...';
   cuerpo.classList.remove('win');
   document.querySelector('.number').textContent = '?';
+  gameIsOver = false;
 };
 
 let checkFunc = function () {
@@ -24,18 +25,24 @@ let checkFunc = function () {
   console.log(randomNum);
 
   if (input !== randomNum) {
-    if (!input) {
-      document.querySelector('.message').textContent = '⛔ No number!';
-    } else if (input > randomNum) {
-      document.querySelector('.message').textContent = 'Too high!';
-    } else if (input < randomNum) {
-      document.querySelector('.message').textContent = 'Too low!';
+    if (score > 1) {
+      if (!input) {
+        document.querySelector('.message').textContent = '⛔ No number!';
+      } else if (input > randomNum) {
+        document.querySelector('.message').textContent = 'Too high!';
+      } else if (input < randomNum) {
+        document.querySelector('.message').textContent = 'Too low!';
+      }
+      number = input;
+      score--;
+      document.querySelector('.score').textContent = score;
+      document.querySelector('.number').textContent = number;
+    } else {
+      document.querySelector('.message').textContent = '💥 You lost!';
+      document.querySelector('.score').textContent = 0;
+      gameIsOver = true;
     }
-    number = input;
-    score -= 1;
-    document.querySelector('.score').textContent = score;
-    document.querySelector('.number').textContent = number;
-  } else if (input === randomNum) {
+  } else if (input === randomNum && gameIsOver === false) {
     cuerpo.classList.add('win');
     document.querySelector('.number').textContent = input;
     document.querySelector('.message').textContent = '🎉 Correct Number!';
