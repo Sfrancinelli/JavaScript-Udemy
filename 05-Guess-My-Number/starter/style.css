@@ -117,3 +117,7 @@ h1 {
 .label-score {
   margin-bottom: 2rem;
 }
+
+.win {
+  background-color: #7dd56f;
+}
