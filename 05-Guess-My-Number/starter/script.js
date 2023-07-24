@@ -48,6 +48,7 @@ let checkFunc = function () {
   } else if (input === randomNum && gameIsOver === false) {
     cuerpo.classList.add('win');
     document.querySelector('.number').textContent = input;
+    document.querySelector('.number').style.width = '30rem';
     document.querySelector('.message').textContent = '🎉 Correct Number!';
 
     if (Number(highscore) < score) {
