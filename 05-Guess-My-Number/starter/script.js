@@ -16,6 +16,7 @@ let againFunc = function () {
   document.querySelector('.guess').value = '';
   document.querySelector('.message').textContent = 'Start guessing...';
   cuerpo.classList.remove('win');
+  document.querySelector('.number').style.width = '15rem';
   document.querySelector('.number').textContent = '?';
   gameIsOver = false;
 };
