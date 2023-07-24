@@ -7,6 +7,9 @@ console.log(randomNum);
 let cuerpo = document.getElementsByTagName('body')[0];
 let gameIsOver = false;
 
+// Another way of setting the style of an element by JS.
+// document.querySelector('body').style.backgroundColor = '#60b347';
+
 let againFunc = function () {
   document.querySelector('.score').textContent = 20;
   randomNum = Math.trunc(Math.random() * 20) + 1;
