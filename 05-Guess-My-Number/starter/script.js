@@ -15,6 +15,7 @@ let againFunc = function () {
   document.querySelector('.guess').value = '';
   document.querySelector('.message').textContent = 'Start guessing...';
   cuerpo.classList.remove('win');
+  document.querySelector('.number').textContent = '?';
 };
 
 let checkFunc = function () {
@@ -25,10 +26,12 @@ let checkFunc = function () {
   console.log(randomNum);
 
   if (input !== randomNum) {
-    if (input < randomNum) {
-      document.querySelector('.message').textContent = 'Too low!';
+    if (!input) {
+      document.querySelector('.message').textContent = '⛔ No number!';
     } else if (input > randomNum) {
       document.querySelector('.message').textContent = 'Too high!';
+    } else if (input < randomNum) {
+      document.querySelector('.message').textContent = 'Too low!';
     }
     number = input;
     score -= 1;
