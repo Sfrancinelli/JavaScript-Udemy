@@ -16,9 +16,11 @@ const funcCloseModal = function () {
   overlay.classList.add('hidden');
 };
 
-const overlayClick = function () {
-  modal.classList.add('hidden');
-  overlay.classList.add('hidden');
+const escEvent = function (e) {
+  console.log(e);
+  if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+    funcCloseModal();
+  }
 };
 
 for (let i = 0; i < openModal.length; i++) {
@@ -27,5 +29,6 @@ for (let i = 0; i < openModal.length; i++) {
 }
 
 closeModal.addEventListener('click', funcCloseModal);
+overlay.addEventListener('click', funcCloseModal);
 
-overlay.addEventListener('click', overlayClick);
+document.addEventListener('keydown', escEvent);
