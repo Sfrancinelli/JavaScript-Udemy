@@ -50,17 +50,11 @@ const rollDice = function () {
   } else if (player1.isActive && randomNum === 1) {
     player1.currentScore = 0;
     document.querySelector('#current--0').textContent = player1.currentScore;
-    // player1.isActive = false;
-    // player2.isActive = true;
-    // call Hold function
     holdScore();
   } else if (player2.isActive && randomNum === 1) {
     player2.currentScore = 0;
     document.querySelector('#current--1').textContent = player2.currentScore;
-    // call Hold function
     holdScore();
-    // player2.isActive = false;
-    // player1.isActive = true;
   }
 
   if (document.querySelector('.dice').style.display === 'none') {
@@ -82,6 +76,11 @@ const holdScore = function () {
     document.querySelector('.player--1').classList.add('player--active');
     player1.currentScore = 0;
     document.querySelector('#current--0').textContent = player1.currentScore;
+    if (player1.score >= 100) {
+      document.querySelector('.player--0').classList.add('player--winner');
+      document.querySelector('#score--0').textContent = player1.score;
+      alert(`${player1Name} has won!`);
+    }
   } else if (player2.isActive) {
     player2.score += player2.currentScore;
     document.querySelector('#score--1').textContent = player2.score;
@@ -91,6 +90,12 @@ const holdScore = function () {
     document.querySelector('.player--0').classList.add('player--active');
     player2.currentScore = 0;
     document.querySelector('#current--1').textContent = player2.currentScore;
+    if (player2.score >= 100) {
+      document.querySelector('.player--1').classList.add('player--winner');
+      document.querySelector('#score--1').textContent = player2.score;
+
+      alert(`${player2Name} has won!`);
+    }
   }
 };
 
@@ -121,3 +126,11 @@ rollBtn.addEventListener('click', rollDice);
 holdBtn.addEventListener('click', holdScore);
 
 // console.log(document.querySelector('.player--1').classList);
+
+// document.querySelector('.player--0').classList.add('player--winner');
+
+const player1Name = prompt('First player name: ');
+const player2Name = prompt('Second player name: ');
+
+document.querySelector('#name--0').textContent = player1Name;
+document.querySelector('#name--1').textContent = player2Name;
