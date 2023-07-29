@@ -99,6 +99,7 @@ const holdScore = function () {
   }
 };
 
+// Player objects
 const player1 = {
   score: Number(document.querySelector('#score--0').textContent),
   currentScore: Number(document.querySelector('#current--0').textContent),
@@ -111,12 +112,15 @@ const player2 = {
   isActive: false,
 };
 
+// Sections for players
 const section1 = document.querySelector('.player--0');
 const section2 = document.querySelector('.player--1');
 
+// Dice source selection
 let diceSrc = document.querySelector('.dice').src;
 // console.log(diceSrc);
 
+// Buttons
 const resetBtn = document.querySelector('.btn--new');
 const rollBtn = document.querySelector('.btn--roll');
 const holdBtn = document.querySelector('.btn--hold');
@@ -129,6 +133,7 @@ holdBtn.addEventListener('click', holdScore);
 
 // document.querySelector('.player--0').classList.add('player--winner');
 
+// Setting player's name
 const player1Name = prompt('First player name: ');
 const player2Name = prompt('Second player name: ');
 
