@@ -440,6 +440,7 @@ team2 < team1 && console.log('Team 2 is more likely to win!');
 console.log(team2 && draw && team1);
 */
 
+/*
 ///////////////////////////////////////////////////////(////////)
 // For-Of Loop!
 const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
@@ -459,3 +460,48 @@ for (const [i, el] of menu.entries()) {
 
 console.log(menu.entries());
 console.log([...menu.entries()]);
+*/
+
+/////////////////////////////////////////////////////////////
+// Enhanced Object Literals
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+// We can now compute the variable names to
+// Pre ES6 we could only compute the values. Now we can compute also the
+// vairable names as seen below
+const openingHours = {
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 13,
+    close: 23,
+  },
+  sat: {
+    open: 0,
+    close: 24,
+  },
+};
+
+const restaurant2 = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+  // Before:
+  // openingHours: openingHours,
+  // ES6 Enhanced Object Literals
+  openingHours,
+
+  // before:
+  // order: function (starterIndex, mainIndex) {
+  //   return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  // },
+  // ES6 Enhanced Object Literals
+  order(starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+};
+
+console.log(restaurant2);
