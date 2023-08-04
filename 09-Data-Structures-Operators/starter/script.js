@@ -57,7 +57,7 @@ const restaurant = {
   },
 };
 
-///////////////////////////7
+///////////////////////////////////////////////////////////////
 // Spreand operator (...) (So usefull)
 // SPREAND BECAUSE ON RIGHT SIDE!! GO TO LINE 200 TO SEE REST (on the left)
 
@@ -113,7 +113,7 @@ console.log(restaurant.name);
 */
 
 /*
-//////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 // Destructuring Objects
 restaurant.orderDelivery({
   time: '22:30',
@@ -156,7 +156,7 @@ const {
 console.log(o, c);
 */
 /*
-////////////////////////////////
+////////////////////////////////////////////////////////////
 // Destructuring Arrays
 const arr = [2, 3, 4];
 const a = arr[0];
@@ -205,6 +205,8 @@ const [p = 1, q = 1, r = 1] = [8, 9];
 console.log(p, q, r);
 */
 
+/*
+////////////////////////////////////////////////////////////
 // REST SINTAX (...) on the left of the assign operator
 // The REST operator
 const [a, b, ...others] = [1, 2, 3, 4, 5];
@@ -254,6 +256,8 @@ restaurant.orderPizza(
 
 restaurant.orderPizza('Mozzarella');
 
+/////////////////////////////////////////////////////////////////////
+// Logical operators
 console.log('-------OR-------');
 // Logical operator can use ANY data type, return ANY data type, short-circuiting
 // The OR operator shortcircuits when it meets the first thruthy value
@@ -322,7 +326,9 @@ const rest2 = {
 // rest2.owner &&= '<ANONYMOUS>';
 
 // console.log(rest1, rest2);
+*/
 
+////////////////////////////////////////////////////////////////
 // CODING CHALLENGE #1
 /*
 We're building a football betting app (soccer for my American friends 😅)! 
@@ -350,6 +356,7 @@ team is more likely to win, without using an if/else statement or the ternary
 operator.
 */
 
+/*
 const game = {
   team1: 'Bayern Munich',
   team2: 'Borrussia Dortmund',
@@ -431,3 +438,24 @@ const printGoals = function (...players) {
 team1 < team2 && console.log('Team 1 is more likely to win!');
 team2 < team1 && console.log('Team 2 is more likely to win!');
 console.log(team2 && draw && team1);
+*/
+
+///////////////////////////////////////////////////////(////////)
+// For-Of Loop!
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+
+for (const items of menu) console.log(items);
+
+// To get index from for of loop
+for (const items of menu.entries()) {
+  // console.log(items);
+  console.log(`${items[0] + 1}: ${items[1]}`);
+}
+
+// Doing the same as above but deestructuring the items array before initializing
+for (const [i, el] of menu.entries()) {
+  console.log(`${i + 1}: ${el}`);
+}
+
+console.log(menu.entries());
+console.log([...menu.entries()]);
