@@ -505,3 +505,36 @@ const restaurant2 = {
 };
 
 console.log(restaurant2);
+
+/////////////////////////////////////////////////////////////////
+// Optional Chaining (?.) ES2020
+// The Optional Chaining checks if the thing of the left exists.
+// If it doesnt exists, it returns undefined, otherwise, it returns the value
+// Because it returns value if the thing on its lefts does not exists, its always used with the Nullish Coalescent Operator to return something if its undefined
+console.log(restaurant2.openingHours.mon); // undefined
+// console.log(restaurant2.openingHours.mon.open); // error cause you cant call a method from 'undefined'
+
+// WITH Optional Chaining
+console.log(restaurant2.openingHours.mon?.open); // undefined. It avoids the error thanks to the optional chaining
+
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+for (const day of days) {
+  // Using OPTIONAL CHAINING and the NULLISH COALESCING OPERATOR
+  // To form a sentence according to dinamic values
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  console.log(`On ${day}, we open at ${open}`);
+}
+
+// Optional chaining on methods:
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exists');
+console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exists');
+
+// Optional chaining on Arrays:
+const users = [{ name: 'Jonas', email: 'hello@jonas.io' }];
+console.log(users[0]?.name ?? 'User array empty');
+console.log(users[1]?.name ?? 'User array empty');
+
+// Doing the same as above but with an if/else statement
+if (users.length > 0) console.log(users[0].name);
+else console.log('User array empty');
