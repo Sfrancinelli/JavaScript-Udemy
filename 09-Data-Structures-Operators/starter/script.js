@@ -538,3 +538,36 @@ console.log(users[1]?.name ?? 'User array empty');
 // Doing the same as above but with an if/else statement
 if (users.length > 0) console.log(users[0].name);
 else console.log('User array empty');
+
+////////////////////////////////////////////////////
+// Looping objects keys 
+
+// Property NAMES
+const properties = Object.keys(openingHours)
+console.log(properties)
+
+console.log(`We are open on ${properties.length} days`)
+
+let openStr = `We are open on ${properties.length} days: `
+
+for (const day of Object.keys(openingHours)) {
+console.log(day);
+openStr += `${day}, `;
+}
+console.log(openStr);
+
+// Property VALUES
+const values = Object.values(openingHours);
+console.log(values);
+
+// Entire object
+const entries = Object.entries(openingHours)
+console.log(entries)
+
+for (const x of entries) {
+  console.log(x)
+}
+
+for (const [key, {open, close}] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}`)
+}
