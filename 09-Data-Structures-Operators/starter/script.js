@@ -701,3 +701,150 @@ for (let x of game.scored) {
 }
 
 console.log(scorers);
+
+//////////////////////////////////////////////////////////////
+// SETS.
+const orderSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Rissoto',
+  'Pasta',
+  'Pizza',
+]);
+
+// All the duplicates will be gone. Sets are iterable, its elements are unique
+console.log(orderSet);
+
+console.log(new Set('Jonas'));
+
+console.log(orderSet.size);
+console.log(orderSet.has('Pizza'));
+console.log(orderSet.has('Bread'));
+
+// const arr = [1, 2, 3, 4, 5, 6, 7];
+// console.log(arr.includes(8));
+// console.log(arr.includes(5));
+
+orderSet.add('Garlic Bread');
+orderSet.add('Garlic Bread');
+// Only 1 garlic bread added (no duplicates allowrd)
+console.log(orderSet);
+
+orderSet.delete('Rissoto');
+console.log(orderSet);
+
+// orderSet.clear(); Cleans all the set
+console.log(orderSet);
+
+for (const order of orderSet) console.log(order);
+
+// The sets are usually used to remove duplicate values from arrays
+// Example
+const staff = ['Waiter', 'Chef', 'Waiter', 'Managed', 'Chef', 'Waiter'];
+// How many different positions are on this restaurant?
+
+// const staffUnique = new Set(staff);
+// console.log(staffUnique);
+
+// We can create an array using the spread operator with a set:
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
+// And now this new array ('StaffUnique') has the non duplicate values from the original
+console.log(
+  new Set(['Waiter', 'Chef', 'Waiter', 'Managed', 'Chef', 'Waiter']).size
+);
+
+console.log(new Set('SebastianFrancinelli').size);
+
+/////////////////////////////////////////////////////////////////
+// MAPS
+// The keys on the maps can be almost anyting, even other maps
+const rest = new Map();
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Italy');
+rest.set(2, 'Lisbon, Portugal');
+// The set method also return the map itself:
+console.log(rest.set(3, 'Paris, France'));
+// The return from the set method allows us to chain sets to assing multiple key / values:
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open')
+  .set(false, 'We are closed');
+
+console.log(rest.get('name'));
+console.log(rest.get(true));
+
+const time = 21;
+// Using a comparison to get either true or false and from that, map the value
+console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+// The result of this would be rest.get(true) witch maps to 'We are open' as seen on line 774
+
+console.log(rest.has('categories'));
+rest.delete(3);
+console.log(rest);
+console.log(rest.size);
+// rest.clear()
+
+// Setting an array as the key:
+rest.set([1, 2], 'Test');
+console.log(rest);
+
+console.log(rest.get([1, 2])); // undefined
+
+// We have to use the same array to properly get it from the map later, it has to be defined as a variale so it has a reference in memory
+const arr = [1, 2];
+rest.set(arr, 'Test');
+console.log(rest.get(arr)); // 'Test'
+
+// Getting a DOM Object to be the key:
+rest.set(document.querySelector('h1'), 'Heading');
+console.log(rest);
+
+// Populating a ma without using the set method:
+// We need to use an array of arrays
+const question = new Map([
+  ['question', 'What is the best programming language in the world?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct! 🎓'],
+  [false, 'Try again!'],
+]);
+
+console.log(question);
+
+// Convert object to map
+// We use the object.entries because it returns an array of arrays!
+console.log(Object.entries(game));
+const gameMap = new Map(Object.entries(game));
+console.log(gameMap);
+
+// Quiz app
+console.log(question.get('question'));
+for (const [key, value] of question) {
+  if (typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+}
+
+// const answer = prompt('Whats your answer? 1, 2 or 3?');
+
+// if (Number(answer) === question.get('correct')) {
+//   alert(`${question.get(true)}`);
+// } else {
+//   alert(question.get(false));
+// }
+
+// Converting a map to an array:
+const mapArray = [...question];
+// Array of arrays
+console.log(mapArray);
+
+// Maps also have the methods from objects and arrays like:
+console.log(question.entries());
+// The entries method is kinda dumb to use on maps, you just use the spread operator
+console.log([...question]);
+console.log([...question.keys()]);
+console.log([...question.values()]);
