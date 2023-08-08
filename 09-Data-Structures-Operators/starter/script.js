@@ -912,3 +912,41 @@ for (const [key, value] of gameEvents) {
     console.log(`[SECOND HALF] ${key}: ${value}`);
   }
 }
+
+//////////////////////////////////////////////////////////////////////
+// Working with Strings!
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+console.log(plane[0]);
+console.log('B737'[0]);
+
+console.log(airline.length);
+console.log('B373'.length);
+
+console.log(airline.indexOf('r'));
+console.log(airline.lastIndexOf('r'));
+console.log(airline.indexOf('Portugal')); // Case sensitive
+
+console.log(airline.slice(4));
+console.log(airline.slice(4, 7)); // End value not included in slicing. The result length will always be end - beginning (in this case 7 - 4 = 3). Thats why it prints 'Air'
+
+console.log(airline.slice(0, airline.indexOf(' ')));
+console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+
+console.log(airline.slice(-2)); // Starts extracting from the end
+console.log(airline.slice(1, -1)); // AP Air Portuga
+
+const checkMiddleSeat = function (seat) {
+  // B and E are middle seats
+  const s = seat.slice(-1);
+  if (seat.slice(seat.length - 1) === 'B' || s === 'E') {
+    console.log('This are middle seats');
+  } else {
+    console.log('This arent middle seats');
+  }
+};
+
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('3E');
