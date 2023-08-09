@@ -1036,7 +1036,47 @@ const toTitleCase = function (string) {
   return finalStr;
 };
 
+const capitalizeString = function (str) {
+  const string = str.split(' ');
+  const stringUpper = [];
+
+  for (const s of string) {
+    // stringUpper.push(s[0].toUpperCase() + s.slice(1));
+    stringUpper.push(s.replace(s[0], s[0].toUpperCase()));
+  }
+  console.log(stringUpper.join(' '));
+  return stringUpper.join(' ');
+};
+
 const passenger2 = 'jessica ann smith davis';
 console.log(toTitleCase('sebastian francinelli senior dev'));
 console.log(toTitleCase('SeBastIan FranCiNNelli JuNIOR Web DEVELOpeR'));
 console.log(toTitleCase('seBastian'));
+
+capitalizeString('seBasTiaN functiOn');
+
+// Padding
+const message = 'Go to gate 23!';
+console.log(message.padStart(25, '%').padEnd(35, '&'));
+console.log(message.length, message.padStart(25, '%').length);
+
+const maskCreditCard = function (number) {
+  const str = String(number);
+  const lastFourDigits = str.slice(-4);
+  const maskedCard = lastFourDigits.padStart(str.length, '*');
+  return maskedCard;
+};
+
+console.log(maskCreditCard(46545412315468));
+console.log(maskCreditCard('654541236874615468'));
+
+// Repeat
+const message2 = 'Bad wather... All Departues Delayed... ';
+console.log(message2.repeat(5));
+
+const planesInLine = function (n) {
+  console.log(`There are ${n} planes in line ${'✈'.repeat(n)}`);
+};
+planesInLine(5);
+planesInLine(3);
+planesInLine(45);
