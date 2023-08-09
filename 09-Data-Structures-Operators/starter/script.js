@@ -1,9 +1,5 @@
 'use strict';
 
-// Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
-
 // Data needed for first part of the section
 const restaurant = {
   name: 'Classico Italiano',
@@ -1139,3 +1135,38 @@ const text = document.querySelector('textarea');
 button.addEventListener('click', function () {
   camelCaseGenerator(text.value);
 });
+
+// CODING CHALLENGE #5
+const flights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+const dividedFlights = flights.split('+');
+console.log(dividedFlights);
+
+const arrFli = [];
+
+for (const flight of dividedFlights) {
+  arrFli.push(flight.split(';'));
+}
+
+console.log(arrFli);
+const formattedFli = [];
+
+for (const f of arrFli) {
+  formattedFli.push(
+    f[0].replaceAll('_', ' ').trim() +
+      ' ' +
+      f[1].slice(0, 3).toUpperCase() +
+      ' ' +
+      'to ' +
+      f[2].slice(0, 3).toUpperCase() +
+      ` (${f[3].replace(':', 'hs')})`
+  );
+  console.log(formattedFli[0].length);
+}
+
+for (let j = 0; j < formattedFli.length; j++) {
+  console.log(
+    `${j === 0 || j === 2 ? '🚨' : '  '}${formattedFli[j].padStart(38, ' ')}`
+  );
+}
