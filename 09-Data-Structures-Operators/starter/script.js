@@ -1011,3 +1011,32 @@ const checkBaggage = function (items) {
 checkBaggage('I have a laptop, some Food and a pocket Knife');
 checkBaggage('Socks and camera');
 checkBaggage('Got some snacks and a gun for protection');
+
+// Split and Join methods
+console.log('a+very+nice+string'.split('+')); // Returns a string splitted by the declared character
+console.log('Sebastian Francineli'.split(' '));
+
+const [firstName, lastName] = 'Sebastian Francinelli'.split(' ');
+
+const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');
+
+console.log(newName);
+
+const toTitleCase = function (string) {
+  const lowerSplitted = string.toLowerCase().split(' ');
+  let finalStr = [];
+  for (let i = 0; i < lowerSplitted.length; i++) {
+    let newStr = [
+      lowerSplitted[i][0].toUpperCase(),
+      lowerSplitted[i].slice(1),
+    ].join('');
+    finalStr.push(newStr);
+  }
+  finalStr = finalStr.join(' ');
+  return finalStr;
+};
+
+const passenger2 = 'jessica ann smith davis';
+console.log(toTitleCase('sebastian francinelli senior dev'));
+console.log(toTitleCase('SeBastIan FranCiNNelli JuNIOR Web DEVELOpeR'));
+console.log(toTitleCase('seBastian'));
