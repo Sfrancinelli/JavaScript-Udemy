@@ -1160,13 +1160,29 @@ for (const f of arrFli) {
       ' ' +
       'to ' +
       f[2].slice(0, 3).toUpperCase() +
-      ` (${f[3].replace(':', 'hs')})`
+      ` (${f[3].replace(':', 'h')})`
   );
   console.log(formattedFli[0].length);
 }
 
 for (let j = 0; j < formattedFli.length; j++) {
   console.log(
-    `${j === 0 || j === 2 ? '🚨' : '  '}${formattedFli[j].padStart(38, ' ')}`
+    `${formattedFli[j].startsWith('Delayed') ? '🚨' : '  '}${formattedFli[
+      j
+    ].padStart(36, ' ')}`
   );
+}
+
+for (const flight of flights.split('+')) {
+  const [type, from, to, time] = flight.split(';');
+  let output = `${type.replaceAll('_', ' ')} from ${from
+    .toUpperCase()
+    .slice(0, 3)} to ${to.toUpperCase().slice(0, 3)} (${time.replace(
+    ':',
+    'h'
+  )})`.padStart(50, ' ');
+
+  output = output.includes('Delayed') ? output.replace('  ', '🛑') : output;
+
+  console.log(output);
 }
