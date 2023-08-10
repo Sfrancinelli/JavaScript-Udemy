@@ -26,7 +26,7 @@ createBooking('LH123', 2);
 
 createBooking('LH123', 2, 800);
 */
-
+/*
 const flight = 'LH234';
 const jonas = {
   name: 'Jonas Schmedtmann',
@@ -55,3 +55,35 @@ const newPassport = function (person) {
 newPassport(jonas);
 console.log(jonas);
 checkIn(flight, jonas);
+*/
+
+const oneWord = function (str) {
+  return str.toLowerCase().replaceAll(' ', '');
+};
+
+const upperFirstWord = function (str) {
+  const [firstWord, ...others] = str.split(' ');
+  return [firstWord.toUpperCase(), ...others].join(' ');
+};
+
+console.log(
+  oneWord('Hola Como estas todo BIEN?'),
+  upperFirstWord('Sebastian Francinelli Un capo')
+);
+
+// Higher-order function (it takes a function as an argument)
+const transformer = function (str, fn) {
+  console.log(`Transformed string: ${fn(str)}`);
+
+  console.log(`Transformed by: ${fn.name}()`);
+};
+
+// The argument functions are named callback functions cause we dont call em ourselves, we let js call em
+transformer('JavaScript is the best!', upperFirstWord);
+transformer('JavaScript is the best!', oneWord);
+
+const high5 = function () {
+  console.log('🖐️');
+};
+
+document.body.addEventListener('click', high5);
