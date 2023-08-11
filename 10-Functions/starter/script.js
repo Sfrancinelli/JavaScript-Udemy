@@ -188,3 +188,56 @@ book.apply(swiss, [657, 'SG']);
 const flightData = [657, 'SG'];
 // The aplly method is really not very usefull and used in modern js. We can do the same using the spread operator:
 book.call(swiss, ...flightData);
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Bind method
+// The bind method allows us to specify the this keyword just like call and apply but with one major difference.
+// This method doesnt call the functon instantly. It returns a new function where the this keyword specified is bind!
+const eurowingsBook = book.bind(eurowings);
+const bookLh = book.bind(lufthansa);
+const bookSS = book.bind(swiss);
+
+eurowingsBook(234, 'Steven Williams');
+
+// We can also specify a given parameter and it will stay the same every time we call this new function. For example, we could specify a function with a given this keyword, so, in this case, for a given airline and we could also set a flight number to be always the same:
+const bookEW23 = book.bind(eurowings, 23);
+
+bookEW23('SF');
+
+// With Event Listeners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+
+  this.planes++;
+  console.log(this.planes);
+};
+
+// If the this keyword is not specified via the bind method on an EventListener, the this keyword will always point to the object that is calling the function (in this case, the 'Buy new plane' button on the document).
+document
+  .querySelector('.buy')
+  .addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
+
+// Partial application
+// Partial application refers to the preapplication of parameters
+
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+// this two are the same thing, but the above one is using partial application (best practice)
+const addVAT = addTax.bind(null, 0.23);
+// const addVAT = value => value + value * 0.23;
+
+console.log(addVAT(200));
+
+const tax = function (rate) {
+  return function (value) {
+    return value + value * rate;
+  };
+};
+
+console.log(tax(0.1)(200));
+
+const addVAT2 = tax(0.23);
+
+console.log(addVAT2(200));
