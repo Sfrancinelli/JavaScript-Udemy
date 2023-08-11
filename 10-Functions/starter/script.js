@@ -57,6 +57,9 @@ console.log(jonas);
 checkIn(flight, jonas);
 */
 
+/////////////////////////////////////////////////////////////////////////////
+// functions that take other functions as parameters
+
 const oneWord = function (str) {
   return str.toLowerCase().replaceAll(' ', '');
 };
@@ -87,3 +90,46 @@ const high5 = function () {
 };
 
 document.body.addEventListener('click', high5);
+
+// Higher order functions are good for higher levels of abtraction in the code. For example, the transformer function doesnt really care about how the string will be transformed. It only wants to transform the string and it will do so by receiving propper parameters
+
+function calculator(fn, ...numbers) {
+  return fn(...numbers);
+}
+
+function add(...numbers) {
+  let sum = 0;
+  for (let n of numbers) sum += n;
+  return sum;
+}
+
+function substract(...numbers) {
+  let less = 0;
+  for (let n of numbers) less -= n;
+  return less;
+}
+
+console.log(calculator(add, 10, 9, 8, 7, 5, 2, 6, 4));
+
+////////////////////////////////////////////////////////////////////////////
+// functions that return other functions
+
+const greet = function (greeting) {
+  return function (name) {
+    console.log(`${greeting} ${name}`);
+  };
+};
+
+const greeterHey = greet('Hey');
+
+greeterHey('Sebastian');
+greeterHey('Steven');
+
+greet('Hello')('Jonas');
+
+// Doing the same but with arrow functions
+const greetings = greeting => {
+  return name => console.log(`${greeting} ${name}`);
+};
+
+greetings('Hello')('SF');
