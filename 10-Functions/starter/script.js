@@ -133,3 +133,58 @@ const greetings = greeting => {
 };
 
 greetings('Hello')('SF');
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+// Call method!
+
+const lufthansa = {
+  airline: 'Lufthansa',
+  iataCode: 'LH',
+  bookings: [],
+  // book: function() {}
+  book(flightNum, nombre) {
+    console.log(
+      `${nombre} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
+    );
+    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, nombre });
+  },
+};
+
+lufthansa.book(239, 'Sebastián Francinelli');
+lufthansa.book(635, 'john Smith');
+console.log(lufthansa);
+
+const book = lufthansa.book;
+
+const eurowings = {
+  airline: 'Eurowings',
+  iataCode: 'EW',
+  bookings: [],
+  book: book,
+};
+
+eurowings.book(23, 'Sarah');
+
+// book(23, 'Sarah');
+
+// Using the call method we can specify what will be the value of the this keyword. The first parameter of the call method is the reference for the this keyword, in this case, eurowings.
+book.call(eurowings, 23, 'Sarah Williams');
+
+book.call(lufthansa, 45, 'SF');
+
+console.log(eurowings);
+console.log(lufthansa);
+
+const swiss = {
+  airline: 'Swiss Airline',
+  iataCode: 'SS',
+  bookings: [],
+};
+
+book.call(swiss, 45, 'SGF');
+
+// The aplly method is basically the same as the call method but instead, it receives the arguments for the function called in the way of an array:
+book.apply(swiss, [657, 'SG']);
+const flightData = [657, 'SG'];
+// The aplly method is really not very usefull and used in modern js. We can do the same using the spread operator:
+book.call(swiss, ...flightData);
