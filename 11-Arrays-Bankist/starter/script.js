@@ -120,3 +120,32 @@ console.log('sebastian'.at(1)); // e
 console.log(arr3[arr3.length - 1]);
 console.log(arr3.slice(-1));
 console.log(arr3.at(-1));
+
+// Looping Arrays: forEach!
+// forEach:
+
+const move = [200, 450, -400, 3003, -650, -100, 70, 1300];
+
+for (const [i, movement] of move.entries()) {
+  if (movement > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(movement)}`); // Removing the '-'
+  }
+}
+
+console.log('--------------- forEach ---------------');
+
+// The first parameter in the callback function for the forEach function is always going to be the element that been looped through the array. So in this case, the first element will correspond to the numbers representing the movements of money (200, 450, etc...)
+// The second parameter is always going to be the index for said element
+// And the third parameter is going to be the array that we are looping through.
+// The names of the parameter doesnt matter at all, but the order is very important as it will always be the same as depicted above.
+
+// forEach method does not accept the break or continue clausules
+move.forEach(function (mov, i, arr) {
+  if (mov > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${mov}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(mov)}`);
+  }
+});
