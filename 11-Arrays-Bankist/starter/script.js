@@ -142,10 +142,32 @@ console.log('--------------- forEach ---------------');
 // The names of the parameter doesnt matter at all, but the order is very important as it will always be the same as depicted above.
 
 // forEach method does not accept the break or continue clausules
-move.forEach(function (mov, i, arr) {
-  if (mov > 0) {
-    console.log(`Movement ${i + 1}: You deposited ${mov}`);
+move.forEach(function (elem, i, arr) {
+  if (elem > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${elem}`);
   } else {
-    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(mov)}`);
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(elem)}`);
   }
+});
+
+/////////////////////////////////////////////////////////////////////
+// forEach with maps
+
+const curr = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+console.log('--------------- forEach with Maps ---------------');
+
+curr.forEach(function (value, key, map) {
+  console.log(`${key}: ${value}`);
+});
+
+// forEach with sets
+const currUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+console.log(currUnique);
+currUnique.forEach(function (value, _, map) {
+  console.log(`${value}: ${value}`);
 });
