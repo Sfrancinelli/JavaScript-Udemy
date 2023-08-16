@@ -171,3 +171,56 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
+
+// for (let acc of accounts) {
+//   let user = acc.owner.split(' ');
+//   for (let [i, _] of user.entries()) {
+//     console.log(user);
+//     console.log(user[i].slice(0, -user[i].length + 1).toLowerCase());
+//     let username = user[i].slice(0, -user[i].length + 1).toLowerCase();
+//     console.log((username += username));
+//   }
+// }
+
+const users = [];
+let username;
+
+for (let acc of accounts) {
+  users.push(acc.owner.split(' '));
+  // console.log(users);
+}
+
+// Getting the user account owner in the correct format to compare to user imput
+users.forEach(function (elem, i) {
+  username =
+    (elem[0][0] + elem[1][0]).toLowerCase() +
+    (elem[2] ? elem[2][0].toLowerCase() : '') +
+    (elem[3] ? elem[2][0].toLowerCase() : '');
+  accounts[i].user = username;
+  console.log(accounts[i].user);
+});
+
+const login = function () {
+  // event.preventDefault() so the page doesnt reload on login button and it properly displays the new opacity
+  event.preventDefault();
+  let correct = false;
+  let inputLogin = inputLoginUsername.value;
+  let inputPin = Number(inputLoginPin.value);
+  console.log(inputLogin, inputPin);
+  for (let acc of accounts) {
+    console.log(acc.user, acc.pin);
+    if (inputLogin === acc.user && inputPin === acc.pin) {
+      correct = true;
+      break;
+    }
+  }
+  console.log(correct);
+  if (correct) {
+    // document.querySelector('.app').style.opacity = '1';
+    document.querySelector('.app').setAttribute('style', 'opacity: 1;');
+    inputLoginUsername.value = '';
+    inputLoginPin.value = '';
+  }
+};
+
+btnLogin.addEventListener('click', login);
