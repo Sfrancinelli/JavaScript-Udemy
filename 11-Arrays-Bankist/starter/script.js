@@ -200,27 +200,33 @@ users.forEach(function (elem, i) {
   console.log(accounts[i].user);
 });
 
+let user;
+
 const login = function () {
   // event.preventDefault() so the page doesnt reload on login button and it properly displays the new opacity
   event.preventDefault();
   let correct = false;
   let inputLogin = inputLoginUsername.value;
   let inputPin = Number(inputLoginPin.value);
-  console.log(inputLogin, inputPin);
+
+  // console.log(inputLogin, inputPin);
   for (let acc of accounts) {
-    console.log(acc.user, acc.pin);
+    // console.log(acc.user, acc.pin);
     if (inputLogin === acc.user && inputPin === acc.pin) {
       correct = true;
+      user = acc;
       break;
     }
   }
-  console.log(correct);
+  // console.log(correct);
   if (correct) {
     // document.querySelector('.app').style.opacity = '1';
     document.querySelector('.app').setAttribute('style', 'opacity: 1;');
     inputLoginUsername.value = '';
     inputLoginPin.value = '';
+    labelWelcome.textContent = `Good Morning, ${user.owner.split(' ')[0]}!`;
   }
+  return user;
 };
 
 btnLogin.addEventListener('click', login);
