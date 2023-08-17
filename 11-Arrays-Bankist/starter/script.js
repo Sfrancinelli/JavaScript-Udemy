@@ -112,6 +112,50 @@ currUnique.forEach(function (value, _, map) {
 });
 */
 
+/////////////////////////////////////////////////////////////////////777
+// CODING CHALLENGE
+/*
+Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners 
+about their dog's age, and stored the data into an array (one array for each). For 
+now, they are just interested in knowing whether a dog is an adult or a puppy. 
+A dog is an adult if it is at least 3 years old, and it's a puppy if it's less than 3 years 
+old. 
+Your tasks: 
+Create a function 'checkDogs', which accepts 2 arrays of dog's ages 
+('dogsJulia' and 'dogsKate'), and does the following things: 
+1. Julia found out that the owners of the first and the last two dogs actually have 
+cats, not dogs! So create a shallow copy of Julia's array, and remove the cat 
+ages from that copied array (because it's a bad practice to mutate function 
+parameters) 
+2. Create an array with both Julia's (corrected) and Kate's data 
+3. For each remaining dog, log to the console whether it's an adult ("Dog number 1 
+is an adult, and is 5 years old") or a puppy ("Dog number 2 is still a puppy 
+🐶") 
+4. Run the function for both test datasets 
+Test data: 
+§ Data 1: Julia's data , Kate's data 
+§ Data 2: Julia's data , Kate's data 
+*/
+/*
+function checkDogs(dogsJulia, dogsKate) {
+  const correctedJulia = [...dogsJulia];
+  const catRemoved = correctedJulia.slice(1, -2);
+  console.log(catRemoved);
+  const bothArrs = catRemoved.concat(dogsKate);
+  bothArrs.forEach(function (dog, i) {
+    console.log(
+      bothArrs[i] >= 3
+        ? `Dog numer ${i + 1} is an adult, and is ${dog} years old`
+        : `Dog number ${i + 1} is still a puppy 
+🐶`
+    );
+  });
+}
+
+checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
+checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
+*/
+
 /////////////////////////////////////////////////
 // BANKIST APP
 
@@ -186,6 +230,7 @@ const users = [];
 let username;
 
 for (let acc of accounts) {
+  acc.balance = 0;
   users.push(acc.owner.split(' '));
   // console.log(users);
 }
@@ -230,6 +275,8 @@ const login = function () {
 };
 
 const displayMovements = function (movements) {
+  containerMovements.innerHTML = '';
+
   movements.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
@@ -241,7 +288,7 @@ const displayMovements = function (movements) {
 </div>
 `;
 
-    containerMovements.insertAdjacentHTML('beforeend', html);
+    containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
 
