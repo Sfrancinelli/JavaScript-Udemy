@@ -156,6 +156,16 @@ checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
 */
 
+/////////////////////////////////////////////////////////////////////
+// MAP METHOD
+// Map returns a new array containing the results of applying an operation on all original array elements.
+
+// FILTER METHOD
+// filter returns a new array containing the array elements that passed a specified test condition
+
+// REDUCE METHOD
+// reduce boils ('reduces') all array elements down to one single value (e.g. adding all elements together)
+
 /////////////////////////////////////////////////
 // BANKIST APP
 
