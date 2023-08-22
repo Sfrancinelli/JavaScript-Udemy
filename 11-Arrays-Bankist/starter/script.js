@@ -553,9 +553,21 @@ const transferMoney = function () {
   }, 1000);
 };
 
+const closeAccount = function () {
+  event.preventDefault();
+  const userConfirm = inputCloseUsername.value;
+  const pinConfirm = inputClosePin.value;
+  if (user.pin === Number(pinConfirm) && user.username === userConfirm) {
+    const newAccs = accounts.filter(acc => acc != user);
+
+    console.log(accounts);
+  }
+};
+
 btnLogin.addEventListener('click', login);
 btnLoan.addEventListener('click', requestLoan);
 btnTransfer.addEventListener('click', transferMoney);
+btnClose.addEventListener('click', closeAccount);
 
 // DEBUG
 document.body.addEventListener('click', function () {
