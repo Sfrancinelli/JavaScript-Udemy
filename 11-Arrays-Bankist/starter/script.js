@@ -273,6 +273,19 @@ function calcAverageHumanAge(ages) {
 
 calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+
+function calcAverageHumanChain(ages) {
+  const avg = ages
+    .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
+    .filter(age => age >= 18)
+    .reduce((acc, curr, i, arr) => acc + curr / arr.length, 0);
+
+  console.log(avg);
+  return avg;
+}
+
+calcAverageHumanChain([5, 2, 4, 1, 15, 8, 3]);
+calcAverageHumanChain([16, 6, 10, 5, 6, 1, 4]);
 */
 
 /*
