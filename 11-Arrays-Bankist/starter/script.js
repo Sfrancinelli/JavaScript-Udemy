@@ -275,6 +275,21 @@ calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 */
 
+/*
+// Chaining methods
+const eurToUsd = 1.1;
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  .map((mov, i, arr) => {
+    // Printing array for debbuging
+    console.log(mov, arr);
+    return mov * eurToUsd;
+  })
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(totalDepositsUSD);
+*/
+
 /////////////////////////////////////////////////
 // BANKIST APP
 
@@ -367,12 +382,42 @@ const createUsernames = function (accs) {
 createUsernames(accounts);
 console.log(accounts);
 
-const calcPrintBalance = function (movements) {
+const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, curr) => acc + curr, 0);
-  labelBalance.textContent = `${balance} EUR`;
+  labelBalance.textContent = `${balance}€`;
 };
 
-calcPrintBalance(account1.movements);
+calcDisplayBalance(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  console.log(movements);
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, curr) => acc + curr, 0);
+
+  labelSumIn.textContent = `${incomes}€`;
+
+  const outcomes = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, curr) => acc + curr, 0);
+
+  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(mov => (mov * 1.2) / 100)
+    .filter((interest, i, arr) => {
+      console.log(arr);
+      return interest >= 1;
+    })
+    .reduce((acc, mov) => acc + mov, 0);
+
+  labelSumInterest.textContent = `${interest}€`;
+
+  return incomes;
+};
+
+console.log(calcDisplaySummary(account1.movements));
 
 // Getting the user account owner in the correct format to compare to user imput
 users.forEach(function (elem, i) {
@@ -423,7 +468,7 @@ const displayMovements = function (movements) {
 <div class="movements__row">
 <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
 <div class="movements__date">3 days ago</div>
-<div class="movements__value">${mov}</div>
+<div class="movements__value">${mov}€</div>
 </div>
 `;
 
