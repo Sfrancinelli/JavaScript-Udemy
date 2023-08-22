@@ -229,7 +229,6 @@ console.log(balance);
 let sum = 0;
 for (const mov of movements) sum += mov;
 console.log(sum);
-*/
 
 // Maximum value
 const max = movements.reduce(
@@ -237,6 +236,7 @@ const max = movements.reduce(
   movements[0]
 );
 console.log(max);
+*/
 
 /////////////////////////////////////////////////
 // BANKIST APP
