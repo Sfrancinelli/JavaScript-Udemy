@@ -430,37 +430,6 @@ const createUsernames = function (accs) {
 createUsernames(accounts);
 console.log(accounts);
 
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, curr) => acc + curr, 0);
-  labelBalance.textContent = `${balance}€`;
-};
-
-const calcDisplaySummary = function (movements) {
-  const incomes = movements
-    .filter(mov => mov > 0)
-    .reduce((acc, curr) => acc + curr, 0);
-
-  labelSumIn.textContent = `${incomes}€`;
-
-  const outcomes = movements
-    .filter(mov => mov < 0)
-    .reduce((acc, curr) => acc + curr, 0);
-
-  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
-
-  const interest = movements
-    .filter(mov => mov > 0)
-    .map(mov => (mov * 1.2) / 100)
-    .filter((interest, i, arr) => {
-      return interest >= 1;
-    })
-    .reduce((acc, mov) => acc + mov, 0);
-
-  labelSumInterest.textContent = `${interest}€`;
-
-  return incomes;
-};
-
 // Getting the user account owner in the correct format to compare to user imput
 users.forEach(function (elem, i) {
   username =
@@ -523,8 +492,54 @@ const displayMovements = function (movements) {
   });
 };
 
-btnLogin.addEventListener('click', login);
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, curr) => acc + curr, 0);
+  labelBalance.textContent = `${balance}€`;
+  user.balance = balance;
+};
 
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, curr) => acc + curr, 0);
+
+  labelSumIn.textContent = `${incomes}€`;
+
+  const outcomes = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, curr) => acc + curr, 0);
+
+  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(mov => (mov * 1.2) / 100)
+    .filter((interest, i, arr) => {
+      return interest >= 1;
+    })
+    .reduce((acc, mov) => acc + mov, 0);
+
+  labelSumInterest.textContent = `${interest}€`;
+
+  return incomes;
+};
+
+const requestLoan = function () {
+  event.preventDefault();
+  let loan = inputLoanAmount.value;
+  user.movements.push(Number(loan));
+
+  setTimeout(function () {
+    calcDisplayBalance(user.movements);
+    calcDisplaySummary(user.movements);
+    displayMovements(user.movements);
+  }, 3000);
+};
+
+btnLogin.addEventListener('click', login);
+btnLoan.addEventListener('click', requestLoan);
+
+// DEBUG
 document.body.addEventListener('click', function () {
   console.log(user);
 });
