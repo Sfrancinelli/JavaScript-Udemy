@@ -258,25 +258,22 @@ Test data:
 § Data 1: [5, 2, 4, 1, 15, 8, 3] 
 § Data 2: [16, 6, 10, 5, 6, 1, 4] 
 */
+
+/*
 function calcAverageHumanAge(ages) {
-  let humanAge = [];
-  ages.forEach(function (age, i) {
-    if (age <= 2) {
-      humanAge.push(2 * age);
-    } else if (age > 2) {
-      humanAge.push(16 + age * 4);
-    }
-  });
-  console.log(humanAge);
-  const filteredAges = humanAge.filter(age => age > 18);
-  console.log(filteredAges);
-  const avg =
-    filteredAges.reduce((acc, curr) => acc + curr, 0) / filteredAges.length;
+  const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+  console.log(humanAges);
+  const adults = humanAges.filter(age => age >= 18);
+  console.log(adults);
+  const avg = adults.reduce((acc, curr) => acc + curr, 0) / adults.length;
   console.log(avg);
+
+  return avg;
 }
 
 calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+*/
 
 /////////////////////////////////////////////////
 // BANKIST APP
