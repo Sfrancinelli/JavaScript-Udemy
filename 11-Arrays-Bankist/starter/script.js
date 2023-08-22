@@ -238,6 +238,40 @@ const max = movements.reduce(
 console.log(max);
 */
 
+// FIND METHOD
+// The find method also needs a calback function that returns a boolean (like the filter method) but it will return the first element that satisfies that condition and not (like the filter method) a new array changing accordgin to condition.
+
+//First withdrawal is this:
+console.log(
+  movements.find(function (mov) {
+    return mov < 0;
+  })
+);
+
+// Finding an object by its property
+
+const account5 = {
+  owner: 'Jonas Schmedtmann',
+};
+
+const account6 = {
+  owner: 'Jessica Davis',
+  objeto: 'Este objetoooo',
+};
+
+const account7 = {
+  owner: 'Steven Thomas Williams',
+};
+
+const account8 = {
+  owner: 'Sarah Smith',
+};
+
+const accountss = [account5, account6, account7, account8];
+
+const account = accountss.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+
 //////////////////////////////////////////////////////////////////777777
 // CODING CHALLENGE #3
 /*
@@ -289,6 +323,7 @@ calcAverageHumanChain([16, 6, 10, 5, 6, 1, 4]);
 */
 
 /*
+////////////////////////////////////////////////////////////////
 // Chaining methods
 const eurToUsd = 1.1;
 const totalDepositsUSD = movements
@@ -400,10 +435,7 @@ const calcDisplayBalance = function (movements) {
   labelBalance.textContent = `${balance}€`;
 };
 
-calcDisplayBalance(account1.movements);
-
 const calcDisplaySummary = function (movements) {
-  console.log(movements);
   const incomes = movements
     .filter(mov => mov > 0)
     .reduce((acc, curr) => acc + curr, 0);
@@ -420,7 +452,6 @@ const calcDisplaySummary = function (movements) {
     .filter(mov => mov > 0)
     .map(mov => (mov * 1.2) / 100)
     .filter((interest, i, arr) => {
-      console.log(arr);
       return interest >= 1;
     })
     .reduce((acc, mov) => acc + mov, 0);
@@ -429,8 +460,6 @@ const calcDisplaySummary = function (movements) {
 
   return incomes;
 };
-
-console.log(calcDisplaySummary(account1.movements));
 
 // Getting the user account owner in the correct format to compare to user imput
 users.forEach(function (elem, i) {
@@ -468,6 +497,11 @@ const login = function () {
     inputLoginPin.value = '';
     labelWelcome.textContent = `Good Morning, ${user.owner.split(' ')[0]}!`;
   }
+
+  displayMovements(user.movements);
+  calcDisplaySummary(user.movements);
+  calcDisplayBalance(user.movements);
+
   return user;
 };
 
@@ -489,6 +523,8 @@ const displayMovements = function (movements) {
   });
 };
 
-displayMovements(account1.movements);
-
 btnLogin.addEventListener('click', login);
+
+document.body.addEventListener('click', function () {
+  console.log(user);
+});
