@@ -526,7 +526,7 @@ const calcDisplaySummary = function (movements) {
 
 const requestLoan = function () {
   event.preventDefault();
-  let loan = inputLoanAmount.value;
+  const loan = inputLoanAmount.value;
   user.movements.push(Number(loan));
 
   setTimeout(function () {
@@ -536,8 +536,26 @@ const requestLoan = function () {
   }, 3000);
 };
 
+const transferMoney = function () {
+  event.preventDefault();
+  const to = inputTransferTo.value;
+  const amount = inputTransferAmount.value;
+  user.movements.push(Number(-amount));
+  const account = accounts.find(acc => acc.username === to);
+  // console.log(to);
+  // console.log(account);
+  account.movements.push(Number(amount));
+
+  setTimeout(function () {
+    calcDisplayBalance(user.movements);
+    calcDisplaySummary(user.movements);
+    displayMovements(user.movements);
+  }, 1000);
+};
+
 btnLogin.addEventListener('click', login);
 btnLoan.addEventListener('click', requestLoan);
+btnTransfer.addEventListener('click', transferMoney);
 
 // DEBUG
 document.body.addEventListener('click', function () {
