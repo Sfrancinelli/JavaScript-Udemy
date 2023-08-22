@@ -173,6 +173,7 @@ const movementsUSD = movements.map(function(mov){
 console.log(movements)
 console.log(movementsUSD)
 
+/ With FOR Loop
 const movementsUSDfor = []
 for (const mov of movements)movementsUSDfor.push(mov*eurToUsd)
 console.log(movementsUSDfor)
@@ -190,8 +191,52 @@ console.log(movementsDescriptions)
 // FILTER METHOD
 // filter returns a new array containing the array elements that passed a specified test condition
 
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+/*
+const deposits = movements.filter(function (mov, i, arr) {
+  return mov > 0;
+});
+
+// With FOR Loop
+const despositsFor = [];
+for (const mov of movements) {
+  if (mov > 0) despositsFor.push(mov);
+}
+
+console.log(movements);
+console.log(deposits);
+console.log(despositsFor);
+
+const withdrawals = movements.filter(mov => mov < 0);
+console.log(withdrawals);
+*/
+
+/*
 // REDUCE METHOD
 // reduce boils ('reduces') all array elements down to one single value (e.g. adding all elements together)
+console.log(movements);
+const globalBalance = movements.reduce(function (accumulator, curr, i, arr) {
+  console.log(`Iteration ${i}: ${accumulator}`);
+  return accumulator + curr;
+}, 0); // This 0 is the inicial value of the accumulator (its editable)
+console.log(globalBalance);
+
+// With Arrow function
+const balance = movements.reduce((accumulator, curr) => accumulator + curr, 0);
+console.log(balance);
+
+// With FOR Loop
+let sum = 0;
+for (const mov of movements) sum += mov;
+console.log(sum);
+*/
+
+// Maximum value
+const max = movements.reduce(
+  (acc, curr) => (acc < curr ? (acc = curr) : (acc = acc)),
+  movements[0]
+);
+console.log(max);
 
 /////////////////////////////////////////////////
 // BANKIST APP
@@ -272,14 +317,25 @@ for (let acc of accounts) {
   // console.log(users);
 }
 
-const createUsernames = function (accs){
-accs.forEach(function (acc) {
- acc.username = acc.owner.toLowerCase().split(' ').map(name => name[0]).join('');
-})
-}
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
 
-createUsernames(accounts)
-console.log(accounts)
+createUsernames(accounts);
+console.log(accounts);
+
+const calcPrintBalance = function (movements) {
+  const balance = movements.reduce((acc, curr) => acc + curr, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+
+calcPrintBalance(account1.movements);
 
 // Getting the user account owner in the correct format to compare to user imput
 users.forEach(function (elem, i) {
