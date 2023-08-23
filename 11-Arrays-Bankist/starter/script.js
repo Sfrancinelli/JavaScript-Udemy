@@ -511,7 +511,7 @@ const calcDisplaySummary = function (movements) {
     })
     .reduce((acc, mov) => acc + mov, 0);
 
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 
   return incomes;
 };
