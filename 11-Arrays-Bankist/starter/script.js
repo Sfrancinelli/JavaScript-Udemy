@@ -334,6 +334,26 @@ const totalDepositsUSD = movements
 console.log(totalDepositsUSD);
 */
 
+/////////////////////////////////////////////////////////////////
+// some and every
+console.log(movements);
+console.log(movements.includes(-130));
+console.log(movements.some(mov => mov === -130));
+// With the some and every methods we can use complex conditions to check. The SOME METHOD returns a boolean corresponding to the condition specified in the function. The some method will return true if ANY value on the array corresponds to the condition (ANY).
+
+const anyDeposits = movements.some(mov => mov > 0); //true
+console.log(anyDeposits);
+
+// The EVERY Method only return true if ALL the elements on the array satisfies the condition passed in the function callback (ALL)
+const allDeposits = movements.every(mov => mov > 0); // False because not EVERY element on the array is positive
+[100, 200, 300, 400, 500, 600].every(mov => mov > 0); //true cause ALL the elemnts are positive
+
+// Seperate callback
+const deposit = mov => mov > 0;
+movements.every(deposit);
+movements.some(deposit);
+movements.filter(deposit);
+
 /////////////////////////////////////////////////
 // BANKIST APP
 
@@ -617,6 +637,7 @@ document.body.addEventListener('click', function () {
 
 ////////////////////////////////////////////////////////////////////////
 // Proffessor functions
+
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
@@ -669,4 +690,32 @@ const transferProff = function (e) {
 
     updateUI(currentAccount);
   }
+  inputTransferAmount.value = inputTransferTo.value = '';
+};
+
+const deleteAccProf = function (e) {
+  const userClose = inputCloseUsername.value;
+  const pinClose = Number(inputClosePin.value);
+
+  if (userClose === user.username && pinClose === user.pin) {
+    const index = accounts.findIndex(acc => acc.username === user.username);
+
+    accounts.splice(index, 1);
+
+    containerApp.style.opacity = 0;
+    inputCloseUsername.value = '';
+    inputClosePin.value = '';
+  }
+};
+
+const loanProff = function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
 };
