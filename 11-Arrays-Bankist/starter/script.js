@@ -452,6 +452,8 @@ const login = function (e) {
     document.querySelector('.app').setAttribute('style', 'opacity: 1;');
     inputLoginUsername.value = '';
     inputLoginPin.value = '';
+    inputLoginPin.blur();
+    inputLoginUsername.blur();
     labelWelcome.textContent = `Good Morning, ${user.owner.split(' ')[0]}!`;
   }
 
