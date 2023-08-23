@@ -458,9 +458,7 @@ const login = function (e) {
   }
 
   // Dinnamically displaying the user movements, balance and summary.
-  displayMovements(user.movements);
-  calcDisplaySummary(user);
-  calcDisplayBalance(user.movements);
+  updateUI(user);
 
   return user;
 };
@@ -525,9 +523,7 @@ const requestLoan = function (e) {
   user.movements.push(Number(loan));
 
   setTimeout(function () {
-    calcDisplayBalance(user.movements);
-    calcDisplaySummary(user);
-    displayMovements(user.movements);
+    updateUI(user);
   }, 3000);
 
   inputLoanAmount.value = '';
@@ -538,20 +534,28 @@ const transferMoney = function (e) {
   e.preventDefault();
   const to = inputTransferTo.value;
   const amount = inputTransferAmount.value;
-  user.movements.push(Number(-amount));
-  const account = accounts.find(acc => acc.username === to);
-  // console.log(to);
-  // console.log(account);
-  account.movements.push(Number(amount));
 
-  setTimeout(function () {
-    calcDisplayBalance(user.movements);
-    calcDisplaySummary(user);
-    displayMovements(user.movements);
-  }, 1000);
+  const accountTo = accounts.find(acc => acc.username === to);
+  if (
+    user.balance >= amount &&
+    amount > 0 &&
+    accountTo?.username !== user.username &&
+    accountTo
+  ) {
+    // console.log(to);
+    // console.log(accountTo);
+    user.movements.push(Number(-amount));
+    accountTo.movements.push(Number(amount));
 
-  inputTransferTo.value = '';
-  inputTransferAmount.value = '';
+    setTimeout(function () {
+      updateUI(user);
+    }, 1000);
+
+    inputTransferTo.value = '';
+    inputTransferAmount.value = '';
+  } else {
+    alert('Cant trasnfer what you dont have');
+  }
 };
 
 const closeAccount = function (e) {
@@ -592,6 +596,12 @@ const sortDisplayMovements = function (e) {
     sorted = false;
     displayMovements(user.movements);
   }
+};
+
+const updateUI = function (acc) {
+  displayMovements(acc.movements);
+  calcDisplaySummary(acc);
+  calcDisplayBalance(acc.movements);
 };
 
 btnLogin.addEventListener('click', login);
@@ -638,5 +648,25 @@ const loginProff = function (e) {
     displayMovements(currentAccount.movements);
     calcDisplaySummary(currentAccount);
     calcDisplayBalance(currentAccount.movements);
+  }
+};
+
+const transferProff = function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const recieverAccount = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+
+  if (
+    amount > 0 &&
+    recieverAccount &&
+    currentAccount.balance >= amount &&
+    recieverAccount?.username !== currentAccount.username
+  ) {
+    currentAccount.movements.push(-amount);
+    recieverAccount.movements.push(amount);
+
+    updateUI(currentAccount);
   }
 };
