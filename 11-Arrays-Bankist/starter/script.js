@@ -242,11 +242,7 @@ console.log(max);
 // The find method also needs a calback function that returns a boolean (like the filter method) but it will return the first element that satisfies that condition and not (like the filter method) a new array changing accordgin to condition.
 
 //First withdrawal is this:
-console.log(
-  movements.find(function (mov) {
-    return mov < 0;
-  })
-);
+// console.log( movements.find(function (mov) {return mov < 0;}));
 
 // Finding an object by its property
 
@@ -270,7 +266,7 @@ const account8 = {
 const accountss = [account5, account6, account7, account8];
 
 const account = accountss.find(acc => acc.owner === 'Jessica Davis');
-console.log(account);
+// console.log(account);
 
 //////////////////////////////////////////////////////////////////777777
 // CODING CHALLENGE #3
@@ -432,19 +428,20 @@ console.log(accounts);
 
 // Getting the user account owner in the correct format to compare to user imput
 users.forEach(function (elem, i) {
+  // console.log(elem, i);
   username =
     (elem[0][0] + elem[1][0]).toLowerCase() +
     (elem[2] ? elem[2][0].toLowerCase() : '') +
-    (elem[3] ? elem[2][0].toLowerCase() : '');
+    (elem[3] ? elem[3][0].toLowerCase() : '');
   accounts[i].user = username;
-  console.log(accounts[i].user);
+  // console.log(accounts[i].user);
 });
 
 let user;
 
-const login = function () {
+const login = function (e) {
   // event.preventDefault() so the page doesnt reload on login button and it properly displays the new opacity
-  event.preventDefault();
+  e.preventDefault();
   let correct = false;
   let inputLogin = inputLoginUsername.value;
   let inputPin = Number(inputLoginPin.value);
@@ -524,8 +521,8 @@ const calcDisplaySummary = function (movements) {
   return incomes;
 };
 
-const requestLoan = function () {
-  event.preventDefault();
+const requestLoan = function (e) {
+  e.preventDefault();
   const loan = inputLoanAmount.value;
   user.movements.push(Number(loan));
 
@@ -534,10 +531,12 @@ const requestLoan = function () {
     calcDisplaySummary(user.movements);
     displayMovements(user.movements);
   }, 3000);
+
+  inputLoanAmount.value = '';
 };
 
-const transferMoney = function () {
-  event.preventDefault();
+const transferMoney = function (e) {
+  e.preventDefault();
   const to = inputTransferTo.value;
   const amount = inputTransferAmount.value;
   user.movements.push(Number(-amount));
@@ -551,10 +550,13 @@ const transferMoney = function () {
     calcDisplaySummary(user.movements);
     displayMovements(user.movements);
   }, 1000);
+
+  inputTransferTo.value = '';
+  inputTransferAmount.value = '';
 };
 
-const closeAccount = function () {
-  event.preventDefault();
+const closeAccount = function (e) {
+  e.preventDefault();
   let userConfirm = inputCloseUsername.value;
   let pinConfirm = inputClosePin.value;
   if (user.pin === Number(pinConfirm) && user.username === userConfirm) {
@@ -573,8 +575,8 @@ const closeAccount = function () {
 let sorted = false;
 let sortedMov;
 
-const sortDisplayMovements = function () {
-  event.preventDefault();
+const sortDisplayMovements = function (e) {
+  e.preventDefault();
   console.log(sorted);
   if (!sorted) {
     sortedMov = user.movements.map(function (mov) {
