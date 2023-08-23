@@ -408,27 +408,16 @@ const users = [];
 let username;
 
 for (let acc of accounts) {
+  // Splitting the objects from the account into the names
   acc.balance = 0;
   users.push(acc.owner.split(' '));
   // console.log(users);
 }
 
-const createUsernames = function (accs) {
-  accs.forEach(function (acc) {
-    acc.username = acc.owner
-      .toLowerCase()
-      .split(' ')
-      .map(name => name[0])
-      .join('');
-  });
-};
-
-createUsernames(accounts);
-console.log(accounts);
-
 // Getting the user account owner in the correct format to compare to user imput
 users.forEach(function (elem, i) {
   // console.log(elem, i);
+  // Splitting the names of the owners into the initials in lowerCase and preparing a new property of the account object (user) with said value
   username =
     (elem[0][0] + elem[1][0]).toLowerCase() +
     (elem[2] ? elem[2][0].toLowerCase() : '') +
@@ -449,6 +438,7 @@ const login = function (e) {
   // console.log(inputLogin, inputPin);
   for (let acc of accounts) {
     // console.log(acc.user, acc.pin);
+    // Checking if the input corresponds to the account credential and when it matches one from the accounts array, it breaks the loop and sets the global variables 'user' to the current account loged
     if (inputLogin === acc.user && inputPin === acc.pin) {
       correct = true;
       user = acc;
@@ -457,6 +447,7 @@ const login = function (e) {
   }
   // console.log(correct);
   if (correct) {
+    // If login is succesfull, the opacity of the conteiner app is setted to 1 to be dislplayed, it also shows the welcome message and blanks the user and pin inputs
     // document.querySelector('.app').style.opacity = '1';
     document.querySelector('.app').setAttribute('style', 'opacity: 1;');
     inputLoginUsername.value = '';
@@ -464,6 +455,7 @@ const login = function (e) {
     labelWelcome.textContent = `Good Morning, ${user.owner.split(' ')[0]}!`;
   }
 
+  // Dinnamically displaying the user movements, balance and summary.
   displayMovements(user.movements);
   calcDisplaySummary(user.movements);
   calcDisplayBalance(user.movements);
@@ -472,6 +464,7 @@ const login = function (e) {
 };
 
 const displayMovements = function (movements) {
+  // Creating the necessary HTML to display the movements. It requires an array of movements (numbers) and it defines wether is a deposit or a withdrawal if its greater or lesser than 0
   containerMovements.innerHTML = '';
 
   movements.forEach(function (mov, i) {
@@ -490,12 +483,14 @@ const displayMovements = function (movements) {
 };
 
 const calcDisplayBalance = function (movements) {
+  // Adds up al the movements array and displays it in the corresponding label
   const balance = movements.reduce((acc, curr) => acc + curr, 0);
   labelBalance.textContent = `${balance}€`;
   user.balance = balance;
 };
 
 const calcDisplaySummary = function (movements) {
+  // Calculates all the summary values, the incomes by adding the positives (deposits), the outcomes by adding the negatives (withdrawals) and the interest base on the current acount interest.
   const incomes = movements
     .filter(mov => mov > 0)
     .reduce((acc, curr) => acc + curr, 0);
@@ -522,6 +517,7 @@ const calcDisplaySummary = function (movements) {
 };
 
 const requestLoan = function (e) {
+  // Request a loan into the bank and updates the the account movements. Also updates the balance and the summary.
   e.preventDefault();
   const loan = inputLoanAmount.value;
   user.movements.push(Number(loan));
@@ -536,6 +532,7 @@ const requestLoan = function (e) {
 };
 
 const transferMoney = function (e) {
+  // Transfer money from account to account, it updates the current account movements and also updates the movements from the destiny account
   e.preventDefault();
   const to = inputTransferTo.value;
   const amount = inputTransferAmount.value;
@@ -556,6 +553,7 @@ const transferMoney = function (e) {
 };
 
 const closeAccount = function (e) {
+  // 'Closes the account' that translates to removing the account from the accounts array so its never found when trying to login.
   e.preventDefault();
   let userConfirm = inputCloseUsername.value;
   let pinConfirm = inputClosePin.value;
@@ -576,6 +574,7 @@ let sorted = false;
 let sortedMov;
 
 const sortDisplayMovements = function (e) {
+  // If sort is false, it sorts the movements in ascending order. If sorted is true it return the original movements order (in date order)
   e.preventDefault();
   console.log(sorted);
   if (!sorted) {
@@ -603,3 +602,39 @@ btnSort.addEventListener('click', sortDisplayMovements);
 document.body.addEventListener('click', function () {
   console.log(user);
 });
+
+////////////////////////////////////////////////////////////////////////
+// Proffessor functions
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+
+createUsernames(accounts);
+console.log(accounts);
+
+let currentAccount;
+
+const loginProff = function (e) {
+  e.preventDefault();
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+
+    containerApp.style.opacity = 100;
+
+    displayMovements(currentAccount.movements);
+    calcDisplaySummary(currentAccount.movements);
+    calcDisplayBalance(currentAccount.movements);
+  }
+};
