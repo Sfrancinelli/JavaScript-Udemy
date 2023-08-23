@@ -248,19 +248,23 @@ console.log(max);
 
 const account5 = {
   owner: 'Jonas Schmedtmann',
+  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
 };
 
 const account6 = {
   owner: 'Jessica Davis',
   objeto: 'Este objetoooo',
+  movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
 };
 
 const account7 = {
   owner: 'Steven Thomas Williams',
+  movements: [200, -200, 340, -300, -20, 50, 400, -460],
 };
 
 const account8 = {
   owner: 'Sarah Smith',
+  movements: [430, 1000, 700, 50, 90],
 };
 
 const accountss = [account5, account6, account7, account8];
@@ -353,6 +357,31 @@ const deposit = mov => mov > 0;
 movements.every(deposit);
 movements.some(deposit);
 movements.filter(deposit);
+
+////////////////////////////////////////////////////////////////
+// FLAT and FLATMAP Methods
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+// The FLAT Method removes the nested arrays from a given array and returns a new array with said modifications. The flat method goes ONE LEVEL DEEP.
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+// If we try to flat this more deep nested array of arrays, the flat method cant do it in one go:
+console.log(arrDeep.flat());
+// Flat can accept arguments though and if we specify a given number, we can get event deeper flat:
+console.log(arrDeep.flat(2));
+
+const accountMovements = accountss.map(acc => acc.movements);
+console.log(accountMovements);
+const allMovements = accountMovements.flat();
+console.log(allMovements);
+const overalBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance);
+
+const overallBalance = accountss
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance);
 
 /////////////////////////////////////////////////
 // BANKIST APP
