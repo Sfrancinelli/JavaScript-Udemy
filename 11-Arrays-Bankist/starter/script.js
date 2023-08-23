@@ -555,12 +555,18 @@ const transferMoney = function () {
 
 const closeAccount = function () {
   event.preventDefault();
-  const userConfirm = inputCloseUsername.value;
-  const pinConfirm = inputClosePin.value;
+  let userConfirm = inputCloseUsername.value;
+  let pinConfirm = inputClosePin.value;
   if (user.pin === Number(pinConfirm) && user.username === userConfirm) {
-    const newAccs = accounts.filter(acc => acc != user);
-
+    accounts.forEach((account, i, arr) => {
+      if (arr[i] === user) {
+        arr.splice(i, 1);
+      }
+    });
     console.log(accounts);
+    document.querySelector('.app').setAttribute('style', 'opacity: 0;');
+    document.querySelector('.form__input--user').value = '';
+    document.querySelector('.form__input--pin').value = '';
   }
 };
 
