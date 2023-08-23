@@ -459,7 +459,7 @@ const login = function (e) {
 
   // Dinnamically displaying the user movements, balance and summary.
   displayMovements(user.movements);
-  calcDisplaySummary(user.movements);
+  calcDisplaySummary(user);
   calcDisplayBalance(user.movements);
 
   return user;
@@ -491,23 +491,23 @@ const calcDisplayBalance = function (movements) {
   user.balance = balance;
 };
 
-const calcDisplaySummary = function (movements) {
+const calcDisplaySummary = function (user) {
   // Calculates all the summary values, the incomes by adding the positives (deposits), the outcomes by adding the negatives (withdrawals) and the interest base on the current acount interest.
-  const incomes = movements
+  const incomes = user.movements
     .filter(mov => mov > 0)
     .reduce((acc, curr) => acc + curr, 0);
 
   labelSumIn.textContent = `${incomes}€`;
 
-  const outcomes = movements
+  const outcomes = user.movements
     .filter(mov => mov < 0)
     .reduce((acc, curr) => acc + curr, 0);
 
   labelSumOut.textContent = `${Math.abs(outcomes)}€`;
 
-  const interest = movements
+  const interest = user.movements
     .filter(mov => mov > 0)
-    .map(mov => (mov * 1.2) / 100)
+    .map(mov => (mov * user.interestRate) / 100)
     .filter((interest, i, arr) => {
       return interest >= 1;
     })
@@ -526,7 +526,7 @@ const requestLoan = function (e) {
 
   setTimeout(function () {
     calcDisplayBalance(user.movements);
-    calcDisplaySummary(user.movements);
+    calcDisplaySummary(user);
     displayMovements(user.movements);
   }, 3000);
 
@@ -546,7 +546,7 @@ const transferMoney = function (e) {
 
   setTimeout(function () {
     calcDisplayBalance(user.movements);
-    calcDisplaySummary(user.movements);
+    calcDisplaySummary(user);
     displayMovements(user.movements);
   }, 1000);
 
@@ -636,7 +636,7 @@ const loginProff = function (e) {
     containerApp.style.opacity = 100;
 
     displayMovements(currentAccount.movements);
-    calcDisplaySummary(currentAccount.movements);
+    calcDisplaySummary(currentAccount);
     calcDisplayBalance(currentAccount.movements);
   }
 };
