@@ -570,10 +570,32 @@ const closeAccount = function () {
   }
 };
 
+let sorted = false;
+let sortedMov;
+
+const sortDisplayMovements = function () {
+  event.preventDefault();
+  console.log(sorted);
+  if (!sorted) {
+    sortedMov = user.movements.map(function (mov) {
+      return mov;
+    });
+    sortedMov.sort(function (a, b) {
+      sorted = true;
+      return a - b;
+    });
+    displayMovements(sortedMov);
+  } else {
+    sorted = false;
+    displayMovements(user.movements);
+  }
+};
+
 btnLogin.addEventListener('click', login);
 btnLoan.addEventListener('click', requestLoan);
 btnTransfer.addEventListener('click', transferMoney);
 btnClose.addEventListener('click', closeAccount);
+btnSort.addEventListener('click', sortDisplayMovements);
 
 // DEBUG
 document.body.addEventListener('click', function () {
