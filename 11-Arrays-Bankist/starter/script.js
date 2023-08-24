@@ -383,6 +383,14 @@ const overallBalance = accountss
   .reduce((acc, mov) => acc + mov, 0);
 console.log(overallBalance);
 
+// flatMap
+// The flatMap Method works as a map function but it then flattens the new array. It's important to know that the flatMap method can only go 1 level deep and it doesnt accept parameters for that matter.
+const overallBalance2 = accountss
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(overallBalance2);
+
 /////////////////////////////////////////////////
 // BANKIST APP
 
