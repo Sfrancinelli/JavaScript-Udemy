@@ -393,6 +393,7 @@ const overallBalance2 = accountss
 console.log(overallBalance2);
 */
 
+/*
 // SORT METHOD
 // The SORT METHOD actually mutates the original array
 const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
@@ -426,6 +427,37 @@ console.log(
 console.log(movements.sort((a, b) => a - b));
 // Sorting in descending order:
 console.log(movements.sort((a, b) => b - a));
+*/
+
+// FILL METHOD + EMPTY ARRAYS
+const x = new Array(7); // This creates an array with 7 empty elements (weird behavior). To fill an array like this is that we use the fill method. In this way we can dinamically create arrays
+console.log(x);
+// The FILL METHOD mutates the original array!
+x.fill(1);
+console.log(x);
+// We can also specify a second parameter indicating the index in which the fill starts and ends (The specified end parameter will not be included like in the slice method):
+x.fill('filling', 3, 5);
+console.log(x);
+
+// FROM METHOD
+// We call this method from the Array object itself (the constructor) and we specify, first, the length of the array. Second, que pass the callback function like in the map method. This function will need to return something that will fill the array in each iteration with the given returned value
+const y = Array.from({ length: 7 }, function () {
+  return 'Y Array';
+});
+console.log(y);
+
+// Array from 1 to 7
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
+
+const hundredDiceRolls = Array.from({ length: 100 }, () => {
+  return Math.floor(Math.random() * 6) + 1; //returns random number between [1-6]
+});
+console.log(hundredDiceRolls);
+
+// Retreiving the movements from the UI and creating an array dinamically:
+const movementsUI = Array.from(document.querySelectorAll('.movements__value'));
+console.log(movementsUI);
 
 /////////////////////////////////////////////////
 // BANKIST APP
