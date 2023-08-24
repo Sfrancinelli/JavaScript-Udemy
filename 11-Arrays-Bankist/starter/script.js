@@ -340,6 +340,7 @@ console.log(totalDepositsUSD);
 
 /////////////////////////////////////////////////////////////////
 // some and every
+/*
 console.log(movements);
 console.log(movements.includes(-130));
 console.log(movements.some(mov => mov === -130));
@@ -390,6 +391,41 @@ const overallBalance2 = accountss
   .reduce((acc, mov) => acc + mov, 0);
 
 console.log(overallBalance2);
+*/
+
+// SORT METHOD
+// The SORT METHOD actually mutates the original array
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+
+// In order to sort numbers its actually neccesary to provide a callback function to the sort method. This happens because the sort method sorts by string alphabetical order and it takes the numbers as the string form of em
+console.log(movements);
+console.log(movements.sort()); // This doesnt work as explain above
+
+// If we return something less than 0 (a < 0) then A will be sorted before B (A,B)
+// If we return sometinh grater than 0 (a > 0) then A will be sorted after B (B,A)
+
+// Sorting in ascending order:
+console.log(
+  movements.sort((a, b) => {
+    if (a > b) return 1;
+    if (b > a) return -1;
+  })
+);
+
+// Sorting in descending order:
+console.log(
+  movements.sort((a, b) => {
+    if (b > a) return 1;
+    if (a > b) return -1;
+  })
+);
+
+// It can also be done in a much simpler way:
+// Sorting in ascending order:
+console.log(movements.sort((a, b) => a - b));
+// Sorting in descending order:
+console.log(movements.sort((a, b) => b - a));
 
 /////////////////////////////////////////////////
 // BANKIST APP
@@ -461,8 +497,11 @@ const inputClosePin = document.querySelector('.form__input--pin');
 //   }
 // }
 
+// Creating the usernames with the initials
 const users = [];
 let username;
+// Current account:
+let user;
 
 for (let acc of accounts) {
   // Splitting the objects from the account into the names
@@ -483,8 +522,7 @@ users.forEach(function (elem, i) {
   // console.log(accounts[i].user);
 });
 
-let user;
-
+// Managing login
 const login = function (e) {
   // event.preventDefault() so the page doesnt reload on login button and it properly displays the new opacity
   e.preventDefault();
@@ -520,6 +558,7 @@ const login = function (e) {
   return user;
 };
 
+// Displaying movements on containerApp
 const displayMovements = function (movements) {
   // Creating the necessary HTML to display the movements. It requires an array of movements (numbers) and it defines wether is a deposit or a withdrawal if its greater or lesser than 0
   containerMovements.innerHTML = '';
@@ -539,6 +578,7 @@ const displayMovements = function (movements) {
   });
 };
 
+// Displaying the balance of the account
 const calcDisplayBalance = function (movements) {
   // Adds up al the movements array and displays it in the corresponding label
   const balance = movements.reduce((acc, curr) => acc + curr, 0);
@@ -546,6 +586,7 @@ const calcDisplayBalance = function (movements) {
   user.balance = balance;
 };
 
+// Displaying the summary data
 const calcDisplaySummary = function (user) {
   // Calculates all the summary values, the incomes by adding the positives (deposits), the outcomes by adding the negatives (withdrawals) and the interest base on the current acount interest.
   const incomes = user.movements
@@ -573,6 +614,7 @@ const calcDisplaySummary = function (user) {
   return incomes;
 };
 
+// Requesting a loan from the bank
 const requestLoan = function (e) {
   // Request a loan into the bank and updates the the account movements. Also updates the balance and the summary.
   e.preventDefault();
@@ -586,6 +628,7 @@ const requestLoan = function (e) {
   inputLoanAmount.value = '';
 };
 
+// Managing the transfer of money through accounts
 const transferMoney = function (e) {
   // Transfer money from account to account, it updates the current account movements and also updates the movements from the destiny account
   e.preventDefault();
@@ -615,6 +658,7 @@ const transferMoney = function (e) {
   }
 };
 
+// Managing the closing of accounts
 const closeAccount = function (e) {
   // 'Closes the account' that translates to removing the account from the accounts array so its never found when trying to login.
   e.preventDefault();
@@ -636,6 +680,7 @@ const closeAccount = function (e) {
 let sorted = false;
 let sortedMov;
 
+// Managing the sort button for the movements
 const sortDisplayMovements = function (e) {
   // If sort is false, it sorts the movements in ascending order. If sorted is true it return the original movements order (in date order)
   e.preventDefault();
@@ -655,12 +700,14 @@ const sortDisplayMovements = function (e) {
   }
 };
 
+// Creaing a function for the update of the UI to keep the code DRY
 const updateUI = function (acc) {
   displayMovements(acc.movements);
   calcDisplaySummary(acc);
   calcDisplayBalance(acc.movements);
 };
 
+// Event handlers
 btnLogin.addEventListener('click', login);
 btnLoan.addEventListener('click', requestLoan);
 btnTransfer.addEventListener('click', transferMoney);
@@ -674,7 +721,6 @@ document.body.addEventListener('click', function () {
 
 ////////////////////////////////////////////////////////////////////////
 // Proffessor functions
-
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
@@ -756,3 +802,32 @@ const loanProff = function (e) {
   }
   inputLoanAmount.value = '';
 };
+
+const displayMovementsProf = function (movements, sort = false) {
+  // Creating the necessary HTML to display the movements. It requires an array of movements (numbers) and it defines wether is a deposit or a withdrawal if its greater or lesser than 0
+  containerMovements.innerHTML = '';
+
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+
+    const html = `
+<div class="movements__row">
+<div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+<div class="movements__date">3 days ago</div>
+<div class="movements__value">${mov}€</div>
+</div>
+`;
+
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+};
+
+// This function would call the from the button with the sort parameter setted to true:
+let sortedProf = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovementsProf((currentAccount.movements, !sortedProf));
+  sorted = !sorted;
+});
