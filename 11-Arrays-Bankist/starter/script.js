@@ -478,6 +478,29 @@ labelBalance.addEventListener('click', function () {
   console.log(movementsUI2);
 });
 
+///////////////////////////////////////////////////////////////////
+// Array Methods Practice
+
+// Getting the global positive balance from all accounts
+const bankDepositSum = accountss
+  .map(acc => acc.movements)
+  .flat()
+  .filter(mov => mov > 0)
+  .reduce((val1, val2) => val1 + val2);
+console.log(bankDepositSum);
+
+// How many deposits in the bank with at least 1000USD
+const numDeposits1000 = accountss
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov >= 1000).length;
+
+const numDeposits1000v2 = accountss
+  .flatMap(acc => acc.movements)
+  .reduce((counter, curr) => (curr >= 1000 ? counter + 1 : counter), 0);
+
+console.log(accountss.flatMap(acc => acc.movements));
+console.log(numDeposits1000);
+
 /////////////////////////////////////////////////
 // BANKIST APP
 
