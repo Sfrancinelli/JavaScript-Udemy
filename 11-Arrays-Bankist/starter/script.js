@@ -456,8 +456,27 @@ const hundredDiceRolls = Array.from({ length: 100 }, () => {
 console.log(hundredDiceRolls);
 
 // Retreiving the movements from the UI and creating an array dinamically:
-const movementsUI = Array.from(document.querySelectorAll('.movements__value'));
-console.log(movementsUI);
+
+let labelBalance = document.querySelector('.balance__value');
+
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace('€', ''))
+  );
+
+  // Using the second part of the Array.from() (the callback function) to already map the array and get the final result into the array.
+
+  // console.log(movementsUI.map(el => Number(el.textContent.replace('€', ''))));
+  console.log(movementsUI);
+
+  // We can use the spread operator to create an array from the elements of the document but its not as recommended as the above method (Array.from)
+  const movementsUI2 = [...document.querySelectorAll('.movements__value')].map(
+    el => Number(el.textContent.replace('€', ''))
+  );
+
+  console.log(movementsUI2);
+});
 
 /////////////////////////////////////////////////
 // BANKIST APP
@@ -496,7 +515,7 @@ const accounts = [account1, account2, account3, account4];
 // Elements
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
-const labelBalance = document.querySelector('.balance__value');
+// const labelBalance = document.querySelector('.balance__value');
 const labelSumIn = document.querySelector('.summary__value--in');
 const labelSumOut = document.querySelector('.summary__value--out');
 const labelSumInterest = document.querySelector('.summary__value--interest');
