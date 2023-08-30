@@ -315,3 +315,23 @@ console.log(Math.floor(-23.9)); // Always rounded down (in this case -24)
 // Rounding decimals
 console.log((2.7).toFixed()); // Returns string (in this case, 3)
 console.log((2.7).toFixed(3)); // Returns string (in this case, 2.700)
+
+// Remainder operator
+console.log(5 % 2); // 5 = 2 * 2 + 1
+console.log(8 % 3);
+
+const isEven = n => n % 2 === 0;
+
+console.log(isEven(8));
+console.log(isEven(823));
+console.log(isEven(514));
+
+labelBalance.addEventListener('click', function (e) {
+  [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
+    if (i % 2 === 0) {
+      row.style.backgroundColor = 'orangered';
+    }
+
+    if (i % 3 === 0) row.style.backgroundColor = 'blue';
+  });
+});
