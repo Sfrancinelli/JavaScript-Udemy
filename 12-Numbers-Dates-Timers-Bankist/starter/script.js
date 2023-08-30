@@ -251,3 +251,32 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+// All numbers are registered as float point numbers in js
+console.log(23 === 23.0);
+
+console.log(0.1 + 0.3 === 0.3); // false beacuse js represents numbers in binary (base 2 - 0 and 1) and not in base 10 (0 to 9)
+
+// Conversion
+console.log(Number('23'));
+console.log(+'23');
+
+// Parsing
+console.log(Number.parseInt('30px', 10)); //30
+console.log(Number.parseInt('e23', 10)); // NaN
+
+console.log(Number.parseFloat('2.5rem')); // 2.5
+
+// Check if value is NaN
+console.log(Number.isNaN(20)); // false
+console.log(Number.isNaN('20')); // flase
+console.log(Number.isNaN(+'20X')); // true
+console.log(Number.isNaN(23 / 0)); // false
+
+// Best way of checking if value is a NUMBER (not a STRING)
+console.log(Number.isFinite(20)); // true
+console.log(Number.isFinite('20')); // false
+console.log(Number.isFinite(+'20X')); // false
+console.log(Number.isFinite(23 / 0)); // false
+
+// Check for integer
+console.log(Number.isInteger(20)); // true
