@@ -591,7 +591,7 @@ const dogs = [
 
 // 1
 dogs.forEach(dog => {
-  dog.recommendedFood = dog.weigth ** 0.75 * 28;
+  dog.recommendedFood = Math.trunc(dog.weigth ** 0.75 * 28);
 });
 
 // 2
@@ -607,20 +607,12 @@ dogs.forEach(dog => {
 
 // 3
 const ownersEatTooMuch = dogs
-  .filter(dog => {
-    if (dog.curFood > dog.recommendedFood) {
-      return dog.owners;
-    }
-  })
-  .map(dog => dog.owners);
+  .filter(dog => dog.curFood > dog.recommendedFood)
+  .flatMap(dog => dog.owners);
 
 const ownersEatTooLittle = dogs
-  .filter(dog => {
-    if (dog.curFood < dog.recommendedFood) {
-      return dog.owners;
-    }
-  })
-  .map(dog => dog.owners);
+  .filter(dog => dog.curFood < dog.recommendedFood)
+  .flatMap(dog => dog.owners);
 
 console.log(ownersEatTooMuch);
 console.log(ownersEatTooLittle);
@@ -659,7 +651,7 @@ const okayAmount = dogs.filter(dog => {
 });
 console.log(okayAmount);
 
-// 8. Create a shallow copu of the 'dogs' array and sort it by recommended food portion in ascending order (keep in mind that the potions are inside the array's objects)
+// 8
 const shallowCopy = dogs
   .map(dog => dog)
   .sort((a, b) => a.recommendedFood - b.recommendedFood);
