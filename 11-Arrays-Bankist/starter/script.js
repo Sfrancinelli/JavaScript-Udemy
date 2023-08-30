@@ -501,6 +501,61 @@ const numDeposits1000v2 = accountss
 console.log(accountss.flatMap(acc => acc.movements));
 console.log(numDeposits1000);
 
+// New object from array.reduce()
+const sums = accountss
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, cur) => {
+      // cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+      sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
+      return sums;
+    },
+    { deposits: 0, withdrawals: 0 }
+  ); // The accumulator starts being an object!
+
+// When the function has a body is always necesary to return the accumulator!!
+
+console.log(sums);
+
+// New array from array.reduce()
+const arrSums = accountss
+  .flatMap(acc => acc.movements)
+  .reduce((sum, cur) => {
+    let deposits = 0;
+    let withdrawals = 0;
+    cur > 0 ? (deposits += cur) : (withdrawals += cur);
+    if (deposits > 0) {
+      sum.push(deposits);
+    } else if (withdrawals < 0) sum.push(withdrawals);
+    return sum;
+  }, []);
+
+console.log(arrSums);
+
+// Convert string into titleCase
+const toTitleCase = function (title) {
+  const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(word => {
+      if (exceptions.includes(word)) {
+        return word;
+      } else {
+        // return `${word[0].toUpperCase()}${word.slice(1)}`;
+        return capitalize(word);
+      }
+    })
+    .join(' ');
+  return capitalize(titleCase);
+};
+
+console.log(toTitleCase('this is a nice title'));
+console.log(toTitleCase('this is a LONG title but not too long'));
+console.log(toTitleCase('and here is another title with an example'));
+
 /////////////////////////////////////////////////
 // BANKIST APP
 
