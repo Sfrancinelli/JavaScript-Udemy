@@ -583,11 +583,88 @@ console.log('---------CODING CHALLENGE #4---------');
 
 // DATA:
 const dogs = [
-  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
-  { weight: 8, curFood: 200, owners: ['Matilda'] },
-  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
-  { weight: 32, curFood: 340, owners: ['Michael'] },
+  { weigth: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weigth: 8, curFood: 200, owners: ['Matilda'] },
+  { weigth: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weigth: 32, curFood: 340, owners: ['Michael'] },
 ];
+
+// 1
+dogs.forEach(dog => {
+  dog.recommendedFood = dog.weigth ** 0.75 * 28;
+});
+
+// 2
+dogs.forEach(dog => {
+  if (dog.owners.includes('Sarah')) {
+    console.log(
+      dog.curFood > dog.recommendedFood
+        ? "Sarah's dog is eating too much!"
+        : "Sarah's dog is eating too little!"
+    );
+  }
+});
+
+// 3
+const ownersEatTooMuch = dogs
+  .filter(dog => {
+    if (dog.curFood > dog.recommendedFood) {
+      return dog.owners;
+    }
+  })
+  .map(dog => dog.owners);
+
+const ownersEatTooLittle = dogs
+  .filter(dog => {
+    if (dog.curFood < dog.recommendedFood) {
+      return dog.owners;
+    }
+  })
+  .map(dog => dog.owners);
+
+console.log(ownersEatTooMuch);
+console.log(ownersEatTooLittle);
+
+// 4
+function stringCreator(arr, mode) {
+  let resultString = '';
+  resultString += `${arr.join(' and ')}'s dogs eat too ${mode}!`;
+  console.log(resultString);
+}
+
+stringCreator(ownersEatTooLittle.flat(), 'little');
+stringCreator(ownersEatTooMuch.flat(), 'much');
+
+// 5
+console.log(dogs);
+console.log(dogs.some(dog => dog.curFood === dog.recommendedFood));
+
+// 6
+console.log(
+  dogs.some(
+    dog =>
+      dog.curFood > dog.recommendedFood * 0.9 &&
+      dog.curFood < dog.recommendedFood * 1.1
+  )
+);
+
+// 7
+const okayAmount = dogs.filter(dog => {
+  if (
+    dog.curFood > dog.recommendedFood * 0.9 &&
+    dog.curFood < dog.recommendedFood * 1.1
+  ) {
+    return dog;
+  }
+});
+console.log(okayAmount);
+
+// 8. Create a shallow copu of the 'dogs' array and sort it by recommended food portion in ascending order (keep in mind that the potions are inside the array's objects)
+const shallowCopy = dogs
+  .map(dog => dog)
+  .sort((a, b) => a.recommendedFood - b.recommendedFood);
+
+console.log(shallowCopy);
 
 console.log('---------CODING CHALLENGE #4---------');
 
