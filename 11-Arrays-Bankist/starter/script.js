@@ -245,7 +245,7 @@ console.log(max);
 // console.log( movements.find(function (mov) {return mov < 0;}));
 
 // Finding an object by its property
-
+/*
 const account5 = {
   owner: 'Jonas Schmedtmann',
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
@@ -271,7 +271,7 @@ const accountss = [account5, account6, account7, account8];
 
 const account = accountss.find(acc => acc.owner === 'Jessica Davis');
 // console.log(account);
-
+*/
 //////////////////////////////////////////////////////////////////777777
 // CODING CHALLENGE #3
 /*
@@ -429,6 +429,7 @@ console.log(movements.sort((a, b) => a - b));
 console.log(movements.sort((a, b) => b - a));
 */
 
+/*
 // FILL METHOD + EMPTY ARRAYS
 const x = new Array(7); // This creates an array with 7 empty elements (weird behavior). To fill an array like this is that we use the fill method. In this way we can dinamically create arrays
 console.log(x);
@@ -659,6 +660,7 @@ const shallowCopy = dogs
 console.log(shallowCopy);
 
 console.log('---------CODING CHALLENGE #4---------');
+*/
 
 /////////////////////////////////////////////////
 // BANKIST APP
