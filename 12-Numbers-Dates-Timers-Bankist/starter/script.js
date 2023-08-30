@@ -335,3 +335,13 @@ labelBalance.addEventListener('click', function (e) {
     if (i % 3 === 0) row.style.backgroundColor = 'blue';
   });
 });
+
+// Numeric separator
+// 287,460,000,000
+const diameter = 287_460_000_000; // The engine ignores this underscores
+console.log(diameter);
+
+const priceCents = 345_99;
+
+console.log(Number('230_000')); // NaN (don't write the numeric separator in strings, only in numbers)
+console.log(parseInt('230_000')); // 230 (same as above)
