@@ -251,6 +251,7 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+/*
 // All numbers are registered as float point numbers in js
 console.log(23 === 23.0);
 
@@ -374,3 +375,35 @@ console.log(huge + ' is REALLY big!!!');
 // Division
 console.log(10n / 3n); // 3n
 console.log(10 / 3); // 3,333333333333
+*/
+
+/////////////////////////////////////////////////////////////////////7{/
+// Dates and times
+// Create a date
+/*
+let now = new Date();
+console.log(now);
+
+console.log(new Date('December 24, 2015'));
+console.log(new Date(account1.movementsDates[0]));
+
+console.log(new Date(2037, 10, 19, 15, 23, 5));
+
+console.log(new Date(0));
+// 3 days later...
+console.log(new Date(3 * 24 * 60 * 60 * 1000));
+*/
+
+// Working with dates
+const future = new Date(2037, 10, 19, 15, 23);
+console.log(future);
+console.log(future.getFullYear());
+// Month are 0 based like an array
+console.log(future.getMonth()); // returns 10 but in real life is month 11
+console.log(future.getDate()); // day of the month (19 in this case)
+console.log(future.getDay()); // day of the week (4 in this case cause is thursday)
+console.log(future.getHours());
+console.log(future.getMinutes());
+console.log(future.getSeconds());
+console.log(future.toISOString()); // 2037-11-19T18:23:00.000Z
+console.log(future.getTime()); // Miliseconds since jan 1 1970
