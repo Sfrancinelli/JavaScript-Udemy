@@ -345,3 +345,32 @@ const priceCents = 345_99;
 
 console.log(Number('230_000')); // NaN (don't write the numeric separator in strings, only in numbers)
 console.log(parseInt('230_000')); // 230 (same as above)
+
+// BigINT
+console.log(2 ** 53 - 1);
+console.log(Number.MAX_SAFE_INTEGER);
+
+// To stablish a number as a big int we have to use an 'n' at the end
+console.log(6156186432156485464468464684n);
+console.log(BigInt(37912918918919164565622165469594956262n));
+
+// Operation
+console.log(10000n + 10000n);
+
+const huge = 54694868468486n;
+const num = 23;
+// We cannot mix bigints with normal ints (we have to use the BigInt constructor as below)
+console.log(huge * BigInt(num));
+
+// Exceptions
+console.log(20n > 15); // True
+console.log(20n === 20); // False cause js doesnt do type coersion
+console.log(20n == '20'); // True cause js does type coersion
+console.log(typeof 20n);
+console.log(huge + ' is REALLY big!!!');
+
+// Can't use Math module with bigints
+
+// Division
+console.log(10n / 3n); // 3n
+console.log(10 / 3); // 3,333333333333
