@@ -128,11 +128,6 @@ const displayMovements = function (acc, sort = false) {
 
     const formattedMov = formatCurrency(acc.locale, acc.currency, mov);
 
-    // const formattedMov = new Intl.NumberFormat(acc.locale, {
-    //   style: 'currency',
-    //   currency: acc.currency,
-    // }).format(mov);
-
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
@@ -154,10 +149,6 @@ const calcDisplayBalance = function (acc) {
     acc.currency,
     acc.balance
   );
-  //   // labelBalance.textContent = `${new Intl.NumberFormat(acc.locale, {
-  //   //   style: 'currency',
-  //   //   currency: acc.currency,
-  //   // }).format(acc.balance)}`;
 };
 
 const calcDisplaySummary = function (acc) {
@@ -165,10 +156,6 @@ const calcDisplaySummary = function (acc) {
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = formatCurrency(acc.locale, acc.currency, incomes);
-  // labelSumIn.textContent = `${new Intl.NumberFormat(acc.locale, {
-  //   style: 'currency',
-  //   currency: acc.currency,
-  // }).format(incomes)}`;
 
   const out = acc.movements
     .filter(mov => mov < 0)
@@ -178,10 +165,6 @@ const calcDisplaySummary = function (acc) {
     acc.currency,
     Math.abs(out)
   );
-  // labelSumOut.textContent = `${new Intl.NumberFormat(acc.locale, {
-  //   style: 'currency',
-  //   currency: acc.currency,
-  // }).format(Math.abs(out))}`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -196,10 +179,6 @@ const calcDisplaySummary = function (acc) {
     acc.currency,
     interest
   );
-  // labelSumInterest.textContent = `${new Intl.NumberFormat(acc.locale, {
-  //   style: 'currency',
-  //   currency: acc.currency,
-  // }).format(interest)}`;
 };
 
 const createUsernames = function (accs) {
