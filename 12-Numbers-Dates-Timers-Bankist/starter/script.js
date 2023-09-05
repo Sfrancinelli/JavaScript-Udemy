@@ -86,7 +86,7 @@ const formatMovementDate = function (date, locale) {
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
   const daysPassed = calcDaysPassed(new Date(), date);
-  console.log(daysPassed);
+  // console.log(daysPassed);
 
   if (daysPassed === 0) {
     return 'now';
@@ -319,14 +319,16 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
-    currentAccount.movements.push(amount);
+    setTimeout(function () {
+      // Add movement
+      currentAccount.movements.push(amount);
 
-    // Add loan date
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // Add loan date
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    // Update UI
-    updateUI(currentAccount);
+      // Update UI
+      updateUI(currentAccount);
+    }, 2500);
   }
   inputLoanAmount.value = '';
 });
@@ -507,6 +509,7 @@ console.log(new Date(0));
 console.log(new Date(3 * 24 * 60 * 60 * 1000));
 */
 
+/*
 // Working with dates
 const future = new Date(2037, 10, 19, 15, 23);
 console.log(future);
@@ -550,3 +553,39 @@ console.log(
   'Browser:',
   new Intl.NumberFormat(navigator.language, options).format(num)
 );
+*/
+
+/*
+// setTimeout function executes a callback function after the miliseconds specified on the setTimeout function parameter. Its also posible to pass arguments to the callback function by specifying em after the miliseconds
+
+setTimeout(() => console.log('Here is your pizza 🍕'), 3000);
+console.log('Waiting....');
+
+const ingredients = ['olives', 'spinach'];
+
+const pizzaTimer = setTimeout(
+  (ingredient1, ingredient2) =>
+    console.log(`Here is your pizza with ${ingredient1} and ${ingredient2}🍕`),
+  3000,
+  ...ingredients
+);
+
+if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
+*/
+
+// setInterval executes the callback function idefenetly using the interval specified in miliseconds
+
+// setInterval(function () {
+//   const now = new Date();
+//   console.log(now);
+// }, 1000);
+
+// clock
+// setInterval(function () {
+//   const now = new Date();
+//   const hours = now.getHours();
+//   const minutes = now.getMinutes();
+//   const seconds = now.getSeconds();
+
+//   console.log(`${hours}:${minutes}:${seconds}s`);
+// }, 1000);
