@@ -85,3 +85,17 @@ document
     message.remove();
     //message.parentElement.removeChild(message)
   });
+
+// Styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+message.style.padding = '10px';
+
+// Returns a CSSStyleDeclaration list with all the CSS properties and the specific values of the given element
+console.log(getComputedStyle(message));
+// To return an specific style from that huge list, we can specify it with dot notation
+console.log(getComputedStyle(message).backgroundColor);
+
+// Setting the height of an ellement dinamically usgin the getComputedStyle to determine the height of the element and in top of that adding more px (Using the parseFloat to transform the height in pixels to a floating number that we can operate on js)
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
