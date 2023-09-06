@@ -230,30 +230,6 @@ const startLogOutTimer = function () {
 // Event handlers
 let currentAccount, timer;
 
-// FAKE ALWAYS LOGGED IN (REMOVE LATER)
-// currentAccount = account1;
-// updateUI(currentAccount);
-// containerApp.style.opacity = 100;
-// FAKE ALWAYS LOGGED IN (REMOVE LATER)
-
-// // Experimenting API
-// const now = new Date();
-// const options = {
-//   hour: 'numeric',
-//   minute: 'numeric',
-//   day: 'numeric',
-//   month: 'long',
-//   year: 'numeric',
-//   weekday: 'long',
-// };
-
-// const locale = navigator.language;
-// console.log(locale);
-
-// labelDate.textContent = new Intl.DateTimeFormat(locale, options).format(now);
-// // The formatter expects the ISO Code for the country and the language selected.
-// // Experimenting API
-
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
   e.preventDefault();
@@ -289,16 +265,6 @@ btnLogin.addEventListener('click', function (e) {
       currentAccount.locale,
       options
     ).format(now);
-    // The formatter expects the ISO Code for the country and the language selected.
-    // Experimenting API
-    // const now = new Date();
-    // const day = `${now.getDate()}`.padStart(2, 0);
-    // const month = `${now.getMonth() + 1}`.padStart(2, 0);
-    // const year = now.getFullYear();
-    // const hour = `${now.getHours()}`.padStart(2, 0);
-    // const min = `${now.getMinutes()}`.padStart(2, 0);
-
-    // labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
 
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
@@ -337,6 +303,10 @@ btnTransfer.addEventListener('click', function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    // Reset the timer
+    clearInterval(timer);
+    timer = startLogOutTimer();
   }
 });
 
@@ -358,6 +328,9 @@ btnLoan.addEventListener('click', function (e) {
     }, 2500);
   }
   inputLoanAmount.value = '';
+
+  clearInterval(timer);
+  timer = startLogOutTimer();
 });
 
 btnClose.addEventListener('click', function (e) {
@@ -389,6 +362,41 @@ btnSort.addEventListener('click', function (e) {
   displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 });
+
+// FAKE ALWAYS LOGGED IN (REMOVE LATER)
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
+// FAKE ALWAYS LOGGED IN (REMOVE LATER)
+
+// // Experimenting API
+// const now = new Date();
+// const options = {
+//   hour: 'numeric',
+//   minute: 'numeric',
+//   day: 'numeric',
+//   month: 'long',
+//   year: 'numeric',
+//   weekday: 'long',
+// };
+
+// const locale = navigator.language;
+// console.log(locale);
+
+// labelDate.textContent = new Intl.DateTimeFormat(locale, options).format(now);
+// // The formatter expects the ISO Code for the country and the language selected.
+// // Experimenting API
+
+// The formatter expects the ISO Code for the country and the language selected.
+// Experimenting API
+// const now = new Date();
+// const day = `${now.getDate()}`.padStart(2, 0);
+// const month = `${now.getMonth() + 1}`.padStart(2, 0);
+// const year = now.getFullYear();
+// const hour = `${now.getHours()}`.padStart(2, 0);
+// const min = `${now.getMinutes()}`.padStart(2, 0);
+
+// labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
