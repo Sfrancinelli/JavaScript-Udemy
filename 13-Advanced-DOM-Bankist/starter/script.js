@@ -99,3 +99,30 @@ console.log(getComputedStyle(message).backgroundColor);
 // Setting the height of an ellement dinamically usgin the getComputedStyle to determine the height of the element and in top of that adding more px (Using the parseFloat to transform the height in pixels to a floating number that we can operate on js)
 message.style.height =
   Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+
+// Changing global variables of css (root variables). The root of css its equivalent of the document.documentElement
+document.documentElement.style.setProperty('--color-primary', 'orangered');
+
+// Atributes
+// Getting the element and then accessing the atributes (in this case the src atribute of the img logo)
+const logo = document.querySelector('.nav__logo');
+console.log(logo.src);
+console.log(logo.className);
+
+logo.alt = 'Beautiful minimalist logo';
+console.log(logo.alt);
+
+console.log(logo.getAttribute('alt'));
+logo.setAttribute('company', 'Bankist');
+console.log(logo.getAttribute('company'));
+
+// Absolute route
+console.log(logo.src);
+// Relative route
+console.log(logo.getAttribute('src'));
+
+const link = document.querySelector('.nav__link');
+// Absolute route
+console.log(link.href);
+// Relative route
+console.log(link.getAttribute('href'));
