@@ -126,3 +126,16 @@ const link = document.querySelector('.nav__link');
 console.log(link.href);
 // Relative route
 console.log(link.getAttribute('href'));
+
+// Data attributes
+// The attribute was data-version-number. When we use it as a property we have to pass it to versionNumber
+console.log(logo.dataset.versionNumber);
+
+// Classes
+logo.classList.add('c');
+logo.classList.remove('c');
+logo.classList.toggle('c');
+logo.classList.contains('c');
+
+// Don't use, this will override every class already in the element
+logo.className = 'jonas';
