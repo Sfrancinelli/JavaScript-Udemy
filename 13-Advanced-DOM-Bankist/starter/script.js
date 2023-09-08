@@ -177,3 +177,20 @@ logo.classList.contains('c');
 
 // Don't use, this will override every class already in the element
 logo.className = 'jonas';
+
+// Managing events
+// The mouseenter event is just like the hover in CSS
+const h1 = document.querySelector('h1');
+// Listening to the event once and then removing the eventlistener
+const alertH1 = function (e) {
+  alert('addEventListener: Great you are reading the heading');
+
+  // Removing an event listener
+  h1.removeEventListener('mouseenter', alertH1);
+};
+h1.addEventListener('mouseenter', alertH1);
+
+// This setting the same response to the same event but with a different sintax, by accesing the event property itself
+// h1.onmouseenter = function (e) {
+//   alert('addEventListener: Great you are reading the heading');
+// };
