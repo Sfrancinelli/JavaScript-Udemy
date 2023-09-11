@@ -85,11 +85,15 @@ btnScrollTo.addEventListener('click', function (e) {
 console.log(navLinks);
 navLinks.addEventListener('click', function (e) {
   e.preventDefault();
-  // console.log(e.target);
-  const id = e.target.getAttribute('href');
-  let section = document.querySelector(id);
-  // console.log(section);
-  section.scrollIntoView({ behavior: 'smooth' });
+
+  // Matching strategy
+  if (e.target.classList.contains('nav__link')) {
+    // console.log(e.target);
+    const id = e.target.getAttribute('href');
+    let section = document.querySelector(id);
+    // console.log(section);
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
 });
 
 //////////////////////////////////////////////////////////////////////
@@ -256,3 +260,36 @@ document.querySelector('.nav').addEventListener('click', function (e) {
   console.log(e.currentTarget === this); // true
 });
 */
+
+///////////////////////////////////////////////////////////
+// DOM Traversing
+const h1 = document.querySelector('h1');
+
+// Going downwards: child
+console.log(h1.querySelectorAll('.highlight'));
+console.log(h1.childNodes);
+console.log(h1.children);
+h1.firstElementChild.style.color = 'white';
+h1.lastElementChild.style.color = 'black';
+console.log(h1.firstElementChild.style.color);
+
+// Going upwards: parents
+console.log(h1.parentNode);
+console.log(h1.parentElement);
+
+// The object itself
+h1.closest('h1').style.background = 'var(--gradient-primary)';
+// Searching for the closest element with that selector
+h1.closest('.header').style.background = 'var(--gradient-secondary)';
+
+// Going sideways: siblings
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+
+// Searching first for the direct parent and then for the childrens of that parent. The result are all the siblings of the element from which we used this proipertys
+console.log(h1.parentElement.children);
+[...h1.parentElement.children].forEach(function (el) {
+  if (el !== h1) {
+    el.style.transform = 'scale(0.5)';
+  }
+});
