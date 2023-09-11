@@ -10,6 +10,7 @@ const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 const navLink = document.querySelectorAll('.nav__link');
 const navLinks = document.querySelector('.nav__links');
+const operationBtns = document.querySelector('.operations__tab-container');
 
 ///////////////////////////////////////
 // Modal window
@@ -93,6 +94,52 @@ navLinks.addEventListener('click', function (e) {
     let section = document.querySelector(id);
     // console.log(section);
     section.scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+// Tabbed component
+console.log(operationBtns);
+operationBtns.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  console.log(operationBtns.children);
+
+  // Making that only the tabs moves (if not checked, the span and the div itself moves)
+  if (e.target.classList.contains('operations__tab')) {
+    // If the target doesnt already have the active class, it gets activated
+    if (!e.target.classList.contains('operations__tab--active')) {
+      console.log(e.target);
+      // Getting the tab id in order to later match the content to the tab
+      const tabId = e.target.dataset.tab;
+      console.log(tabId);
+
+      // Removing the active class from all the children of the operationBtns (removing from all the tabs)
+      [...operationBtns.children].forEach(btn => {
+        btn.classList.remove('operations__tab--active');
+      });
+      console.log(operationBtns.children);
+
+      // Adding the active class to the selected operation tab (the one thats being clicked)
+      e.target.classList.add('operations__tab--active');
+      e.target.previousElementSibling?.classList.remove(
+        'operations__tab--active'
+      );
+      e.target.nextElementSibling?.classList.remove('operations__tab--active');
+
+      // Removing the active classes from the content elements
+      [...operationBtns.parentElement.children].forEach(el => {
+        if (el.classList.contains('operations__content')) {
+          el.classList.remove('operations__content--active');
+
+          let content = document.querySelector(
+            `.operations__content--${tabId}`
+          );
+          // Adding the active class to the content element that its being targeted according to the tabId from the selected operation__tab btn
+          content.classList.add('operations__content--active');
+          console.log(operationBtns.parentElement.children);
+        }
+      });
+    }
   }
 });
 
@@ -259,8 +306,6 @@ document.querySelector('.nav').addEventListener('click', function (e) {
   console.log('NAV', e.target, e.currentTarget);
   console.log(e.currentTarget === this); // true
 });
-*/
-
 ///////////////////////////////////////////////////////////
 // DOM Traversing
 const h1 = document.querySelector('h1');
@@ -293,3 +338,4 @@ console.log(h1.parentElement.children);
     el.style.transform = 'scale(0.5)';
   }
 });
+*/
