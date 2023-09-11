@@ -1,13 +1,18 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
-
+///////////////////////////////////
+// Selectors
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+const navLink = document.querySelectorAll('.nav__link');
+const navLinks = document.querySelector('.nav__links');
 
+///////////////////////////////////////
+// Modal window
 const openModal = function (e) {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -30,21 +35,20 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+////////////////////////////////////////////////////////////
+// Page navigation
 // Smooth scrolling
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
-
 btnScrollTo.addEventListener('click', function (e) {
-  const s1coords = section1.getBoundingClientRect();
-  console.log(s1coords);
-  console.log('current scroll (X/Y)', pageXOffset, pageYOffset);
+  // const s1coords = section1.getBoundingClientRect();
+  // console.log(s1coords);
+  // console.log('current scroll (X/Y)', pageXOffset, pageYOffset);
 
-  // Checking viewport lenghts
-  console.log(
-    'height/width viewport',
-    document.documentElement.clientHeight,
-    document.documentElement.clientWidth
-  );
+  // // Checking viewport lenghts
+  // console.log(
+  //   'height/width viewport',
+  //   document.documentElement.clientHeight,
+  //   document.documentElement.clientWidth
+  // );
 
   //Scrolling
   // window.scrollTo(
@@ -68,8 +72,29 @@ btnScrollTo.addEventListener('click', function (e) {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
+// navLink.forEach(function (el) {
+//   el.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     const id = this.getAttribute('href');
+//     let section = document.querySelector(id);
+//     section.scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
+
+// Same as above but doing it with event delegation. This way its not neccesary to create the same event listener for every link. Its only necessary making one in the common parent element and defining the targeted click by the e.target property (where the event originated).
+console.log(navLinks);
+navLinks.addEventListener('click', function (e) {
+  e.preventDefault();
+  // console.log(e.target);
+  const id = e.target.getAttribute('href');
+  let section = document.querySelector(id);
+  // console.log(section);
+  section.scrollIntoView({ behavior: 'smooth' });
+});
+
 //////////////////////////////////////////////////////////////////////
 // LECTURES
+/*
 // Selecting the entire document, the head and the body
 // console.log(document.documentElement);
 // console.log(document.head);
@@ -230,3 +255,4 @@ document.querySelector('.nav').addEventListener('click', function (e) {
   console.log('NAV', e.target, e.currentTarget);
   console.log(e.currentTarget === this); // true
 });
+*/
