@@ -130,15 +130,13 @@ operationBtns.addEventListener('click', function (e) {
       [...operationBtns.parentElement.children].forEach(el => {
         if (el.classList.contains('operations__content')) {
           el.classList.remove('operations__content--active');
-
-          let content = document.querySelector(
-            `.operations__content--${tabId}`
-          );
-          // Adding the active class to the content element that its being targeted according to the tabId from the selected operation__tab btn
-          content.classList.add('operations__content--active');
-          console.log(operationBtns.parentElement.children);
         }
       });
+
+      let content = document.querySelector(`.operations__content--${tabId}`);
+      // Adding the active class to the content element that its being targeted according to the tabId from the selected operation__tab btn
+      content.classList.add('operations__content--active');
+      console.log(operationBtns.parentElement.children);
     }
   }
 });
