@@ -194,3 +194,39 @@ h1.addEventListener('mouseenter', alertH1);
 // h1.onmouseenter = function (e) {
 //   alert('addEventListener: Great you are reading the heading');
 // };
+
+// Random color generator
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
+console.log(randomColor());
+
+// Playing with random colors in the nav to watch how the event travels to its parents from and to the document root
+
+// The e.target will always be the same on this examples. If I click the link, then the event target will be the link on all of the elements that get affected by the same event.
+// But when you talk about the event.currentTarget its different, as the currentTarget will always point to the element in which the event is currently on which corresponds to the this keyword of said element. In this case, if I click the nav__link, the link, the container and the nav will change colors, the event.target will always be the link beacuase it was the origin of said event (where the click happened) but the event.currentTarget will differ. In the link, it will be the nav__link element, on the container it will be the nav__links elements and in the nav it will be the nav element.
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  e.preventDefault();
+  this.style.backgroundColor = randomColor();
+  console.log('LINK', e.target, e.currentTarget);
+  console.log(e.currentTarget === this); // true
+
+  // To stop event propagation we can call an specific function:
+  e.stopPropagation();
+});
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+  this.style.backgroundColor = randomColor();
+  console.log('CONTAINER', e.target, e.currentTarget);
+  console.log(e.currentTarget === this); // true
+});
+
+document.querySelector('.nav').addEventListener('click', function (e) {
+  e.preventDefault();
+  this.style.backgroundColor = randomColor();
+  console.log('NAV', e.target, e.currentTarget);
+  console.log(e.currentTarget === this); // true
+});
