@@ -193,6 +193,22 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 nav.addEventListener('mouseout', handleHover.bind(1));
 
+// Sticky navigation
+// Getting the coordinates of the section 1 (we want the navbar to become sticky once the scroll reaches the first section)
+// Its important to do it outside the function in order to get one value for the coordinates as we dont want it to be dynamic in this case
+const initialCoords = section1.getBoundingClientRect();
+
+window.addEventListener('scroll', function (e) {
+  // console.log(window.scrollY);
+  // console.log(initialCoords);
+  // Checking if the position of the scroll is grater than the top value of the coordinates from section1
+  if (window.scrollY >= initialCoords.top) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+});
+
 //////////////////////////////////////////////////////////////////////
 // LECTURES
 /*
