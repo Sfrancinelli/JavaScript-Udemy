@@ -193,7 +193,9 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 nav.addEventListener('mouseout', handleHover.bind(1));
 
-// Sticky navigation
+/*
+////////////////////////////////////////////////////////
+// Sticky navigation with scroll event (bad practice)
 // Getting the coordinates of the section 1 (we want the navbar to become sticky once the scroll reaches the first section)
 // Its important to do it outside the function in order to get one value for the coordinates as we dont want it to be dynamic in this case
 const initialCoords = section1.getBoundingClientRect();
@@ -208,6 +210,48 @@ window.addEventListener('scroll', function (e) {
     nav.classList.remove('sticky');
   }
 });
+*/
+/*
+// Sticky navigation with Intersection Observer API (good practice)
+// PRACTICE
+const observerCallback = function (entries, observer) {
+  entries.forEach(entry => {
+    console.log(entry);
+  });
+};
+
+const observerOptions = {
+  root: null,
+  threshold: [0, 0.2],
+};
+
+// The observer will call the callback function each time that the observed element (in this case section1) is intersecting the root element (in this case null. Because its setted to null, it means that we are checking for the entire viewport) at the threshold that we define (in this case 0.1 or 10%)
+const observer = new IntersectionObserver(observerCallback, observerOptions);
+observer.observe(section1);
+*/
+/////////////////////////////////////////////
+// Sticky navigation with Intersection Observer API
+const navHeight = nav.getBoundingClientRect().height;
+console.log(navHeight);
+
+const stickyNav = function (entries) {
+  console.log(entries);
+  entries.forEach(entry => {
+    if (entry.isIntersecting === false) {
+      nav.classList.add('sticky');
+    } else nav.classList.remove('sticky');
+  });
+};
+
+const obsOptions = {
+  root: null,
+  threshold: [0],
+  // The navbar will appear when 90 pixels before the section 1 starts (when the header is no longer in the viewport since the threshold is 0). So, 90px before the threshold is reached. (hence the -90px)
+  rootMargin: `-${navHeight}px`,
+};
+
+const obs = new IntersectionObserver(stickyNav, obsOptions);
+obs.observe(document.querySelector('.header'));
 
 //////////////////////////////////////////////////////////////////////
 // LECTURES
