@@ -97,7 +97,8 @@ navLinks.addEventListener('click', function (e) {
   }
 });
 
-// Tabbed component
+/*
+// Tabbed component (My take before watcing the lecture)
 console.log(operationBtns);
 operationBtns.addEventListener('click', function (e) {
   e.preventDefault();
@@ -121,10 +122,13 @@ operationBtns.addEventListener('click', function (e) {
 
       // Adding the active class to the selected operation tab (the one thats being clicked)
       e.target.classList.add('operations__tab--active');
-      e.target.previousElementSibling?.classList.remove(
-        'operations__tab--active'
-      );
-      e.target.nextElementSibling?.classList.remove('operations__tab--active');
+
+      // This is commented because the same (But better) its being done on line 117 where i removed the active class from all the tabs.
+
+      // e.target.previousElementSibling?.classList.remove(
+      //   'operations__tab--active'
+      // );
+      // e.target.nextElementSibling?.classList.remove('operations__tab--active');
 
       // Removing the active classes from the content elements
       [...operationBtns.parentElement.children].forEach(el => {
@@ -139,6 +143,33 @@ operationBtns.addEventListener('click', function (e) {
       console.log(operationBtns.parentElement.children);
     }
   }
+});
+*/
+
+// Tabbed component by proffesor:
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+  console.log(clicked);
+
+  // Guard clause
+  if (!clicked) return;
+
+  // Remove active classes for tab and content
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  tabsContent.forEach(t => t.classList.remove('operations__content--active'));
+
+  // Activate tab
+  clicked.classList.add('operations__tab--active');
+
+  // Activate content area
+
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
 });
 
 //////////////////////////////////////////////////////////////////////
