@@ -232,10 +232,10 @@ observer.observe(section1);
 /////////////////////////////////////////////
 // Sticky navigation with Intersection Observer API
 const navHeight = nav.getBoundingClientRect().height;
-console.log(navHeight);
+// console.log(navHeight);
 
 const stickyNav = function (entries) {
-  console.log(entries);
+  // console.log(entries);
   entries.forEach(entry => {
     if (entry.isIntersecting === false) {
       nav.classList.add('sticky');
@@ -252,6 +252,37 @@ const obsOptions = {
 
 const obs = new IntersectionObserver(stickyNav, obsOptions);
 obs.observe(document.querySelector('.header'));
+
+//////////////////////////7
+// Reveal sections
+const allSections = document.querySelectorAll('.section');
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+
+  // if (entry.isIntersecting) entry.target.classList.remove('section--hidden');
+  // else entry.target.classList.add('section--hidden');
+
+  // Guard clause
+  if (!entry.isIntersecting) return;
+
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const sectionObserverOptions = {
+  root: null,
+  threshold: 0.15,
+};
+
+const sectionObserver = new IntersectionObserver(
+  revealSection,
+  sectionObserverOptions
+);
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
 
 //////////////////////////////////////////////////////////////////////
 // LECTURES
