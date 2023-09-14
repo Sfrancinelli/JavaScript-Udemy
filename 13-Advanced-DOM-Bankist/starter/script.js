@@ -15,6 +15,8 @@ const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
+const allSections = document.querySelectorAll('.section');
+const allImgs = document.querySelectorAll('img[data-src]');
 
 ///////////////////////////////////////
 // Modal window
@@ -255,10 +257,9 @@ obs.observe(document.querySelector('.header'));
 
 //////////////////////////7
 // Reveal sections
-const allSections = document.querySelectorAll('.section');
 const revealSection = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
+  // console.log(entry);
 
   // if (entry.isIntersecting) entry.target.classList.remove('section--hidden');
   // else entry.target.classList.add('section--hidden');
@@ -272,7 +273,7 @@ const revealSection = function (entries, observer) {
 
 const sectionObserverOptions = {
   root: null,
-  threshold: 0.15,
+  threshold: 0.1,
 };
 
 const sectionObserver = new IntersectionObserver(
@@ -283,6 +284,31 @@ allSections.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
+
+///////////////////////////////////////
+// Reveal lazy images
+const revealImg = function (entries, observer) {
+  const [entry] = entries;
+
+  // Guard clause
+  if (!entry.isIntersecting) return;
+  // console.log(entry);
+  const newSrc = entry.target.dataset.src;
+  entry.target.src = newSrc;
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+  observer.unobserve(entry.target);
+};
+
+const imgObs = new IntersectionObserver(revealImg, {
+  root: null,
+  threshold: 0.5,
+  // In reality, the loading of the image shouldnt be noticed by the user. It should happen in the background and then appear loaded when the user reaches, for that, we use the root margin to start loading the image 200px before:
+  rootMargin: '200px',
+});
+
+allImgs.forEach(img => imgObs.observe(img));
 
 //////////////////////////////////////////////////////////////////////
 // LECTURES
