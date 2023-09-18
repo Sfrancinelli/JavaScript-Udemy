@@ -52,35 +52,6 @@ document.addEventListener('keydown', function (e) {
 // Page navigation
 // Smooth scrolling
 btnScrollTo.addEventListener('click', function (e) {
-  // const s1coords = section1.getBoundingClientRect();
-  // console.log(s1coords);
-  // console.log('current scroll (X/Y)', pageXOffset, pageYOffset);
-
-  // // Checking viewport lenghts
-  // console.log(
-  //   'height/width viewport',
-  //   document.documentElement.clientHeight,
-  //   document.documentElement.clientWidth
-  // );
-
-  //Scrolling
-  // window.scrollTo(
-  //   s1coords.left + window.pageXOffset,
-  //   s1coords.top + window.pageYOffset
-  // );
-
-  // window.scrollTo(
-  //   s1coords.left + window.scrollX,
-  //   s1coords.top + window.scrollY
-  // );
-
-  // Implementing smooth scrolling
-  // window.scrollTo({
-  //   left: s1coords.left + window.scrollX,
-  //   top: s1coords.top + window.scrollY,
-  //   behavior: 'smooth',
-  // });
-
   // Implementing smooth scroll behavior in a more modern way
   section1.scrollIntoView({ behavior: 'smooth' });
 });
@@ -109,56 +80,8 @@ navLinks.addEventListener('click', function (e) {
   }
 });
 
-/*
-// Tabbed component (My take before watcing the lecture)
-console.log(operationBtns);
-operationBtns.addEventListener('click', function (e) {
-  e.preventDefault();
-
-  console.log(operationBtns.children);
-
-  // Making that only the tabs moves (if not checked, the span and the div itself moves)
-  if (e.target.classList.contains('operations__tab')) {
-    // If the target doesnt already have the active class, it gets activated
-    if (!e.target.classList.contains('operations__tab--active')) {
-      console.log(e.target);
-      // Getting the tab id in order to later match the content to the tab
-      const tabId = e.target.dataset.tab;
-      console.log(tabId);
-
-      // Removing the active class from all the children of the operationBtns (removing from all the tabs)
-      [...operationBtns.children].forEach(btn => {
-        btn.classList.remove('operations__tab--active');
-      });
-      console.log(operationBtns.children);
-
-      // Adding the active class to the selected operation tab (the one thats being clicked)
-      e.target.classList.add('operations__tab--active');
-
-      // This is commented because the same (But better) its being done on line 117 where i removed the active class from all the tabs.
-
-      // e.target.previousElementSibling?.classList.remove(
-      //   'operations__tab--active'
-      // );
-      // e.target.nextElementSibling?.classList.remove('operations__tab--active');
-
-      // Removing the active classes from the content elements
-      [...operationBtns.parentElement.children].forEach(el => {
-        if (el.classList.contains('operations__content')) {
-          el.classList.remove('operations__content--active');
-        }
-      });
-
-      let content = document.querySelector(`.operations__content--${tabId}`);
-      // Adding the active class to the content element that its being targeted according to the tabId from the selected operation__tab btn
-      content.classList.add('operations__content--active');
-      console.log(operationBtns.parentElement.children);
-    }
-  }
-});
-*/
-
-// Tabbed component by proffesor:
+/////////////////////////////////////////////////////////////////
+// Tabbed component:
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
   console.log(clicked);
@@ -180,6 +103,7 @@ tabsContainer.addEventListener('click', function (e) {
     .classList.add('operations__content--active');
 });
 
+/////////////////////////////////////////////////////////////////
 // Menu fade animation
 // The handler functions can only take one argument as parameter.
 // To have another parameter in the function we use the bind method and set the 'this' keyword to wathever value we need for the function
@@ -201,43 +125,7 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 nav.addEventListener('mouseout', handleHover.bind(1));
 
-/*
-////////////////////////////////////////////////////////
-// Sticky navigation with scroll event (bad practice)
-// Getting the coordinates of the section 1 (we want the navbar to become sticky once the scroll reaches the first section)
-// Its important to do it outside the function in order to get one value for the coordinates as we dont want it to be dynamic in this case
-const initialCoords = section1.getBoundingClientRect();
-
-window.addEventListener('scroll', function (e) {
-  // console.log(window.scrollY);
-  // console.log(initialCoords);
-  // Checking if the position of the scroll is grater than the top value of the coordinates from section1
-  if (window.scrollY >= initialCoords.top) {
-    nav.classList.add('sticky');
-  } else {
-    nav.classList.remove('sticky');
-  }
-});
-*/
-/*
-// Sticky navigation with Intersection Observer API (good practice)
-// PRACTICE
-const observerCallback = function (entries, observer) {
-  entries.forEach(entry => {
-    console.log(entry);
-  });
-};
-
-const observerOptions = {
-  root: null,
-  threshold: [0, 0.2],
-};
-
-// The observer will call the callback function each time that the observed element (in this case section1) is intersecting the root element (in this case null. Because its setted to null, it means that we are checking for the entire viewport) at the threshold that we define (in this case 0.1 or 10%)
-const observer = new IntersectionObserver(observerCallback, observerOptions);
-observer.observe(section1);
-*/
-/////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 // Sticky navigation with Intersection Observer API
 const navHeight = nav.getBoundingClientRect().height;
 // console.log(navHeight);
@@ -261,7 +149,7 @@ const obsOptions = {
 const obs = new IntersectionObserver(stickyNav, obsOptions);
 obs.observe(document.querySelector('.header'));
 
-//////////////////////////7
+/////////////////////////////////////////////////////////////////
 // Reveal sections
 const revealSection = function (entries, observer) {
   const [entry] = entries;
@@ -291,7 +179,7 @@ allSections.forEach(function (section) {
   section.classList.add('section--hidden');
 });
 
-///////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 // Reveal lazy images
 const revealImg = function (entries, observer) {
   const [entry] = entries;
@@ -316,75 +204,41 @@ const imgObs = new IntersectionObserver(revealImg, {
 
 allImgs.forEach(img => imgObs.observe(img));
 
-////////////////////////////////////////
-// SLIDE COMPONENT
-/*
-let translate = 100;
+/////////////////////////////////////////////////////////////////
+// Slider
+const dotContainer = document.querySelector('.dots');
 
-const sliderStart = function () {
-  translate = 100;
-
-  slides.forEach((slide, i) => {
-    slide.style.transform = `translate(${translate * i}%)`;
-    slide.style.overflow = 'hidden';
-  });
-};
-
-const sliderEnd = function () {
-  translate = -200;
-
-  slides.forEach(slide => {
-    slide.style.transform = `translate(${translate}%)`;
-    translate += 100;
-  });
-};
-
-sliderStart();
-
-const slider = function (e) {
-  e.preventDefault();
-
-  if (this === 'left') {
-    console.log(Number.parseInt(slide3.style.transform.slice(10, -2)));
-    if (Number.parseInt(slide3.style.transform.slice(10, -2)) === 200)
-      sliderEnd();
-    else {
-      slides.forEach(slide => {
-        translate = Number.parseInt(slide.style.transform.slice(10, -2));
-        translate += 100;
-        slide.style.transform = `translate(${translate}%)`;
-      });
-    }
-  }
-  if (this === 'right') {
-    console.log(Number.parseInt(slide1.style.transform.slice(10, -2)));
-    if (Number.parseInt(slide1.style.transform.slice(10, -2)) === -200)
-      sliderStart();
-    else {
-      slides.forEach(slide => {
-        translate = Number.parseInt(slide.style.transform.slice(10, -2));
-        translate -= 100;
-        slide.style.transform = `translate(${translate}%)`;
-      });
-    }
-  }
-};
-
-slideBtnL.addEventListener('click', slider.bind('left'));
-slideBtnR.addEventListener('click', slider.bind('right'));
-*/
-
-/////////////////////////////////////////////
-// Slider profe
 let curSlide = 0;
 const maxSlide = slides.length;
+
+const createDots = function () {
+  slides.forEach((_, i) => {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${i}"></button>`
+    );
+  });
+};
+
+createDots();
+
+const activateDot = function (slide) {
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`)
+    .classList.add('dots__dot--active');
+};
 
 const goToSlide = function (slide) {
   slides.forEach(
     (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
   );
+  activateDot(slide);
 };
-goToSlide(0);
+goToSlide(curSlide);
 
 // Next slide
 const nextSlide = function () {
@@ -408,6 +262,19 @@ const prevSlide = function () {
 
 slideBtnL.addEventListener('click', prevSlide);
 slideBtnR.addEventListener('click', nextSlide);
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'ArrowLeft') prevSlide();
+  if (e.key === 'ArrowRight') nextSlide();
+});
+
+dotContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('dots__dot')) {
+    console.log('dot');
+    const slideTarget = e.target.dataset.slide;
+    goToSlide(slideTarget);
+  }
+});
 
 //////////////////////////////////////////////////////////////////////
 // LECTURES
@@ -604,4 +471,203 @@ console.log(h1.parentElement.children);
     el.style.transform = 'scale(0.5)';
   }
 });
+*/
+
+// The first event is the loading of the DOM content. This event does not wait for the loading of images nor external resources
+// We don't need to listen to this event when we put the script tag at the end of the HTML (this script is loading when the whole HTML is parsed anyways since its the last thing in the HTML code)
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML parsed and DOM tree built', e);
+});
+
+// To check is the page is fully loaded its necessary to use another event. We use the:
+window.addEventListener('load', function (e) {
+  console.log('Page fully loaded', e);
+});
+
+// This event is created inmediately before the user is about to leave the page. It creates a prompt window when the user tries to reload or to leave after interacting with the page. This should only be used when data could be lost and ONLY then (when a user is filling a form or writing a post, etc)
+/*
+window.addEventListener('beforeunload', function (e) {
+  e.preventDefault();
+  console.log(e);
+  e.returnValue = '';
+});
+*/
+
+/////////////////////////////////////////////////////////////////////////
+// My takes on the app
+
+/*
+//////////////////////////////////////////////////////
+// Tabbed component (My take before watcing the lecture)
+console.log(operationBtns);
+operationBtns.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  console.log(operationBtns.children);
+
+  // Making that only the tabs moves (if not checked, the span and the div itself moves)
+  if (e.target.classList.contains('operations__tab')) {
+    // If the target doesnt already have the active class, it gets activated
+    if (!e.target.classList.contains('operations__tab--active')) {
+      console.log(e.target);
+      // Getting the tab id in order to later match the content to the tab
+      const tabId = e.target.dataset.tab;
+      console.log(tabId);
+
+      // Removing the active class from all the children of the operationBtns (removing from all the tabs)
+      [...operationBtns.children].forEach(btn => {
+        btn.classList.remove('operations__tab--active');
+      });
+      console.log(operationBtns.children);
+
+      // Adding the active class to the selected operation tab (the one thats being clicked)
+      e.target.classList.add('operations__tab--active');
+
+      // This is commented because the same (But better) its being done on line 117 where i removed the active class from all the tabs.
+
+      // e.target.previousElementSibling?.classList.remove(
+      //   'operations__tab--active'
+      // );
+      // e.target.nextElementSibling?.classList.remove('operations__tab--active');
+
+      // Removing the active classes from the content elements
+      [...operationBtns.parentElement.children].forEach(el => {
+        if (el.classList.contains('operations__content')) {
+          el.classList.remove('operations__content--active');
+        }
+      });
+
+      let content = document.querySelector(`.operations__content--${tabId}`);
+      // Adding the active class to the content element that its being targeted according to the tabId from the selected operation__tab btn
+      content.classList.add('operations__content--active');
+      console.log(operationBtns.parentElement.children);
+    }
+  }
+});
+*/
+
+///////////////////////////////////////////////////////
+// Page navigation (smooth scrolling)
+// const s1coords = section1.getBoundingClientRect();
+// console.log(s1coords);
+// console.log('current scroll (X/Y)', pageXOffset, pageYOffset);
+
+// // Checking viewport lenghts
+// console.log(
+//   'height/width viewport',
+//   document.documentElement.clientHeight,
+//   document.documentElement.clientWidth
+// );
+
+//Scrolling
+// window.scrollTo(
+//   s1coords.left + window.pageXOffset,
+//   s1coords.top + window.pageYOffset
+// );
+
+// window.scrollTo(
+//   s1coords.left + window.scrollX,
+//   s1coords.top + window.scrollY
+// );
+
+// Implementing smooth scrolling
+// window.scrollTo({
+//   left: s1coords.left + window.scrollX,
+//   top: s1coords.top + window.scrollY,
+//   behavior: 'smooth',
+// });
+/*
+
+////////////////////////////////////////////////////////
+// Sticky navigation with scroll event (bad practice)
+// Getting the coordinates of the section 1 (we want the navbar to become sticky once the scroll reaches the first section)
+// Its important to do it outside the function in order to get one value for the coordinates as we dont want it to be dynamic in this case
+const initialCoords = section1.getBoundingClientRect();
+
+window.addEventListener('scroll', function (e) {
+  // console.log(window.scrollY);
+  // console.log(initialCoords);
+  // Checking if the position of the scroll is grater than the top value of the coordinates from section1
+  if (window.scrollY >= initialCoords.top) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+});
+*/
+/*
+// Sticky navigation with Intersection Observer API (good practice)
+// PRACTICE
+const observerCallback = function (entries, observer) {
+  entries.forEach(entry => {
+    console.log(entry);
+  });
+};
+
+const observerOptions = {
+  root: null,
+  threshold: [0, 0.2],
+};
+
+// The observer will call the callback function each time that the observed element (in this case section1) is intersecting the root element (in this case null. Because its setted to null, it means that we are checking for the entire viewport) at the threshold that we define (in this case 0.1 or 10%)
+const observer = new IntersectionObserver(observerCallback, observerOptions);
+observer.observe(section1);
+*/
+
+////////////////////////////////////////
+// SLIDE COMPONENT
+/*
+let translate = 100;
+
+const sliderStart = function () {
+  translate = 100;
+
+  slides.forEach((slide, i) => {
+    slide.style.transform = `translate(${translate * i}%)`;
+    slide.style.overflow = 'hidden';
+  });
+};
+
+const sliderEnd = function () {
+  translate = -200;
+
+  slides.forEach(slide => {
+    slide.style.transform = `translate(${translate}%)`;
+    translate += 100;
+  });
+};
+
+sliderStart();
+
+const slider = function (e) {
+  e.preventDefault();
+
+  if (this === 'left') {
+    console.log(Number.parseInt(slide3.style.transform.slice(10, -2)));
+    if (Number.parseInt(slide3.style.transform.slice(10, -2)) === 200)
+      sliderEnd();
+    else {
+      slides.forEach(slide => {
+        translate = Number.parseInt(slide.style.transform.slice(10, -2));
+        translate += 100;
+        slide.style.transform = `translate(${translate}%)`;
+      });
+    }
+  }
+  if (this === 'right') {
+    console.log(Number.parseInt(slide1.style.transform.slice(10, -2)));
+    if (Number.parseInt(slide1.style.transform.slice(10, -2)) === -200)
+      sliderStart();
+    else {
+      slides.forEach(slide => {
+        translate = Number.parseInt(slide.style.transform.slice(10, -2));
+        translate -= 100;
+        slide.style.transform = `translate(${translate}%)`;
+      });
+    }
+  }
+};
+
+slideBtnL.addEventListener('click', slider.bind('left'));
+slideBtnR.addEventListener('click', slider.bind('right'));
 */
