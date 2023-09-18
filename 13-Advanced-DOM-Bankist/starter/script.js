@@ -17,6 +17,12 @@ const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
 const allSections = document.querySelectorAll('.section');
 const allImgs = document.querySelectorAll('img[data-src]');
+const slides = document.querySelectorAll('.slide');
+const slide1 = document.querySelector('.slide--1');
+const slide2 = document.querySelector('.slide--2');
+const slide3 = document.querySelector('.slide--3');
+const slideBtnR = document.querySelector('.slider__btn--right');
+const slideBtnL = document.querySelector('.slider__btn--left');
 
 ///////////////////////////////////////
 // Modal window
@@ -309,6 +315,99 @@ const imgObs = new IntersectionObserver(revealImg, {
 });
 
 allImgs.forEach(img => imgObs.observe(img));
+
+////////////////////////////////////////
+// SLIDE COMPONENT
+/*
+let translate = 100;
+
+const sliderStart = function () {
+  translate = 100;
+
+  slides.forEach((slide, i) => {
+    slide.style.transform = `translate(${translate * i}%)`;
+    slide.style.overflow = 'hidden';
+  });
+};
+
+const sliderEnd = function () {
+  translate = -200;
+
+  slides.forEach(slide => {
+    slide.style.transform = `translate(${translate}%)`;
+    translate += 100;
+  });
+};
+
+sliderStart();
+
+const slider = function (e) {
+  e.preventDefault();
+
+  if (this === 'left') {
+    console.log(Number.parseInt(slide3.style.transform.slice(10, -2)));
+    if (Number.parseInt(slide3.style.transform.slice(10, -2)) === 200)
+      sliderEnd();
+    else {
+      slides.forEach(slide => {
+        translate = Number.parseInt(slide.style.transform.slice(10, -2));
+        translate += 100;
+        slide.style.transform = `translate(${translate}%)`;
+      });
+    }
+  }
+  if (this === 'right') {
+    console.log(Number.parseInt(slide1.style.transform.slice(10, -2)));
+    if (Number.parseInt(slide1.style.transform.slice(10, -2)) === -200)
+      sliderStart();
+    else {
+      slides.forEach(slide => {
+        translate = Number.parseInt(slide.style.transform.slice(10, -2));
+        translate -= 100;
+        slide.style.transform = `translate(${translate}%)`;
+      });
+    }
+  }
+};
+
+slideBtnL.addEventListener('click', slider.bind('left'));
+slideBtnR.addEventListener('click', slider.bind('right'));
+*/
+
+/////////////////////////////////////////////
+// Slider profe
+let curSlide = 0;
+const maxSlide = slides.length;
+
+const goToSlide = function (slide) {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+  );
+};
+goToSlide(0);
+
+// Next slide
+const nextSlide = function () {
+  if (curSlide === maxSlide - 1) {
+    curSlide = 0;
+  } else {
+    curSlide++;
+  }
+  goToSlide(curSlide);
+};
+
+// Previous Slide
+const prevSlide = function () {
+  if (curSlide === 0) {
+    curSlide = maxSlide - 1;
+  } else {
+    curSlide--;
+  }
+  goToSlide(curSlide);
+};
+
+slideBtnL.addEventListener('click', prevSlide);
+slideBtnR.addEventListener('click', nextSlide);
 
 //////////////////////////////////////////////////////////////////////
 // LECTURES
