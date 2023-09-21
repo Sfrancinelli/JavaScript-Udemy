@@ -57,3 +57,6 @@ console.log(jonas.species, '-----', matilda.species);
 // Al the properties inhereted from the prototype are not actually properties of the object. To check said statement:
 console.log(jonas.hasOwnProperty('firstName')); // true (because the constructor function creates this property on the object)
 console.log(jonas.hasOwnProperty('species')); // false
+
+// Prototype of Person is === to Object.__proto__
+console.log(Object.getPrototypeOf(Person) === Object.__proto__); // True
