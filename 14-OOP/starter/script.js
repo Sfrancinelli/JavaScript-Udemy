@@ -92,3 +92,40 @@ Array.prototype.unique = function () {
 
 // Using the method on the created array
 console.log(arr.unique());
+
+////7777777777777777/////7//////////////////////////////////////
+// CODING CHALLENGE #1
+
+const Car = function (make, speed) {
+  this.make = make;
+  this.speed = speed;
+};
+
+Car.prototype.accelerate = function () {
+  this.speed += 10;
+  console.log(`'${this.make}' going at ${this.speed} km/h`);
+};
+
+Car.prototype.break = function () {
+  this.speed -= 5;
+  console.log(`'${this.make}' going at ${this.speed} km/h`);
+};
+
+const bmw = new Car('BMW', 110);
+const mercedes = new Car('Mercedes', 100);
+
+bmw.accelerate();
+bmw.accelerate();
+bmw.accelerate();
+bmw.accelerate();
+bmw.accelerate();
+bmw.break();
+bmw.break();
+bmw.break();
+bmw.break();
+bmw.break();
+
+mercedes.break();
+mercedes.break();
+mercedes.break();
+mercedes.break();
