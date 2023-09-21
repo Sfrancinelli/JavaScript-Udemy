@@ -129,3 +129,31 @@ mercedes.break();
 mercedes.break();
 mercedes.break();
 mercedes.break();
+
+/////////////////////////////////////////////////////////////7
+// ES6 Classes (is the same as above but with a syntethic sugar syntax for people coming from other programming languages)
+
+// class expression
+// const Student = class {}
+
+// class declaration
+class Student {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+
+  // The methods that we declare here will be added to the prototype of the object, same as before. This is only a 'nicer' syntax to do exactly de same
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+}
+
+const jessica = new Student('Jessica', 1996);
+console.log(jessica.__proto__);
+console.log(jessica.__proto__ === Student.prototype); // true
+jessica.calcAge();
+
+// 1. Classes are NOT hoisted
+// 2. Classes are first-class citizes
+// 3. Classes are executed in strict mode event if the document wasnt
