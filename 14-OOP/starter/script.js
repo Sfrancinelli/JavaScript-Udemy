@@ -256,7 +256,7 @@ sarah.init('Sarah', 1979);
 
 ////////////////////////////////////////////////////////////////////7
 // CODING CHALLENGE #2
-class Car2 {
+class CarCl {
   constructor(make, speed) {
     this.make = make;
     this.speed = speed;
@@ -280,8 +280,45 @@ class Car2 {
   }
 }
 
-const ford = new Car2('Ford', 120);
+const ford = new CarCl('Ford', 120);
 console.log(ford.speedUS);
 ford.accelerate();
 ford.speedUS = 50; // m/h
 console.log(ford); // 80 km/h
+
+/////////////////////////////////////////////////////////////
+// INheritance Between "Classes": Constructor functions
+
+const PersonClass = function (firstName, birthYear) {
+  (this.firstName = firstName), (this.birthYear = birthYear);
+};
+
+PersonClass.prototype.calcAge = function () {
+  console.log(2023 - this.birthYear);
+};
+
+const StudentClass = function (firstName, birthYear, course) {
+  PersonClass.call(this, firstName, birthYear);
+  this.course = course;
+};
+// Its very importart to create this conection. The Student prototype MUST inherit from the Person prototype to adopt its methods and so.
+StudentClass.prototype = Object.create(PersonClass.prototype);
+
+StudentClass.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const mike = new StudentClass('Mike', 2020, 'Computer Science');
+console.log(mike);
+mike.introduce();
+mike.calcAge();
+
+console.log(mike instanceof StudentClass); // true
+console.log(mike instanceof PersonClass); // true
+console.log(mike instanceof Object); // true
+
+// Setting the constructor of mike to the Student constructor
+Student.prototype.constructor = Student;
+
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
