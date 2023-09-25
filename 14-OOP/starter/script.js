@@ -322,3 +322,36 @@ Student.prototype.constructor = Student;
 
 console.log(mike.__proto__);
 console.log(mike.__proto__.__proto__);
+
+/////////////////////////////////////////////////////////////
+// CODING CHALLENGE #3
+
+const Ev = function (make, speed, charge) {
+  Car.call(this, make, speed);
+  this.charge = charge;
+};
+
+Ev.prototype = Object.create(Car.prototype);
+
+Ev.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+};
+
+Ev.prototype.accelerate = function () {
+  this.speed += 20;
+  this.charge--;
+  console.log(
+    `'${this.make}' going at ${this.speed} km/h, with a charge of ${this.charge}%`
+  );
+};
+
+const tesla = new Ev('Tesla', 100, 50);
+console.log(tesla);
+tesla.chargeBattery(90);
+tesla.accelerate();
+tesla.accelerate();
+tesla.accelerate();
+tesla.accelerate();
+tesla.break();
+tesla.break();
+tesla.break();
