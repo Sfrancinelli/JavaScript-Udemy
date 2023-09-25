@@ -355,3 +355,34 @@ tesla.accelerate();
 tesla.break();
 tesla.break();
 tesla.break();
+
+/////////////////////////////////////////////////////////////
+// Inheritance Between "Classes": ES6 Classes
+
+// Only with the extends keyword, the prototypes are linked
+class Oyente extends Student {
+  constructor(fullName, birthYear, course) {
+    // Instead of calling the function of the parent class like before, the super function is called. Always needs to happen first.
+    super(fullName, birthYear);
+    this.course = course;
+  }
+
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`);
+  }
+
+  calcAge() {
+    console.log(
+      `I'm ${
+        2023 - this.birthYear
+      } years old, but as a student I fell more like ${
+        2023 - this.birthYear + 10
+      }`
+    );
+  }
+}
+
+const martha = new Oyente('Martha Jones', 2000, 'Computer Science');
+console.log(martha);
+martha.introduce();
+martha.calcAge();
