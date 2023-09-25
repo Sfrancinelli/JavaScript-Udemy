@@ -386,3 +386,34 @@ const martha = new Oyente('Martha Jones', 2000, 'Computer Science');
 console.log(martha);
 martha.introduce();
 martha.calcAge();
+
+/////////////////////////////////////////////////////////////
+// Inheritance Between "Classes": Object.create
+
+const PersonPrototype = {
+  calcAge() {
+    console.log(2023 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const sebastian = Object.create(PersonPrototype);
+
+const StudentProto = Object.create(PersonPrototype);
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonPrototype.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const jay = Object.create(StudentProto);
+jay.init('Jay', 2000, 'Computer Science');
+jay.introduce();
+jay.calcAge();
