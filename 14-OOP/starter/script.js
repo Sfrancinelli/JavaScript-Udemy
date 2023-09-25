@@ -138,8 +138,8 @@ mercedes.break();
 
 // class declaration
 class Student {
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
     this.birthYear = birthYear;
   }
 
@@ -147,13 +147,78 @@ class Student {
   calcAge() {
     console.log(2037 - this.birthYear);
   }
+
+  get age() {
+    return 2037 - this.birthYear;
+  }
+
+  // Set a property that already exists (in this case the setter is there for validation purposes)
+  set fullName(name) {
+    console.log(name);
+    if (name.includes(' ')) {
+      // The property is created with an underscore in order to avoid an error caused by the constructor and a setter trying to create the same property.
+      this._fullName = name;
+    } else {
+      alert(`${name} is not a full name!`);
+    }
+  }
+
+  get fullName() {
+    // This getter is created to return a value for the "property" fullName althought the property itself doesnt exists, the name is _fullName
+    return this._fullName;
+  }
+
+  // To create an static method with ES6 classes, its only needed to use the "static" keyword
+  static heyThere() {
+    console.log('Hey there 👋');
+    console.log(this);
+  }
 }
 
-const jessica = new Student('Jessica', 1996);
+const jessica = new Student('Jessica Davis', 1996);
+console.log(jessica);
 console.log(jessica.__proto__);
 console.log(jessica.__proto__ === Student.prototype); // true
 jessica.calcAge();
+console.log(jessica.age);
+
+const walter = new Student('Walter White', 1965);
+console.log(walter);
 
 // 1. Classes are NOT hoisted
 // 2. Classes are first-class citizes
 // 3. Classes are executed in strict mode event if the document wasnt
+
+/////////////////////////////////////////////////////////////
+// Getters and setters
+
+const accounts = {
+  owner: 'jonas',
+  movements: [200, 520, 120, 300],
+
+  // To create a getter the only thing to do is prepend the "get" keyword before the method
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+
+  // To create a setter the only thing to do is prepend the "set" keyword before the method
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+};
+
+// The getter is "called" like a property, and it shows the return value
+console.log(accounts.latest);
+
+// Calling the setter
+accounts.latest = 50;
+console.log(accounts.movements, accounts.latest);
+
+// To add static methods: (like Number.parseFloat, Array.from, etc)
+Student.hey = function () {
+  console.log('Hey there 👋');
+};
+
+Student.hey();
+// This "hey" method will not be inherited by the instances because is an static method from the class itself and NOT in the prototype
+Student.heyThere();
