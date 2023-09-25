@@ -222,3 +222,34 @@ Student.hey = function () {
 Student.hey();
 // This "hey" method will not be inherited by the instances because is an static method from the class itself and NOT in the prototype
 Student.heyThere();
+
+///////////////////////////////////////////////////////////////////
+// Different way of creating classes than constructor functions and ES6 classes.
+// Object.create
+
+// Its important to create the prototype for the Person class as an object literal:
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  calcActualAge() {
+    console.log(2023 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+// Create the person object with the PersonProto as the prototype linked
+const steven = Object.create(PersonProto);
+console.log(steven.__proto__);
+(steven.name = 'Steven'), (steven.birthYear = 2002);
+
+steven.calcActualAge();
+
+// Editing objects programatically and not like above
+const sarah = Object.create(PersonProto);
+sarah.init('Sarah', 1979);
