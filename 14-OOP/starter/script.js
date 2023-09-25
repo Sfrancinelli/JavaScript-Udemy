@@ -417,3 +417,51 @@ const jay = Object.create(StudentProto);
 jay.init('Jay', 2000, 'Computer Science');
 jay.introduce();
 jay.calcAge();
+
+///////////////////////////////////////////////////////////
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.locale = navigator.language;
+
+    console.log(`Thanks for opening an account, ${owner}!`);
+  }
+
+  // Public interface
+  deposit(val) {
+    this.movements.push(val);
+  }
+
+  withdrawl(val) {
+    this.deposit(-val);
+  }
+
+  aproveLoan(val) {
+    return true;
+  }
+
+  requestLoan(val) {
+    if (this.aproveLoan(val)) {
+      this.deposit(val);
+      console.log('Loan approved');
+    }
+  }
+}
+
+const acc1 = new Account('Jonas', 'EUR', 1111);
+console.log(acc1);
+
+// Bad practice
+// acc1.movements.push(250);
+// acc1.movements.push(-1250);
+// console.log(acc1);
+
+// Good practice with methods in the class that modifies this
+acc1.deposit(250);
+acc1.withdrawl(140);
+acc1.requestLoan(1000);
+
+console.log(acc1);
