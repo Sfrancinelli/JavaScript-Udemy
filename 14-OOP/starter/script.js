@@ -518,3 +518,60 @@ acc1
   .withdrawl(4000);
 
 console.log(acc1.movements);
+
+/////////////////////////////////////////////////////////////////
+// CODING CHALLENGE #4
+
+class EVCl extends CarCl {
+  #charge;
+
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
+
+  accelerate() {
+    this.speed += 10;
+    this.#charge--;
+    console.log(
+      `${this.make} is going at ${this.speed} km/h, with a charge of ${
+        this.#charge
+      }`
+    );
+    return this;
+  }
+
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+    return this;
+  }
+
+  break() {
+    this.speed -= 5;
+    console.log(
+      `'${this.make}' going at ${this.speed} km/h, with a charge of ${
+        this.#charge
+      }`
+    );
+    return this;
+  }
+}
+
+const rivian = new EVCl('Rivian', 100, 50);
+
+console.log(rivian);
+
+rivian
+  .accelerate()
+  .chargeBattery(70)
+  .accelerate()
+  .break()
+  .break()
+  .break()
+  .chargeBattery(90)
+  .accelerate()
+  .accelerate()
+  .accelerate()
+  .accelerate();
+
+console.log(rivian.speedUS);
