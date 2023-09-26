@@ -459,10 +459,12 @@ class Account {
 
   deposit(val) {
     this.#movements.push(val);
+    return this;
   }
 
   withdrawl(val) {
     this.deposit(-val);
+    return this;
   }
 
   // Protected method
@@ -474,6 +476,7 @@ class Account {
     if (this.#approveLoan(val)) {
       this.deposit(val);
       console.log('Loan approved');
+      return this;
     }
   }
 
@@ -503,4 +506,15 @@ console.log(acc1);
 
 // ENCAPSULATION
 // To prevent code from outside of a class to manipulate our data inside the class
+console.log(acc1.movements);
+
+// Chaining methods
+// Its necessary to return the instance objects itself for the chaining of methods to work. To do that, we return the "this" kewyword (the object)
+acc1
+  .deposit(300)
+  .deposit(500)
+  .withdrawl(350)
+  .requestLoan(25000)
+  .withdrawl(4000);
+
 console.log(acc1.movements);
