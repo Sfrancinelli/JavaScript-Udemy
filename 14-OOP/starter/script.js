@@ -420,34 +420,66 @@ jay.calcAge();
 
 ///////////////////////////////////////////////////////////
 class Account {
+  // 1) Public fields
+  // The public fields are added on the intances and NOT on the prototype. Is kinda like a DIRECT inheritance
+  // This are also referenceable with the "this" keyword!
+  locale = navigator.language;
+  // movements = [];
+
+  // 2) Private fields
+  // To make a method or a property really private its necessary to use the '#' symbol.
+  #movements = [];
+  // To make a property which value is received in the constructor function private, its necessary to declare it as a private field with no value and then set the value in the constructor function
+  #pin;
+
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this.pin = pin;
-    this.movements = [];
-    this.locale = navigator.language;
+    this.#pin = pin;
+    // Protected property
+    // this._movements = [];
+    // this.locale = navigator.language;
 
     console.log(`Thanks for opening an account, ${owner}!`);
   }
 
-  // Public interface
+  // 3) Public interface / Public methods
+  get movements() {
+    return this.#movements;
+  }
+
+  get pin() {
+    return this.#pin;
+  }
+
+  set pin(value) {
+    value = String(value);
+    if (value.length === 4) this.#pin = Number(value);
+  }
+
   deposit(val) {
-    this.movements.push(val);
+    this.#movements.push(val);
   }
 
   withdrawl(val) {
     this.deposit(-val);
   }
 
-  aproveLoan(val) {
-    return true;
-  }
+  // Protected method
+  //   _aproveLoan(val) {
+  //     return true;
+  //   }
 
   requestLoan(val) {
-    if (this.aproveLoan(val)) {
+    if (this.#approveLoan(val)) {
       this.deposit(val);
       console.log('Loan approved');
     }
+  }
+
+  // 4) Private methods
+  #approveLoan(val) {
+    return true;
   }
 }
 
@@ -455,13 +487,20 @@ const acc1 = new Account('Jonas', 'EUR', 1111);
 console.log(acc1);
 
 // Bad practice
-// acc1.movements.push(250);
+// acc1._movements.push(250);
 // acc1.movements.push(-1250);
 // console.log(acc1);
 
 // Good practice with methods in the class that modifies this
 acc1.deposit(250);
+acc1.deposit(2500);
 acc1.withdrawl(140);
 acc1.requestLoan(1000);
 
+acc1.pin = 4455;
+
 console.log(acc1);
+
+// ENCAPSULATION
+// To prevent code from outside of a class to manipulate our data inside the class
+console.log(acc1.movements);
