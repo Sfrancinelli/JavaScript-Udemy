@@ -13,99 +13,118 @@ const inputElevation = document.querySelector('.form__input--elevation');
 
 let map, mapEvent;
 
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
-    function (position) {
-      console.log(position);
-      const { latitude } = position.coords;
-      const { longitude } = position.coords;
-      console.log(latitude, longitude);
-      console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
+class App {
+  #map;
+  #mapEvent;
 
-      const coords = [latitude, longitude];
+  constructor() {
+    this._getPosition();
 
-      map = L.map('map').setView(coords, 16); // The second attr is the zoom lvl
+    // Event listener to check the change of the select input
+    inputType.addEventListener('change', this._toggleElevationField.bind(this));
 
-      L.tileLayer('https://tile.openstreetmap.fr/hot//{z}/{x}/{y}.png', {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).addTo(map);
+    this.className;
+    this.content;
 
-      // Handling clicks on map
-      map.on('click', function (mapE) {
-        // console.log(mapEvent);
-        mapEvent = mapE;
+    form.addEventListener('submit', this._newWorkout.bind(this));
+  }
 
-        form.classList.remove('hidden');
-        inputDistance.focus();
-      });
-    },
-    function () {
-      alert('Could not get your position');
+  _getPosition() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        this._loadMap.bind(this),
+        function () {
+          alert('Could not get your position');
+        }
+      );
     }
-  );
+  }
+
+  _loadMap(position) {
+    console.log(position);
+    const { latitude } = position.coords;
+    const { longitude } = position.coords;
+    console.log(latitude, longitude);
+    console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
+
+    const coords = [latitude, longitude];
+
+    this.#map = L.map('map').setView(coords, 16); // The second attr is the zoom lvl
+
+    L.tileLayer('https://tile.openstreetmap.fr/hot//{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(this.#map);
+
+    // Handling clicks on map
+    this.#map.on('click', this._showForm.bind(this));
+  }
+
+  _showForm(mapE) {
+    this.#mapEvent = mapE;
+    form.classList.remove('hidden');
+    inputDistance.focus();
+  }
+
+  _toggleElevationField() {
+    inputCadence.parentNode.classList.toggle('form__row--hidden');
+    inputElevation.parentNode.classList.toggle('form__row--hidden');
+  }
+
+  _newWorkout(e) {
+    e.preventDefault();
+
+    console.log(inputType.value);
+    console.log(inputDistance.value);
+    console.log(inputDuration.value);
+    console.log(inputCadence.value);
+    console.log(inputElevation.value);
+
+    // Clearing input fields
+    inputDistance.value =
+      inputDuration.value =
+      inputCadence.value =
+      inputElevation.value =
+        '';
+
+    // Getting the current date
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+
+    const options = { month: 'long' };
+    const mm = new Intl.DateTimeFormat('en-US', options).format(today);
+
+    // Setting up the options for the marker according to action
+    if (inputType.value === 'cycling') {
+      this.className = 'cycling-popup';
+      this.content = `🚴‍♂️ Cycling on ${mm} ${dd}`;
+    }
+    if (inputType.value === 'running') {
+      this.className = 'running-popup';
+      this.content = `🏃‍♂️ Running on ${mm} ${dd}`;
+    }
+
+    // Getting the coordinates for marker
+    const { lat, lng } = this.#mapEvent.latlng;
+    console.log(`${lat}, ${lng}`);
+
+    // Display a marker
+    L.marker([lat, lng])
+      .addTo(this.#map)
+      .bindPopup(
+        L.popup({
+          maxWidth: 250,
+          minWidth: 100,
+          autoClose: false,
+          closeOnClick: false,
+          className: `${this.className}`,
+        })
+      )
+      .setPopupContent(`${this.content}`)
+      .openPopup();
+
+    form.classList.add('hidden');
+  }
 }
 
-// Event listener to check the change of the select input
-inputType.addEventListener('change', function () {
-  inputCadence.parentNode.classList.toggle('form__row--hidden');
-  inputElevation.parentNode.classList.toggle('form__row--hidden');
-});
-
-let className;
-let content;
-
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  console.log(inputType.value);
-  console.log(inputDistance.value);
-  console.log(inputDuration.value);
-  console.log(inputCadence.value);
-  console.log(inputElevation.value);
-
-  // Clearing input fields
-  inputDistance.value =
-    inputDuration.value =
-    inputCadence.value =
-    inputElevation.value =
-      '';
-
-  // Getting the current date
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, '0');
-
-  const options = { month: 'long' };
-  const mm = new Intl.DateTimeFormat('en-US', options).format(today);
-
-  // Setting up the options for the marker according to action
-  if (inputType.value === 'cycling') {
-    className = 'cycling-popup';
-    content = `🚴‍♂️ Cycling on ${mm} ${dd}`;
-  }
-  if (inputType.value === 'running') {
-    className = 'running-popup';
-    content = `🏃‍♂️ Running on ${mm} ${dd}`;
-  }
-
-  // Getting the coordinates for marker
-  const { lat, lng } = mapEvent.latlng;
-  console.log(`${lat}, ${lng}`);
-
-  // Display a marker
-  L.marker([lat, lng])
-    .addTo(map)
-    .bindPopup(
-      L.popup({
-        maxWidth: 250,
-        minWidth: 100,
-        autoClose: false,
-        closeOnClick: false,
-        className: `${className}`,
-      })
-    )
-    .setPopupContent(`${content}`)
-    .openPopup();
-
-  form.classList.add('hidden');
-});
+const app = new App();
