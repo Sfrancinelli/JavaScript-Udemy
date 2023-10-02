@@ -120,6 +120,39 @@ class App {
   _newWorkout(e) {
     e.preventDefault();
 
+    // Get data form form
+    const type = inputType.value;
+    const distance = Number(inputDistance.value);
+    const duration = Number(inputDuration.value);
+    const cadence = Number(inputCadence.value);
+    const elevation = Number(inputElevation.value);
+
+    console.log(type, distance, Number(duration), cadence, elevation);
+    console.log(typeof duration);
+
+    // Check if data is valid
+    if (Number(distance) <= 0) {
+      alert('Please input a positive distance');
+    } else if (Number(duration) <= 0) {
+      alert('Please enter a positive duration');
+    } else if (type === 'running') {
+      if (Number(cadence) <= 0) {
+        alert('Please enter a positive duration');
+      } else {
+        // Create running object
+      }
+    } else if (type === 'cycling') {
+      if (elevation <= 0) {
+        alert('Please enter a positive elevation');
+      } else {
+        // Create cycling object
+      }
+    }
+
+    // If activity is running, create running object
+
+    // If activity is cycling, create cycling object
+
     console.log(inputType.value);
     console.log(inputDistance.value);
     console.log(inputDuration.value);
