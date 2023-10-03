@@ -377,15 +377,6 @@ class App {
 
     workoutEl.remove();
     this._setLocalStorage();
-
-    // this.#map.setView(workout.coords, 16, {
-    //   animate: true,
-    //   pan: {
-    //     duration: 1,
-    //   },
-    // });
-
-    // // workout.click();
   }
 
   reset() {
