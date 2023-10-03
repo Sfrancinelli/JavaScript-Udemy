@@ -86,6 +86,30 @@ a:visited {
 
 .workout--delete {
   grid-column: 4/5;
+  background-color: #dedfe0;
+  border-color: #dedfe0;
+  padding: 0.3rem 0.6rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  border-width: 1px;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  border-radius: 0.375rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
+  width: 40px;
+  height: 30px;
+  margin-left: auto;
+  box-shadow: none;
+}
+
+.workout--delete:hover {
+  /* background-color: #dc3545; */
+  color: #dc3545;
+  /* border-color: #dc3545; */
 }
 
 .workout__title {
