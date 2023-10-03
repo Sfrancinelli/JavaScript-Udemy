@@ -89,6 +89,7 @@ class App {
     inputType.addEventListener('change', this._toggleElevationField.bind(this));
     form.addEventListener('submit', this._newWorkout.bind(this));
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+    containerWorkouts.addEventListener('click', this._deleteWorkout.bind(this));
   }
 
   _getPosition() {
@@ -317,7 +318,7 @@ class App {
 
     const id = workoutEl.dataset.id;
     const workout = this.#workouts.find(work => work.id === id);
-    console.log(workout);
+    // console.log(workout);
 
     this.#map.setView(workout.coords, 16, {
       animate: true,
@@ -349,6 +350,42 @@ class App {
     this.#workouts.forEach(work => {
       this._renderWorkout(work);
     });
+  }
+
+  _deleteWorkout(e) {
+    if (
+      e.target.classList.contains('workout--delete') ||
+      e.target.classList.contains('bi-trash')
+    )
+      console.log(e.target);
+    const deleteBtn = e.target.closest('.workout--delete');
+    console.log(deleteBtn);
+
+    if (!deleteBtn) return;
+
+    const workoutEl = deleteBtn.parentNode;
+    console.log(workoutEl);
+
+    const id = workoutEl.dataset.id;
+    const workout = this.#workouts.find(work => work.id === id);
+    console.log(workout);
+
+    const index = this.#workouts.indexOf(workout);
+    console.log(index);
+    const removedWorkout = this.#workouts.splice(index, 1);
+    console.log(removedWorkout);
+
+    workoutEl.remove();
+    this._setLocalStorage();
+
+    // this.#map.setView(workout.coords, 16, {
+    //   animate: true,
+    //   pan: {
+    //     duration: 1,
+    //   },
+    // });
+
+    // // workout.click();
   }
 
   reset() {
