@@ -86,6 +86,7 @@ class App {
   #map;
   #mapEvent;
   #workouts = [];
+  deleteBtn;
 
   constructor() {
     // Get user's position
@@ -373,21 +374,21 @@ class App {
   }
 
   _createDelBtn(e) {
-    let deleteBtn = null;
+    this.deleteBtn = null;
     console.log(e.target.classList);
     if (
       e.target.classList.contains('workout--delete') ||
       e.target.classList.contains('bi-trash')
     ) {
       console.log(e.target);
-      deleteBtn = e.target.closest('.workout--delete');
-      console.log(deleteBtn);
+      this.deleteBtn = e.target.closest('.workout--delete');
+      console.log(this.deleteBtn);
     }
 
-    if (!deleteBtn) return;
+    if (!this.deleteBtn) return;
 
     this._openModal(e);
-    deleteBtn.addEventListener('click', this._openModal.bind(this));
+    this.deleteBtn.addEventListener('click', this._openModal.bind(this));
   }
 
   _openModal(e) {
@@ -402,9 +403,11 @@ class App {
     overlay.classList.add('hidden');
   }
 
-  _deleteWorkout() {
-    const workoutEl = deleteBtn.parentNode;
+  _deleteWorkout(e) {
+    e.preventDefault();
+    const workoutEl = this.deleteBtn.parentNode;
     console.log(workoutEl);
+    console.log(this);
 
     const id = workoutEl.dataset.id;
     const workout = this.#workouts.find(work => work.id === id);
@@ -414,6 +417,8 @@ class App {
     console.log(index);
     const removedWorkout = this.#workouts.splice(index, 1);
     console.log(removedWorkout);
+
+    this._closeModal(e);
 
     workoutEl.remove();
     this._setLocalStorage();
