@@ -96,7 +96,7 @@ class App {
     inputType.addEventListener('change', this._toggleElevationField.bind(this));
     form.addEventListener('submit', this._newWorkout.bind(this));
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
-    containerWorkouts.addEventListener('click', this._deleteWorkout.bind(this));
+    containerWorkouts.addEventListener('click', this._createDelBtn.bind(this));
     btnCloseModal.addEventListener('click', this._closeModal);
     overlay.addEventListener('click', this._closeModal);
   }
@@ -368,33 +368,22 @@ class App {
     });
   }
 
-  _deleteWorkout(e) {
+  _createDelBtn(e) {
+    let deleteBtn = null;
+    console.log(e.target.classList);
     if (
       e.target.classList.contains('workout--delete') ||
       e.target.classList.contains('bi-trash')
-    )
+    ) {
       console.log(e.target);
-    const deleteBtn = e.target.closest('.workout--delete');
-    deleteBtn.addEventListener('click', this._openModal.bind(this));
-    this._openModal(e);
-    console.log(deleteBtn);
+      deleteBtn = e.target.closest('.workout--delete');
+      console.log(deleteBtn);
+    }
 
     if (!deleteBtn) return;
 
-    // const workoutEl = deleteBtn.parentNode;
-    // console.log(workoutEl);
-
-    // const id = workoutEl.dataset.id;
-    // const workout = this.#workouts.find(work => work.id === id);
-    // console.log(workout);
-
-    // const index = this.#workouts.indexOf(workout);
-    // console.log(index);
-    // const removedWorkout = this.#workouts.splice(index, 1);
-    // console.log(removedWorkout);
-
-    // workoutEl.remove();
-    // this._setLocalStorage();
+    this._openModal(e);
+    deleteBtn.addEventListener('click', this._openModal.bind(this));
   }
 
   _openModal(e) {
@@ -406,6 +395,23 @@ class App {
   _closeModal() {
     modal.classList.add('hidden');
     overlay.classList.add('hidden');
+  }
+
+  _deleteWorkout() {
+    const workoutEl = deleteBtn.parentNode;
+    console.log(workoutEl);
+
+    const id = workoutEl.dataset.id;
+    const workout = this.#workouts.find(work => work.id === id);
+    console.log(workout);
+
+    const index = this.#workouts.indexOf(workout);
+    console.log(index);
+    const removedWorkout = this.#workouts.splice(index, 1);
+    console.log(removedWorkout);
+
+    workoutEl.remove();
+    this._setLocalStorage();
   }
 
   reset() {
