@@ -256,9 +256,9 @@ class App {
   _renderWorkoutMarker(workout) {
     const myIcon = L.icon({
       iconUrl: 'icon.png',
-      iconSize: [45, 45],
-      iconAnchor: [25, 82],
-      popupAnchor: [-3, -76],
+      iconSize: [40, 40],
+      iconAnchor: [22, 40],
+      popupAnchor: [-2, -35],
     });
 
     // Display a marker
