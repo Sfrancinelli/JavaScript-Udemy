@@ -131,7 +131,7 @@ class App {
 
     this.#map = L.map('map').setView(coords, 14); // The second attr is the zoom lvl
 
-    this.#map.locate({ setView: true, maxZoom: 16 });
+    this.#map.locate({ setView: true, maxZoom: 16 }); // Zooming on current location
 
     // this.#map = L.map('map').locate({ setView: true, maxZoom: 16 });
 
