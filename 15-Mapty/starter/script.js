@@ -124,12 +124,16 @@ class App {
     // console.log(position);
     const { latitude } = position.coords;
     const { longitude } = position.coords;
-    // console.log(latitude, longitude);
+    console.log(latitude, longitude);
     // console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
 
     const coords = [latitude, longitude];
 
     this.#map = L.map('map').setView(coords, 14); // The second attr is the zoom lvl
+
+    this.#map.locate({ setView: true, maxZoom: 16 });
+
+    // this.#map = L.map('map').locate({ setView: true, maxZoom: 16 });
 
     L.tileLayer('https://tile.openstreetmap.fr/hot//{z}/{x}/{y}.png', {
       attribution:
@@ -143,12 +147,28 @@ class App {
       //   this._renderWorkout(work);
       this._renderWorkoutMarker(work);
     });
+
+    this.#map.on('locationfound', this._onLocationFound.bind(this));
   }
 
   _showForm(mapE) {
     this.#mapEvent = mapE;
     form.classList.remove('hidden');
     inputDistance.focus();
+  }
+
+  _onLocationFound(mapE) {
+    this.#mapEvent = mapE;
+
+    console.log(mapE);
+    const radius = mapE.accuracy;
+
+    L.marker(mapE.latlng)
+      .addTo(this.#map)
+      .bindPopup('You are within ' + radius + ' meters from this point')
+      .openPopup();
+
+    L.circle(mapE.latlng, radius).addTo(this.#map);
   }
 
   _hideForm() {
