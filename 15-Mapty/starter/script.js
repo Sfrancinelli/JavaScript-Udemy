@@ -3,6 +3,8 @@
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
+const btnNo = document.querySelector('.no');
+const btnYes = document.querySelector('.yes');
 
 const form = document.querySelector('.form');
 const containerWorkouts = document.querySelector('.workouts');
@@ -97,8 +99,10 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this));
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
     containerWorkouts.addEventListener('click', this._createDelBtn.bind(this));
-    btnCloseModal.addEventListener('click', this._closeModal);
-    overlay.addEventListener('click', this._closeModal);
+    btnCloseModal.addEventListener('click', this._closeModal.bind(this));
+    overlay.addEventListener('click', this._closeModal.bind(this));
+    btnNo.addEventListener('click', this._closeModal.bind(this));
+    btnYes.addEventListener('click', this._deleteWorkout.bind(this));
   }
 
   _getPosition() {
@@ -392,7 +396,8 @@ class App {
     overlay.classList.remove('hidden');
   }
 
-  _closeModal() {
+  _closeModal(e) {
+    e.preventDefault();
     modal.classList.add('hidden');
     overlay.classList.add('hidden');
   }
