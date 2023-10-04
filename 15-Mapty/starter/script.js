@@ -257,7 +257,7 @@ class App {
     const myIcon = L.icon({
       iconUrl: 'icon.png',
       iconSize: [45, 45],
-      iconAnchor: [22, 82],
+      iconAnchor: [25, 82],
       popupAnchor: [-3, -76],
     });
 
