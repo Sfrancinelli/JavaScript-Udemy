@@ -135,7 +135,7 @@ class App {
 
     // this.#map = L.map('map').locate({ setView: true, maxZoom: 16 });
 
-    L.tileLayer('https://tile.openstreetmap.fr/hot//{z}/{x}/{y}.png', {
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.#map);
@@ -161,7 +161,7 @@ class App {
     this.#mapEvent = mapE;
 
     console.log(mapE);
-    const radius = mapE.accuracy;
+    const radius = Math.floor(mapE.accuracy);
 
     L.marker(mapE.latlng)
       .addTo(this.#map)
