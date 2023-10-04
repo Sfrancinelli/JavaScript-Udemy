@@ -21,13 +21,16 @@ const inputElevation = document.querySelector('.form__input--elevation');
 // Workouts architecture
 class Workout {
   date = new Date();
-  id = Date.now() + ''.slice(-10);
+  static nextId = 1;
   clicks = 0;
+  marker;
 
   constructor(coords, distance, duration) {
     this.coords = coords; // [lat, lng]
     this.distance = distance; // in km
     this.duration = duration; // in min
+
+    this.id = Workout.nextId++; // Assing an unique id and increment the counter
   }
 
   _setDescription() {
@@ -247,7 +250,7 @@ class App {
     });
 
     // Display a marker
-    L.marker(workout.coords, { icon: myIcon })
+    workout.marker = L.marker(workout.coords, { icon: myIcon })
       .addTo(this.#map)
       .bindPopup(
         L.popup({
@@ -337,7 +340,7 @@ class App {
 
     if (!workoutEl) return;
 
-    const id = workoutEl.dataset.id;
+    const id = Number(workoutEl.dataset.id);
     const workout = this.#workouts.find(work => work.id === id);
     // console.log(workout);
 
@@ -356,17 +359,43 @@ class App {
   }
 
   _setLocalStorage() {
-    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+    const workoutData = this.#workouts.map(workout => ({
+      // Create a copy of workout data without circular references
+      id: workout.id,
+      coords: workout.coords,
+      distance: workout.distance,
+      duration: workout.duration,
+      type: workout.type,
+      cadence: workout.cadence,
+      elevation: workout.elevation,
+    }));
+
+    localStorage.setItem('workouts', JSON.stringify(workoutData));
   }
 
   _getLocalStorage() {
     const data = JSON.parse(localStorage.getItem('workouts'));
 
-    console.log(data);
-
     if (!data) return;
 
-    this.#workouts = data;
+    this.#workouts = data.map(workoutData => {
+      // Create workout objects from stored data
+      if (workoutData.type === 'running') {
+        return new Running(
+          workoutData.coords,
+          workoutData.distance,
+          workoutData.duration,
+          workoutData.cadence
+        );
+      } else if (workoutData.type === 'cycling') {
+        return new Cycling(
+          workoutData.coords,
+          workoutData.distance,
+          workoutData.duration,
+          workoutData.elevation
+        );
+      }
+    });
 
     this.#workouts.forEach(work => {
       this._renderWorkout(work);
@@ -406,17 +435,22 @@ class App {
   _deleteWorkout(e) {
     e.preventDefault();
     const workoutEl = this.deleteBtn.parentNode;
-    console.log(workoutEl);
-    console.log(this);
-
-    const id = workoutEl.dataset.id;
+    const id = Number(workoutEl.dataset.id);
     const workout = this.#workouts.find(work => work.id === id);
-    console.log(workout);
+
+    if (!workout) return; // Return early if workout not found
+
+    // Access the marker reference from the workout object and remove it from the map
+    if (workout.marker) {
+      this.#map.removeLayer(workout.marker);
+    }
 
     const index = this.#workouts.indexOf(workout);
-    console.log(index);
-    const removedWorkout = this.#workouts.splice(index, 1);
-    console.log(removedWorkout);
+
+    // Remove the workout from the workouts array
+    if (index !== -1) {
+      this.#workouts.splice(index, 1);
+    }
 
     this._closeModal(e);
 
