@@ -254,8 +254,15 @@ class App {
   }
 
   _renderWorkoutMarker(workout) {
+    const myIcon = L.icon({
+      iconUrl: 'icon.png',
+      iconSize: [45, 45],
+      iconAnchor: [22, 82],
+      popupAnchor: [-3, -76],
+    });
+
     // Display a marker
-    L.marker(workout.coords)
+    L.marker(workout.coords, { icon: myIcon })
       .addTo(this.#map)
       .bindPopup(
         L.popup({
