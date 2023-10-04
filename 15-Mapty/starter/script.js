@@ -3,7 +3,6 @@
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
-const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const form = document.querySelector('.form');
 const containerWorkouts = document.querySelector('.workouts');
@@ -15,27 +14,6 @@ const inputElevation = document.querySelector('.form__input--elevation');
 
 ///////////////////////////////////////
 // Modal window
-const openModal = function (e) {
-  e.preventDefault();
-  modal.classList.remove('hidden');
-  overlay.classList.remove('hidden');
-};
-
-const closeModal = function () {
-  modal.classList.add('hidden');
-  overlay.classList.add('hidden');
-};
-
-btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
-
-btnCloseModal.addEventListener('click', closeModal);
-overlay.addEventListener('click', closeModal);
-
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-    closeModal();
-  }
-});
 
 ///////////////////////////////////////////////////////////////////
 // Workouts architecture
@@ -119,6 +97,8 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this));
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
     containerWorkouts.addEventListener('click', this._deleteWorkout.bind(this));
+    btnCloseModal.addEventListener('click', this._closeModal);
+    overlay.addEventListener('click', this._closeModal);
   }
 
   _getPosition() {
@@ -395,24 +375,37 @@ class App {
     )
       console.log(e.target);
     const deleteBtn = e.target.closest('.workout--delete');
+    deleteBtn.addEventListener('click', this._openModal.bind(this));
+    this._openModal(e);
     console.log(deleteBtn);
 
     if (!deleteBtn) return;
 
-    const workoutEl = deleteBtn.parentNode;
-    console.log(workoutEl);
+    // const workoutEl = deleteBtn.parentNode;
+    // console.log(workoutEl);
 
-    const id = workoutEl.dataset.id;
-    const workout = this.#workouts.find(work => work.id === id);
-    console.log(workout);
+    // const id = workoutEl.dataset.id;
+    // const workout = this.#workouts.find(work => work.id === id);
+    // console.log(workout);
 
-    const index = this.#workouts.indexOf(workout);
-    console.log(index);
-    const removedWorkout = this.#workouts.splice(index, 1);
-    console.log(removedWorkout);
+    // const index = this.#workouts.indexOf(workout);
+    // console.log(index);
+    // const removedWorkout = this.#workouts.splice(index, 1);
+    // console.log(removedWorkout);
 
-    workoutEl.remove();
-    this._setLocalStorage();
+    // workoutEl.remove();
+    // this._setLocalStorage();
+  }
+
+  _openModal(e) {
+    e.preventDefault();
+    modal.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+  }
+
+  _closeModal() {
+    modal.classList.add('hidden');
+    overlay.classList.add('hidden');
   }
 
   reset() {

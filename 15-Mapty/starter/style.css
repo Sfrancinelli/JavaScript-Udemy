@@ -248,17 +248,50 @@ a:visited {
 }
 
 /* MODAL WINDOW */
+.btn {
+  display: inline-block;
+  background-color: var(--color-primary);
+  font-size: 1.6rem;
+  font-family: inherit;
+  font-weight: 500;
+  border: none;
+  padding: 1.25rem 4.5rem;
+  border-radius: 10rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.yes {
+  background-color: var(--color-brand--2);
+}
+
+.yes:hover {
+  background-color: #00ff73;
+}
+
+.no {
+  background-color: var(--color-brand--1);
+}
+
+.no:hover {
+  background-color: #ff9100;
+}
+
 .modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 60rem;
-  background-color: #f3f3f3;
+  max-width: 80rem;
+  min-width: 60rem;
+  background-color: var(--color-dark--1);
   padding: 5rem 6rem;
   box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.3);
+  border-radius: 5%;
   z-index: 1000;
   transition: all 0.5s;
+  display: grid;
+  grid-column: 2;
 }
 
 .overlay {
@@ -274,15 +307,16 @@ a:visited {
 }
 
 .modal__header {
-  font-size: 3.25rem;
-  margin-bottom: 4.5rem;
+  font-size: 2.6rem;
+  text-align: center;
+  margin-bottom: 2rem;
   line-height: 1.5;
 }
 
 .modal__form {
   margin: 0 3rem;
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 2.5rem;
 }
@@ -300,9 +334,14 @@ a:visited {
 }
 
 .modal__form button {
-  grid-column: 1 / span 2;
+  /* grid-column: 1 / span 2; */
   justify-self: center;
   margin-top: 1rem;
+}
+
+.modal img {
+  justify-self: center;
+  margin-bottom: 1rem;
 }
 
 .btn--close-modal {
