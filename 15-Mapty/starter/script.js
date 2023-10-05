@@ -214,21 +214,47 @@ class App {
     // Initializing the workout variable for future workouts
     let workout;
 
+    // Initializing html variable to show error
+    let html;
+
     // Check if data is valid
     if (!Number.isFinite(distance) || !Number.isFinite(duration)) {
-      return alert('The distance and duration inputs MUST be numbers!');
+      html = `       
+      <div class="validation__msg">
+        The distance and duration inputs<span class="positive__numbers">
+        MUST be numbers!</span>
+      </div>`;
+      console.log(html);
     }
     if (distance <= 0) {
-      alert('Please input a positive distance');
+      html = `
+      <div class="validation__msg">
+      Please input a <span class="positive__numbers">
+      positive distance</span>
+    </div>`;
+      console.log(html);
     } else if (Number(duration) <= 0) {
-      alert('Please enter a positive duration');
+      html = `
+      <div class="validation__msg">
+      Please enter a <span class="positive__numbers">
+      positive duration</span>
+    </div>`;
+      console.log(html);
     } else if (type === 'running') {
       if (!Number.isFinite(cadence)) {
-        return alert(
-          'Cadence MUST be a number that represents the step per minute count!'
-        );
+        html = `
+        <div class="validation__msg">
+        Cadence MUST be a number that represents<span class="positive__numbers">
+         the step per minute count!</span>
+      </div>`;
+        console.log(html);
       } else if (Number(cadence) <= 0) {
-        alert('Please enter a positive cadence');
+        html = `
+        <div class="validation__msg">
+        Please enter a <span class="positive__numbers">
+        positive cadence</span>
+      </div>`;
+        console.log(html);
       } else {
         // Create running object
         workout = new Running([lat, lng], distance, duration, cadence);
@@ -237,15 +263,28 @@ class App {
       }
     } else if (type === 'cycling') {
       if (!Number.isFinite(elevation)) {
-        return alert(
-          'Elevation MUST be a number that represents the meters of elevation!'
-        );
+        html = `
+        <div class="validation__msg">
+        Elevation MUST be a number that represents <span class="positive__numbers">
+        the meters of elevation!</span>
+      </div>`;
+        console.log(html);
       } else {
         // Create cycling object
         workout = new Cycling([lat, lng], distance, duration, elevation);
         // console.log(workout);
         this.#workouts.push(workout);
       }
+    }
+
+    if (html) {
+      const form = document.querySelector('.form');
+      form.insertAdjacentHTML('afterend', html);
+      const validationMsg = document.querySelector('.validation__msg');
+      validationMsg.classList.add('msg__show');
+      setTimeout(() => {
+        validationMsg.classList.remove('msg__show');
+      }, 1000);
     }
 
     // Render workout on map as marker
@@ -424,7 +463,7 @@ class App {
 
   _createDelBtn(e) {
     this.deleteBtn = null;
-    console.log(e.target.classList);
+    // console.log(e.target.classList);
     if (
       e.target.classList.contains('workout--delete') ||
       e.target.classList.contains('bi-trash')
