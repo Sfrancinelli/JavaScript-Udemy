@@ -384,8 +384,9 @@ class App {
       </div>
     </li>`;
     }
-
-    form.insertAdjacentHTML('afterend', html);
+    const sortDivider = document.querySelector('.sort__devider');
+    // form.insertAdjacentHTML('afterend', html);
+    sortDivider.insertAdjacentHTML('afterend', html);
   }
 
   _moveToPopup(e) {
