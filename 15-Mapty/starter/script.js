@@ -94,6 +94,7 @@ class App {
   #workouts = [];
   deleteBtn;
   showSort = false;
+  #sorted = false;
 
   constructor() {
     // Get user's position
@@ -393,6 +394,10 @@ class App {
     sortDivider.insertAdjacentHTML('afterend', html);
   }
 
+  _removeRendedWorkouts() {
+    document.querySelectorAll('.workout').forEach(work => work.remove());
+  }
+
   _moveToPopup(e) {
     const workoutEl = e.target.closest('.workout');
 
@@ -524,6 +529,26 @@ class App {
       sortContainer.classList.add('zero__height');
       this.showSort = false;
     }
+  }
+
+  _sortWorkouts() {
+    let sortedWorkouts;
+    let unsortedWorks;
+    if (this.#sorted === false) {
+      console.log(this);
+      unsortedWorks = this.#workouts.map(work => work);
+      sortedWorkouts = this.#workouts.sort((work1, work2) => {
+        if (work1.distance > work2.distance) return 1;
+        if (work1.distance < work2.distance) return -1;
+        return 0;
+      });
+    } else {
+      this.#workouts = unsortedWorks;
+    }
+
+    console.log(sortedWorkouts);
+    this._removeRendedWorkouts();
+    sortedWorkouts.forEach(work => this._renderWorkout(work));
   }
 
   reset() {
