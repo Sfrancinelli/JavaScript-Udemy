@@ -224,7 +224,6 @@ class App {
         The distance and duration inputs<span class="positive__numbers">
         MUST be numbers!</span>
       </div>`;
-      console.log(html);
     }
     if (distance <= 0) {
       html = `
@@ -232,14 +231,12 @@ class App {
       Please input a <span class="positive__numbers">
       positive distance</span>
     </div>`;
-      console.log(html);
     } else if (Number(duration) <= 0) {
       html = `
       <div class="validation__msg">
       Please enter a <span class="positive__numbers">
       positive duration</span>
     </div>`;
-      console.log(html);
     } else if (type === 'running') {
       if (!Number.isFinite(cadence)) {
         html = `
@@ -247,14 +244,12 @@ class App {
         Cadence MUST be a number that represents<span class="positive__numbers">
          the step per minute count!</span>
       </div>`;
-        console.log(html);
       } else if (Number(cadence) <= 0) {
         html = `
         <div class="validation__msg">
         Please enter a <span class="positive__numbers">
         positive cadence</span>
       </div>`;
-        console.log(html);
       } else {
         // Create running object
         workout = new Running([lat, lng], distance, duration, cadence);
@@ -268,7 +263,6 @@ class App {
         Elevation MUST be a number that represents <span class="positive__numbers">
         the meters of elevation!</span>
       </div>`;
-        console.log(html);
       } else {
         // Create cycling object
         workout = new Cycling([lat, lng], distance, duration, elevation);
