@@ -14,6 +14,8 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 const sortDivider = document.querySelector('.sort__devider');
+const sortBtn = document.querySelector('.show__sort__btns');
+const sortContainer = document.querySelector('.sort__buttons__container');
 
 ///////////////////////////////////////
 // Modal window
@@ -91,6 +93,7 @@ class App {
   #mapEvent;
   #workouts = [];
   deleteBtn;
+  showSort = false;
 
   constructor() {
     // Get user's position
@@ -108,6 +111,7 @@ class App {
     overlay.addEventListener('click', this._closeModal.bind(this));
     btnNo.addEventListener('click', this._closeModal.bind(this));
     btnYes.addEventListener('click', this._deleteWorkout.bind(this));
+    sortBtn.addEventListener('click', this._sortBtn.bind(this));
   }
 
   _getPosition() {
@@ -510,6 +514,16 @@ class App {
 
     workoutEl.remove();
     this._setLocalStorage();
+  }
+
+  _sortBtn() {
+    if (this.showSort === false || this.showSort === undefined) {
+      sortContainer.classList.remove('zero__height');
+      this.showSort = true;
+    } else if (this.showSort === true) {
+      sortContainer.classList.add('zero__height');
+      this.showSort = false;
+    }
   }
 
   reset() {
