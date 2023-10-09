@@ -113,6 +113,8 @@ class App {
     btnNo.addEventListener('click', this._closeModal.bind(this));
     btnYes.addEventListener('click', this._deleteWorkout.bind(this));
     sortBtn.addEventListener('click', this._sortBtn.bind(this));
+
+    this.sorted = 'down';
   }
 
   _getPosition() {
@@ -531,21 +533,128 @@ class App {
     }
   }
 
-  _sortWorkouts() {
+  _sortWorkouts(method) {
     let sortedWorkouts;
     let unsortedWorks;
+
     if (this.#sorted === false) {
       console.log(this);
-      unsortedWorks = this.#workouts.map(work => work);
-      sortedWorkouts = this.#workouts.sort((work1, work2) => {
-        if (work1.distance > work2.distance) return 1;
-        if (work1.distance < work2.distance) return -1;
-        return 0;
+      unsortedWorks = this.#workouts.map(work => {
+        console.log(work.method);
+        return work;
       });
+
+      if (method === 'date' && this.sorted === 'down') {
+        sortedWorkouts = this.#workouts.sort((work1, work2) => {
+          if (work1.id > work2.id) return 1;
+          if (work1.id < work2.id) return -1;
+          return 0;
+        });
+        console.log(sortedWorkouts);
+
+        this.sorted = 'up';
+      } else if (method === 'distance' && this.sorted === 'down') {
+        sortedWorkouts = this.#workouts.sort((work1, work2) => {
+          if (work1.distance > work2.distance) return 1;
+          if (work1.distance < work2.distance) return -1;
+          return 0;
+        });
+
+        this.sorted = 'up';
+      } else if (method === 'duration' && this.sorted === 'down') {
+        sortedWorkouts = this.#workouts.sort((work1, work2) => {
+          if (work1.duration > work2.duration) return 1;
+          if (work1.duration < work2.duration) return -1;
+          return 0;
+        });
+
+        this.sorted = 'up';
+      } else if (
+        (method === 'pace' && this.sorted === 'down') ||
+        (method === 'speed' && this.sorted === 'down')
+      ) {
+        sortedWorkouts = this.#workouts.sort((work1, work2) => {
+          if (work1.id > work2.id) return 1;
+          if (work1.id < work2.id) return -1;
+          return 0;
+        });
+
+        this.sorted = 'up';
+      } else if (method === 'cadence' && this.sorted === 'down') {
+        sortedWorkouts = this.#workouts.sort((work1, work2) => {
+          if (work1.cadence > work2.cadence) return 1;
+          if (work1.cadence < work2.cadence) return -1;
+          return 0;
+        });
+
+        this.sorted = 'up';
+      } else if (method === 'elevation' && this.sorted === 'down') {
+        sortedWorkouts = this.#workouts.sort((work1, work2) => {
+          if (work1.elevation > work2.elevation) return 1;
+          if (work1.elevation < work2.elevation) return -1;
+          return 0;
+        });
+
+        this.sorted = 'up';
+      }
+
+      if (method === 'date' && this.sorted === 'up') {
+        sortedWorkouts = this.#workouts.sort((work1, work2) => {
+          if (work1.id > work2.id) return -1;
+          if (work1.id < work2.id) return 1;
+          return 0;
+        });
+
+        this.sorted = 'down';
+      } else if (method === 'distance' && this.sorted === 'up') {
+        sortedWorkouts = this.#workouts.sort((work1, work2) => {
+          if (work1.distance > work2.distance) return -1;
+          if (work1.distance < work2.distance) return 1;
+          return 0;
+        });
+
+        this.sorted = 'down';
+      } else if (method === 'duration' && this.sorted === 'up') {
+        sortedWorkouts = this.#workouts.sort((work1, work2) => {
+          if (work1.duration > work2.duration) return -1;
+          if (work1.duration < work2.duration) return 1;
+          return 0;
+        });
+
+        this.sorted = 'down';
+      } else if (
+        (method === 'pace' && this.sorted === 'up') ||
+        (method === 'speed' && this.sorted === 'up')
+      ) {
+        sortedWorkouts = this.#workouts.sort((work1, work2) => {
+          if (work1.id > work2.id) return -1;
+          if (work1.id < work2.id) return 1;
+          return 0;
+        });
+
+        this.sorted = 'down';
+      } else if (method === 'cadence' && this.sorted === 'up') {
+        sortedWorkouts = this.#workouts.sort((work1, work2) => {
+          if (work1.cadence > work2.cadence) return -1;
+          if (work1.cadence < work2.cadence) return 1;
+          return 0;
+        });
+
+        this.sorted = 'down';
+      } else if (method === 'elevation' && this.sorted === 'up') {
+        sortedWorkouts = this.#workouts.sort((work1, work2) => {
+          if (work1.elevation > work2.elevation) return -1;
+          if (work1.elevation < work2.elevation) return 1;
+          return 0;
+        });
+
+        this.sorted = 'down';
+      }
     } else {
       this.#workouts = unsortedWorks;
     }
 
+    console.log(this.sorted);
     console.log(sortedWorkouts);
     this._removeRendedWorkouts();
     sortedWorkouts.forEach(work => this._renderWorkout(work));
