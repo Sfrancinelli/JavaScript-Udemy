@@ -92,6 +92,7 @@ class App {
   #map;
   #mapEvent;
   #workouts = [];
+  #markers = [];
   deleteBtn;
   showSort = false;
   #sorted = false;
@@ -113,6 +114,9 @@ class App {
     btnNo.addEventListener('click', this._closeModal.bind(this));
     btnYes.addEventListener('click', this._deleteWorkout.bind(this));
     sortBtn.addEventListener('click', this._sortBtn.bind(this));
+
+    //sort event listener
+    sortContainer.addEventListener('click', this._sortAndRender.bind(this));
 
     this.sorted = 'down';
   }
@@ -533,131 +537,88 @@ class App {
     }
   }
 
-  _sortWorkouts(method) {
-    let sortedWorkouts;
-    let unsortedWorks;
+  _sortAndRender(e) {
+    const element = e.target.closest('.sort__button');
+    let currentDirection = 'descending'; //default
+    if (!element) return;
+    const arrow = element.querySelector('.arrow');
+    const type = element.dataset.type;
 
-    if (this.#sorted === false) {
-      console.log(this);
-      unsortedWorks = this.#workouts.map(work => {
-        console.log(work.method);
-        return work;
-      });
+    // set all arrows to default state (down)
+    sortContainer
+      .querySelectorAll('.arrow')
+      .forEach(e => e.classList.remove('arrow__up'));
 
-      if (method === 'date' && this.sorted === 'down') {
-        sortedWorkouts = this.#workouts.sort((work1, work2) => {
-          if (work1.id > work2.id) return 1;
-          if (work1.id < work2.id) return -1;
-          return 0;
-        });
-        console.log(sortedWorkouts);
+    // get which direction to sort
+    const typeValues = this.#workouts.map(workout => {
+      return workout[type];
+    });
+    const sortedAscending = typeValues
+      .slice()
+      .sort(function (a, b) {
+        return a - b;
+      })
+      .join('');
+    const sortedDescending = typeValues
+      .slice()
+      .sort(function (a, b) {
+        return b - a;
+      })
+      .join('');
 
-        this.sorted = 'up';
-      } else if (method === 'distance' && this.sorted === 'down') {
-        sortedWorkouts = this.#workouts.sort((work1, work2) => {
-          if (work1.distance > work2.distance) return 1;
-          if (work1.distance < work2.distance) return -1;
-          return 0;
-        });
+    // compare sortedAscending array with values from #workout array to check how are they sorted
+    // 1. case 1 ascending
+    if (typeValues.join('') === sortedAscending) {
+      currentDirection = 'ascending';
 
-        this.sorted = 'up';
-      } else if (method === 'duration' && this.sorted === 'down') {
-        sortedWorkouts = this.#workouts.sort((work1, work2) => {
-          if (work1.duration > work2.duration) return 1;
-          if (work1.duration < work2.duration) return -1;
-          return 0;
-        });
+      arrow.classList.add('arrow__up');
+    }
+    // 2. case 2 descending
+    if (typeValues.join('') === sortedDescending) {
+      currentDirection = 'descending';
 
-        this.sorted = 'up';
-      } else if (
-        (method === 'pace' && this.sorted === 'down') ||
-        (method === 'speed' && this.sorted === 'down')
-      ) {
-        sortedWorkouts = this.#workouts.sort((work1, work2) => {
-          if (work1.id > work2.id) return 1;
-          if (work1.id < work2.id) return -1;
-          return 0;
-        });
-
-        this.sorted = 'up';
-      } else if (method === 'cadence' && this.sorted === 'down') {
-        sortedWorkouts = this.#workouts.sort((work1, work2) => {
-          if (work1.cadence > work2.cadence) return 1;
-          if (work1.cadence < work2.cadence) return -1;
-          return 0;
-        });
-
-        this.sorted = 'up';
-      } else if (method === 'elevation' && this.sorted === 'down') {
-        sortedWorkouts = this.#workouts.sort((work1, work2) => {
-          if (work1.elevation > work2.elevation) return 1;
-          if (work1.elevation < work2.elevation) return -1;
-          return 0;
-        });
-
-        this.sorted = 'up';
-      }
-
-      if (method === 'date' && this.sorted === 'up') {
-        sortedWorkouts = this.#workouts.sort((work1, work2) => {
-          if (work1.id > work2.id) return -1;
-          if (work1.id < work2.id) return 1;
-          return 0;
-        });
-
-        this.sorted = 'down';
-      } else if (method === 'distance' && this.sorted === 'up') {
-        sortedWorkouts = this.#workouts.sort((work1, work2) => {
-          if (work1.distance > work2.distance) return -1;
-          if (work1.distance < work2.distance) return 1;
-          return 0;
-        });
-
-        this.sorted = 'down';
-      } else if (method === 'duration' && this.sorted === 'up') {
-        sortedWorkouts = this.#workouts.sort((work1, work2) => {
-          if (work1.duration > work2.duration) return -1;
-          if (work1.duration < work2.duration) return 1;
-          return 0;
-        });
-
-        this.sorted = 'down';
-      } else if (
-        (method === 'pace' && this.sorted === 'up') ||
-        (method === 'speed' && this.sorted === 'up')
-      ) {
-        sortedWorkouts = this.#workouts.sort((work1, work2) => {
-          if (work1.id > work2.id) return -1;
-          if (work1.id < work2.id) return 1;
-          return 0;
-        });
-
-        this.sorted = 'down';
-      } else if (method === 'cadence' && this.sorted === 'up') {
-        sortedWorkouts = this.#workouts.sort((work1, work2) => {
-          if (work1.cadence > work2.cadence) return -1;
-          if (work1.cadence < work2.cadence) return 1;
-          return 0;
-        });
-
-        this.sorted = 'down';
-      } else if (method === 'elevation' && this.sorted === 'up') {
-        sortedWorkouts = this.#workouts.sort((work1, work2) => {
-          if (work1.elevation > work2.elevation) return -1;
-          if (work1.elevation < work2.elevation) return 1;
-          return 0;
-        });
-
-        this.sorted = 'down';
-      }
-    } else {
-      this.#workouts = unsortedWorks;
+      arrow.classList.remove('arrow__up');
     }
 
-    console.log(this.sorted);
-    console.log(sortedWorkouts);
-    this._removeRendedWorkouts();
-    sortedWorkouts.forEach(work => this._renderWorkout(work));
+    // sort main workouts array
+    this._sortArray(this.#workouts, currentDirection, type);
+
+    ///////// RE-RENDER ////////
+    // clear rendered workouts from DOM
+    containerWorkouts
+      .querySelectorAll('.workout')
+      .forEach(workout => workout.remove());
+    // clear workouts from map(to prevent bug in array order when deleting a single workout)
+    this.#markers.forEach(marker => marker.remove());
+    //clear array
+    this.#markers = [];
+    // render list all again sorted
+    this.#workouts.forEach(workout => {
+      this._renderWorkout(workout);
+      // create new markers and render them on map
+      this._renderWorkoutMarker(workout);
+    });
+    // center map on the last item in array (this will be 1st workout on the list in the UI)
+    const lastWorkout = this.#workouts[this.#workouts.length - 1];
+    this._setIntoView(lastWorkout);
+  }
+
+  _sortArray(array, currentDirection, type) {
+    // sort opposite to the currentDirection
+    if (currentDirection === 'ascending') {
+      array.sort(function (a, b) {
+        return b[type] - a[type];
+      });
+    }
+    if (currentDirection === 'descending') {
+      array.sort(function (a, b) {
+        return a[type] - b[type];
+      });
+    }
+  }
+
+  _setIntoView(foundWorkout) {
+    this.#map.setView(foundWorkout.coords, 13);
   }
 
   reset() {
