@@ -3,6 +3,40 @@
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  //   countriesContainer.style.opacity = 1;
+};
+
+const renderCountry = function (data, className = '') {
+  const flag = data.flags.png;
+  const name = data.name.common;
+  const region = data.region;
+  const population = (+data.population / 1_000_000).toFixed(1);
+  const languageValues = Object.values(data.languages);
+  const language = languageValues[languageValues.length - 1];
+  const currency = Object.keys(data.currencies)[0]; // USD, ARS, etc. Three letter name of the currency
+  const curr = Object.entries(data.currencies)[0][1].name; // Whole name of the currency
+
+  console.log(language, currency, curr);
+
+  const html = `
+          <article class="country ${className}">
+          <img class="country__img" src="${flag}" />
+          <div class="country__data">
+            <h3 class="country__name">${name}</h3>
+            <h4 class="country__region">${region}</h4>
+            <p class="country__row"><span>👫</span>${population}M</p>
+            <p class="country__row"><span>🗣️</span>${language}</p>
+            <p class="country__row"><span>💰</span>${curr}</p>
+          </div>
+        </article>
+          `;
+
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  //   countriesContainer.style.opacity = 1;
+};
+
 ///////////////////////////////////////
 
 // https://countries-api-836d.onrender.com/countries/ <-- URL for API
@@ -153,6 +187,7 @@ getCountryAndNeighbour('usa');
 
 const getCountryData = function (country) {
   // Country 1
+  // The second callback function in the then method is for the unsuccesfull fetch of the API
   fetch(`https://restcountries.com/v3.1/name/${country}`)
     .then(function (response) {
       console.log(response);
@@ -172,36 +207,20 @@ const getCountryData = function (country) {
     .then(response => response.json())
     .then(data => {
       renderCountry(data[0], 'neighbour');
+    })
+    .catch(error => {
+      console.error(`${error} 💥🧨💣🧨💥`);
+      renderError(`Something went wrong 💥💥 ${error.message}. Try again!`);
+    })
+    .finally(() => {
+      // Usually finally method its used for hiding the spinners that starts when the asincronous task begins
+      countriesContainer.style.opacity = 1;
     });
+  // The catch function will be able to process any error that happens during the whole chain so it inst necessary to catch the errors on every fetch
 };
 
-getCountryData('argentina');
+// getCountryData('argentina');
 
-const renderCountry = function (data, className = '') {
-  const flag = data.flags.png;
-  const name = data.name.common;
-  const region = data.region;
-  const population = (+data.population / 1_000_000).toFixed(1);
-  const languageValues = Object.values(data.languages);
-  const language = languageValues[languageValues.length - 1];
-  const currency = Object.keys(data.currencies)[0]; // USD, ARS, etc. Three letter name of the currency
-  const curr = Object.entries(data.currencies)[0][1].name; // Whole name of the currency
-
-  console.log(language, currency, curr);
-
-  const html = `
-      <article class="country ${className}">
-      <img class="country__img" src="${flag}" />
-      <div class="country__data">
-        <h3 class="country__name">${name}</h3>
-        <h4 class="country__region">${region}</h4>
-        <p class="country__row"><span>👫</span>${population}M</p>
-        <p class="country__row"><span>🗣️</span>${language}</p>
-        <p class="country__row"><span>💰</span>${curr}</p>
-      </div>
-    </article>
-      `;
-
-  countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
-};
+btn.addEventListener('click', function () {
+  getCountryData('saudi');
+});
