@@ -36,3 +36,47 @@ request.addEventListener('load', function () {
   countriesContainer.insertAdjacentHTML('beforeend', html);
   countriesContainer.style.opacity = 1;
 });
+
+const getCountryData = function (country) {
+  const request = new XMLHttpRequest();
+  request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
+  request.send();
+
+  // When the data loads, it fires this 'load' event listener. We listen to the event in order to execute the callback function when the data arrives.
+  request.addEventListener('load', function () {
+    const [data] = JSON.parse(this.responseText); // this = request
+
+    console.log(data);
+
+    const flag = data.flags.png;
+    const name = data.name.common;
+    const region = data.region;
+    const population = (+data.population / 1_000_000).toFixed(1);
+    const languageValues = Object.values(data.languages);
+    const language = languageValues[languageValues.length - 1];
+    const currency = Object.keys(data.currencies)[0]; // USD, ARS, etc. Three letter name of the currency
+    const curr = Object.entries(data.currencies)[0][1].name; // Whole name of the currency
+
+    console.log(language, currency, curr);
+
+    const html = `
+  <article class="country">
+  <img class="country__img" src="${flag}" />
+  <div class="country__data">
+    <h3 class="country__name">${name}</h3>
+    <h4 class="country__region">${region}</h4>
+    <p class="country__row"><span>👫</span>${population}M</p>
+    <p class="country__row"><span>🗣️</span>${language}</p>
+    <p class="country__row"><span>💰</span>${curr}</p>
+  </div>
+</article>
+  `;
+
+    countriesContainer.insertAdjacentHTML('beforeend', html);
+    countriesContainer.style.opacity = 1;
+  });
+};
+
+getCountryData('uruguay');
+getCountryData('usa');
+getCountryData('argentina');
