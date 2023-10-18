@@ -184,13 +184,18 @@ getCountryAndNeighbour('usa');
 
 // const request = fetch('https://restcountries.com/v3.1/name/argentina');
 // console.log(request);
-
+/*
 const getCountryData = function (country) {
   // Country 1
   // The second callback function in the then method is for the unsuccesfull fetch of the API
   fetch(`https://restcountries.com/v3.1/name/${country}`)
     .then(function (response) {
       console.log(response);
+
+      if (!response.ok) {
+        errorFetching(response);
+      }
+
       return response.json();
     })
     .then(function (dataResponse) {
@@ -200,11 +205,58 @@ const getCountryData = function (country) {
       renderCountry(data);
 
       const neighbour = data.borders?.[0];
+      //   const neighbour = 'errorhandling'; // Handling errors test!
 
       // Country 2
       return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
     })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        errorFetching(response);
+      }
+      return response.json();
+    })
+    .then(data => {
+      renderCountry(data[0], 'neighbour');
+    })
+    .catch(error => {
+      console.error(`${error} 💥🧨💣🧨💥`);
+      renderError(`Something went wrong 💥💥 ${error.message}. Try again!`);
+    })
+    .finally(() => {
+      // Usually finally method its used for hiding the spinners that starts when the asincronous task begins
+      countriesContainer.style.opacity = 1;
+    });
+  // The catch function will be able to process any error that happens during the whole chain so it inst necessary to catch the errors on every fetch
+};
+*/
+// getCountryData('argentina');
+
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    if (!response.ok) {
+      throw new Error(`${errorMsg} (${response.status})`);
+    }
+    return response.json();
+  });
+};
+
+const getCountryData = function (country) {
+  // Country 1
+  getJSON(`https://restcountries.com/v3.1/name/${country}`, 'Country not found')
+    .then(data => {
+      renderCountry(data[0]);
+
+      console.log(data[0]);
+
+      const neighbour = data[0].borders?.[0];
+      //   const neighbour = 'errorhandling'; // Handling errors test!
+
+      if (!neighbour) throw new Error('No neighbour found!');
+
+      // Country 2
+      return getJSON(`https://restcountries.com/v3.1/alpha/${neighbour}`);
+    })
     .then(data => {
       renderCountry(data[0], 'neighbour');
     })
@@ -219,8 +271,8 @@ const getCountryData = function (country) {
   // The catch function will be able to process any error that happens during the whole chain so it inst necessary to catch the errors on every fetch
 };
 
-// getCountryData('argentina');
-
 btn.addEventListener('click', function () {
-  getCountryData('saudi');
+  getCountryData('iraq');
 });
+
+// getCountryData('ubrubr'); // Error display
