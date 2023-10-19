@@ -469,6 +469,7 @@ GOOD LUCK 😀
 */
 
 let imgElement;
+const imagesContainer = document.querySelector('.images');
 
 function loadImg(path) {
   return new Promise(function (resolve, reject) {
@@ -478,12 +479,12 @@ function loadImg(path) {
       console.log(e);
       console.log(e.target);
       console.log(e.target.src);
-      const images = document.querySelector('.images');
-      images.appendChild(e.target);
+
+      imagesContainer.appendChild(e.target);
       resolve(e.target);
     };
     imgElement.onerror = err => {
-      reject(new Error(`The loading failed! ${err.message}`));
+      reject(new Error(`Image not found! ${err.message}`));
     };
   });
 }
@@ -555,20 +556,20 @@ function loadImg(path) {
 // Optimized version :)
 
 function createImage(imgPath) {
-  return loadImg(imgPath)
-    .then(() => wait(2))
-    .then(() => {
-      imgElement.style.display = 'none';
-      return loadImg('img/img-2.jpg');
-    })
-    .then(() => wait(2))
-    .then(() => {
-      imgElement.style.display = 'none';
-      return loadImg('img/img-3.jpg');
-    })
-    .then(() => wait(2))
-    .then(() => (imgElement.style.display = 'none'))
-    .catch(err => console.error(err));
+  return loadImg(imgPath);
 }
 
-createImage('img/img-1.jpg');
+createImage('img/img-1.jpg')
+  .then(() => wait(2))
+  .then(() => {
+    imgElement.style.display = 'none';
+    return loadImg('img/img-2.jpg');
+  })
+  .then(() => wait(2))
+  .then(() => {
+    imgElement.style.display = 'none';
+    return loadImg('img/img-3.jpg');
+  })
+  .then(() => wait(2))
+  .then(() => (imgElement.style.display = 'none'))
+  .catch(err => console.error(err));
