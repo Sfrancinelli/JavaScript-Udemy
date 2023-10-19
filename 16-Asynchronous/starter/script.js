@@ -308,14 +308,22 @@ const auth = '148373027319996109767x19451';
 
 const whereAmI = function (lat, lng) {
   fetch(`https://geocode.xyz/${lat},${lng}?geoit=json&auth=${auth}`)
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Problem with geocoding ${response.status}`);
+      return response.json();
+    })
     .then(data => {
       console.log(data);
       const country = data.country.toLowerCase();
       console.log(country);
       return fetch(`https://restcountries.com/v3.1/name/${country}`);
     })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Problem with geocoding ${response.status}`);
+      return response.json();
+    })
     .then(data => {
       renderCountry(data[0]);
     })
@@ -330,3 +338,4 @@ const whereAmI = function (lat, lng) {
 whereAmI(52.508, 13.381);
 whereAmI(19.037, 72.873);
 whereAmI(-33.933, 18.474);
+whereAmI(50.933, 0.474);
