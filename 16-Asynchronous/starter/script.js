@@ -271,9 +271,9 @@ const getCountryData = function (country) {
   // The catch function will be able to process any error that happens during the whole chain so it inst necessary to catch the errors on every fetch
 };
 
-btn.addEventListener('click', function () {
-  getCountryData('iraq');
-});
+// btn.addEventListener('click', function () {
+//   getCountryData('iraq');
+// });
 
 // getCountryData('ubrubr'); // Error display
 
@@ -388,3 +388,55 @@ wait(2)
 // Static method to resolve and rejectthe promise inmediatly
 Promise.resolve('abc').then(X => console.log(X));
 Promise.reject(new Error('Problem!')).catch(x => console.error(x));
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position),
+    //   error => reject(error)
+    // );
+
+    // Same as above but simplified
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+getPosition().then(pos => console.log(pos));
+
+const auth = '148373027319996109767x19451';
+
+const whereAmI = function () {
+  getPosition()
+    .then(pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+      console.log(lat, lng);
+      return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json&auth=${auth}`);
+    })
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Problem with geocoding ${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      const country = data.country.toLowerCase();
+      console.log(country);
+      return fetch(`https://restcountries.com/v3.1/name/${country}`);
+    })
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Problem with geocoding ${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+      renderCountry(data[0]);
+    })
+    .catch(err =>
+      renderError(`Something went wrong!:\n${err.message}. \nTry again!`)
+    )
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
+};
+
+btn.addEventListener('click', whereAmI);
