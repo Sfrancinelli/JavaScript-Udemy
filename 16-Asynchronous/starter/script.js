@@ -373,6 +373,7 @@ const lotteryPromise = new Promise(function (resolve, reject) {
 lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
 */
 
+/*
 // Promisifying setTimeout
 const wait = function (seconds) {
   return new Promise(function (resolve) {
@@ -442,6 +443,7 @@ const whereAmI = function () {
 };
 
 btn.addEventListener('click', whereAmI);
+*/
 
 ///////////////////////////////////////
 // Coding Challenge #2
@@ -468,6 +470,7 @@ TEST DATA: Images in the img folder. Test the error handler by passing a wrong i
 GOOD LUCK 😀
 */
 
+/*
 let imgElement;
 const imagesContainer = document.querySelector('.images');
 
@@ -573,3 +576,71 @@ createImage('img/img-1.jpg')
   .then(() => wait(2))
   .then(() => (imgElement.style.display = 'none'))
   .catch(err => console.error(err));
+*/
+
+//////////////////////////////////////////////////////////
+// Async Await
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+const auth = '148373027319996109767x19451';
+
+const getCurrentCountry = async function () {
+  // Geolocation
+  try {
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
+
+    // Reverse geocoding
+    const resGeo = await fetch(
+      `https://geocode.xyz/${lat},${lng}?geoit=json&auth=${auth}`
+    );
+
+    if (!resGeo.ok) throw new Error('Problem getting location data');
+
+    const dataGeo = await resGeo.json();
+    console.log(dataGeo);
+
+    // From the reverse geocoding, getting the country from the API
+    const res = await fetch(
+      `https://restcountries.com/v3.1/name/${dataGeo.country}`
+    );
+    if (!res.ok) throw new Error('Problem getting country');
+    //   console.log(res);
+
+    // Async await its the same as this:
+    //   fetch(`https://restcountries.com/v3.1/name/${country}`).then(res =>
+    //     console.log(res)
+    //   );
+
+    const data = await res.json();
+    console.log(data);
+
+    // Rendering country on card
+    renderCountry(data[0]);
+    countriesContainer.style.opacity = 1;
+  } catch (err) {
+    console.error(err);
+    renderError(`${err.message}
+    `);
+    countriesContainer.style.opacity = 1;
+  }
+};
+
+getCurrentCountry();
+
+console.log('FIRST');
+
+// Try catch blocks
+
+try {
+  let y = 1;
+  const x = 2;
+  x = 3;
+} catch (err) {
+  console.error(err.message);
+}
