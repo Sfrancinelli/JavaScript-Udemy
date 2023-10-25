@@ -675,6 +675,7 @@ const get3Countries = async function (c1, c2, c3) {
     // const [data3] = await getJSON(`https://restcountries.com/v3.1/name/${c3}`);
 
     // To run promises in parallel we use the Promise.all() method:
+    // If one promise from the array gets rejected, the whole array of promises will be so.
     const data = await Promise.all([
       getJSON(`https://restcountries.com/v3.1/name/${c1}`),
       getJSON(`https://restcountries.com/v3.1/name/${c2}`),
@@ -690,3 +691,61 @@ const get3Countries = async function (c1, c2, c3) {
 };
 
 get3Countries('portugal', 'canada', 'tanzania');
+
+// Promise.race() gets an array of promises and returns one value (the winner of the race). Different from Promise.all(), the first promise that returns a value (doesnt matter if its resolved or rejected) is the value that will be returned. It's like a race.
+// If one promise is rejected, the returned value will be the error from the rejection. It shortcircuits when one is rejected
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.com/v3.1/name/italy`),
+    getJSON(`https://restcountries.com/v3.1/name/egypt`),
+    getJSON(`https://restcountries.com/v3.1/name/israel`),
+  ]);
+  console.log(res[0]);
+  renderCountry(res[0]);
+})();
+
+// Creating a timer that rejects the Promise after the imputed seconds
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error('Request took too long!'));
+    }, sec * 1000);
+  });
+};
+
+// Running a race between a Promise that we want to consume vs the timer that stablishes the amout of seconds that we are capable of waiting before throwing an error
+Promise.race([
+  getJSON(`https://restcountries.com/v3.1/name/tanzania`),
+  timeout(1),
+])
+  .then(res => {
+    console.log(res[0]);
+    renderCountry(res[0]);
+  })
+  .catch(err => console.error(err));
+
+// Promise.allSettled() Takes an array of promises and returns an array of ALL the settled promises. No matter if rejected or resolved. It never shortcircuits
+Promise.allSettled([
+  Promise.resolve('Success'),
+  Promise.resolve('Success 2'),
+  Promise.reject('ERROR'),
+]).then(res => console.log(...res));
+
+// To see the difference of shortcircuit between allSettled and all
+Promise.all([
+  Promise.resolve('Success'),
+  Promise.resolve('Success 2'),
+  Promise.reject('ERROR'),
+])
+  .then(res => console.log(...res))
+  .catch(err => console.error(err));
+
+// Promise.any() (ES2021) Takes an array of multiple promises and returns the FIRST fullfilled promise. It will ignore rejected promises.
+// Very similar to Promise.race but with the difference that rejected promises are completely ignored. The result will be always a resolved promise (except all from the array are rejected, of course)
+Promise.any([
+  Promise.reject('ERROR'),
+  Promise.resolve('Success'),
+  Promise.resolve('Success 2'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
