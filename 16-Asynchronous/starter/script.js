@@ -18,7 +18,7 @@ const renderCountry = function (data, className = '') {
   const currency = Object.keys(data.currencies)[0]; // USD, ARS, etc. Three letter name of the currency
   const curr = Object.entries(data.currencies)[0][1].name; // Whole name of the currency
 
-  console.log(language, currency, curr);
+  //   console.log(language, currency, curr);
 
   const html = `
           <article class="country ${className}">
@@ -603,7 +603,7 @@ const getCurrentCountry = async function () {
     if (!resGeo.ok) throw new Error('Problem getting location data');
 
     const dataGeo = await resGeo.json();
-    console.log(dataGeo);
+    // console.log(dataGeo);
 
     // From the reverse geocoding, getting the country from the API
     const res = await fetch(
@@ -618,22 +618,42 @@ const getCurrentCountry = async function () {
     //   );
 
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
 
     // Rendering country on card
     renderCountry(data[0]);
     countriesContainer.style.opacity = 1;
+
+    return `You are in ${dataGeo.city}, ${dataGeo.country}`;
   } catch (err) {
     console.error(err);
     renderError(`${err.message}
     `);
     countriesContainer.style.opacity = 1;
+
+    // Reject promise returned from async functon
+    throw err;
   }
 };
 
-getCurrentCountry();
+console.log('FIRST: Fetching data...');
 
-console.log('FIRST');
+getCurrentCountry()
+  .then(resultado => console.log(`SECOND: ${resultado}`))
+  .catch(err => console.error(`SECOND: ${err.message}`))
+  .finally(() => console.log('THIRD: Finished getting location'));
+
+// Transforming the above to an asyc await function called inmediatly
+(async function () {
+  try {
+    const res = await getCurrentCountry();
+    console.log(`SECOND: ${res}`);
+  } catch (err) {
+    console.error(`SECOND: ${err.message}`);
+  } finally {
+    console.log('THIRD: Finished getting location');
+  }
+})();
 
 // Try catch blocks
 
