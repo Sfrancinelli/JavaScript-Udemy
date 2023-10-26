@@ -373,14 +373,13 @@ const lotteryPromise = new Promise(function (resolve, reject) {
 lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
 */
 
-/*
 // Promisifying setTimeout
 const wait = function (seconds) {
   return new Promise(function (resolve) {
     setTimeout(resolve, seconds * 1000);
   });
 };
-
+/*
 wait(2)
   .then(() => {
     console.log('I waited for 2 seconds');
@@ -470,7 +469,6 @@ TEST DATA: Images in the img folder. Test the error handler by passing a wrong i
 GOOD LUCK 😀
 */
 
-/*
 let imgElement;
 const imagesContainer = document.querySelector('.images');
 
@@ -491,7 +489,7 @@ function loadImg(path) {
     };
   });
 }
-
+/*
 // Poor version
 
 // function createImage(imgPath) {
@@ -749,3 +747,46 @@ Promise.any([
 ])
   .then(res => console.log(res))
   .catch(err => console.error(err));
+
+// CODING CHALLENGE #3
+/*
+PART 1
+Write an async function "loadNPause" that recreates coding challenge #2, this time using async/await (only on the part where the promise is consumed). Compare the two versions, think about the big differences, and see which one you like more.
+Don't forget to test the error hanlder, and to set the network speed to 'fast 3G' in the dev tool Network tab.
+*/
+
+const loadNPause = async function () {
+  try {
+    let res = await loadImg('img/img-1.jpg');
+    console.log(res);
+
+    await wait(2);
+
+    imgElement.style.display = 'none';
+    res = await loadImg('img/img-2.jpg');
+
+    await wait(2);
+    imgElement.style.display = 'none';
+    res = await loadImg('img/img-3.jpg');
+
+    await wait(2);
+    imgElement.style.display = 'none';
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+// loadNPause();
+
+/*
+PART 2
+1. Create an async function 'loadAll' that receives an array of image paths 'imgArr'
+2. Use map to loop over the array to load all the images with the createImg function (call the resulting array 'imgs')
+3. Check out the 'imgs' array in the console! Is it like you expected?
+4. Use a promise combinator function to actually get the images from the array
+5. Add the 'parallel' class to all the images (it has some CSS styles)
+*/
+
+const loadAll = async function (imgArr) {
+  const imgs = imgArr.map(() => {});
+};
