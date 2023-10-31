@@ -477,9 +477,9 @@ function loadImg(path) {
     imgElement = document.createElement('img');
     imgElement.src = path;
     imgElement.onload = e => {
-      console.log(e);
-      console.log(e.target);
-      console.log(e.target.src);
+      // console.log(e);
+      // console.log(e.target);
+      // console.log(e.target.src);
 
       imagesContainer.appendChild(e.target);
       resolve(e.target);
@@ -579,6 +579,7 @@ createImage('img/img-1.jpg')
 //////////////////////////////////////////////////////////
 // Async Await
 
+/*
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -747,7 +748,7 @@ Promise.any([
 ])
   .then(res => console.log(res))
   .catch(err => console.error(err));
-
+*/
 // CODING CHALLENGE #3
 /*
 PART 1
@@ -788,5 +789,20 @@ PART 2
 */
 
 const loadAll = async function (imgArr) {
-  const imgs = imgArr.map(() => {});
+  try {
+    const data = await Promise.all(
+      imgArr.map(async img => {
+        return await loadImg(img);
+      })
+    );
+    console.log(data);
+    data.forEach(img => {
+      console.log(img);
+      img.classList.add('parallel');
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
 };
+
+loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
