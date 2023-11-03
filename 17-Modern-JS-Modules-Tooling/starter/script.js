@@ -20,6 +20,7 @@
 // // Importing the default export no matter how the default export its called (in this case it doesnt have a name)
 // add('pizza', 2);
 
+/*
 import add, {
   addToCart,
   totalPrice as price,
@@ -57,3 +58,48 @@ lastPost.then(last => console.log(last));
 // Consuming the promise with top level await
 const lastPost2 = await getLastPost();
 console.log(lastPost2);
+*/
+
+/*
+// The module pattern
+const ShoppingCart2 = (function () {
+  const cart = [];
+  const shippingCost = 10;
+  const totalPrice = 237;
+  const totalQuantity = 23;
+
+  const addToCart = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(
+      `${quantity} ${product} added to cart (shipping cost is $${shippingCost})`
+    );
+  };
+
+  const orderStock = function (product, quantity) {
+    console.log(`${quantity} ${product} ordered from supplier`);
+  };
+
+  return {
+    addToCart,
+    cart,
+    totalPrice,
+    totalQuantity,
+  };
+})();
+
+ShoppingCart2.addToCart('apple', 4);
+ShoppingCart2.addToCart('pizza', 2);
+console.log(ShoppingCart2);
+console.log(ShoppingCart2.shippingCost);
+*/
+
+/*
+// Exporting in nodeJS ( doesnt work in the web )
+export.addToCart = function(product, quantity) {
+  cart.push({product, quantity})
+  console.log(`${quantity} ${product} added to cart`)
+}
+
+// Importing in nodeJS
+const {addToCart} = required('./shoppingCart.js')
+*/
