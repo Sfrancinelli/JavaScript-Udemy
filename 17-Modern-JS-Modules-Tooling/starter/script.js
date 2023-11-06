@@ -103,3 +103,29 @@ export.addToCart = function(product, quantity) {
 // Importing in nodeJS
 const {addToCart} = required('./shoppingCart.js')
 */
+import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+
+const state = {
+  cart: [
+    { product: 'bread', quantity: 5 },
+    { product: 'pizza', quantity: 5 },
+  ],
+  user: { loggedIn: true },
+};
+
+// CLoning nested object with normal js
+const stateClone = Object.assign({}, state);
+console.log(stateClone);
+// Changin the loggedIn to false
+state.user.loggedIn = false;
+// Loggin the clone and realizing that the loggedIn key is false because both objects point to the same memory heap
+console.log(stateClone);
+
+// With lodash clone this doesn't happen
+const stateDeepClone = cloneDeep(state);
+// Changing it again to true to see the differences
+state.user.loggedIn = true;
+// The clone with lodash will show that the loggedIn is false
+console.log(stateDeepClone);
+// The normal js clone will show that its true because its a live copy
+console.log(stateClone);
