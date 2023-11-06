@@ -2,13 +2,17 @@
   "name": "starter",
   "version": "1.0.0",
   "description": "",
-  "main": "clean.js",
+  "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
   },
-  "author": "",
+  "author": "SF",
   "license": "ISC",
   "dependencies": {
     "lodash-es": "^4.17.21"
+  },
+  "devDependencies": {
+    "parcel": "^2.10.2"
   }
 }

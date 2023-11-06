@@ -16,9 +16,9 @@
 // console.log(ShoppingCart.totalPrice);
 
 // console.log(shippingCost) // Not defined because variables are module scoped if not exported
-// import add from './shoppingCart.js';
-// // Importing the default export no matter how the default export its called (in this case it doesnt have a name)
-// add('pizza', 2);
+import add from './shoppingCart.js';
+// Importing the default export no matter how the default export its called (in this case it doesnt have a name)
+add('pizza', 2);
 
 /*
 import add, {
@@ -103,7 +103,8 @@ export.addToCart = function(product, quantity) {
 // Importing in nodeJS
 const {addToCart} = required('./shoppingCart.js')
 */
-import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+// import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+import cloneDeep from 'lodash-es';
 
 const state = {
   cart: [
@@ -129,3 +130,7 @@ state.user.loggedIn = true;
 console.log(stateDeepClone);
 // The normal js clone will show that its true because its a live copy
 console.log(stateClone);
+
+if (module.hot) {
+  module.hot.accept();
+}
