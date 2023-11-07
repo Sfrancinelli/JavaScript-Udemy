@@ -707,7 +707,42 @@ console.log(stateDeepClone);
 console.log(stateClone);
 if (module.hot) module.hot.accept();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","lodash-es":"bXNwz","./shoppingCart.js":"l6bJl"}],"gkKU3":[function(require,module,exports) {
+},{"./shoppingCart.js":"l6bJl","lodash-es":"bXNwz","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l6bJl":[function(require,module,exports) {
+// Exporting module
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "cart", ()=>cart);
+parcelHelpers.export(exports, "addToCart", ()=>addToCart);
+parcelHelpers.export(exports, "totalPrice", ()=>totalPrice);
+parcelHelpers.export(exports, "totalQuantity", ()=>totalQuantity);
+parcelHelpers.export(exports, "default", ()=>function(product, quantity) {
+        cart.push({
+            product,
+            quantity
+        });
+        console.log(`${quantity} ${product} added to cart`);
+    });
+console.log("Exporting module");
+// Blocking code
+// The code in script js will need to await for the promise to be fullfilled as we are using top level await and its blocking the code in this script but also on the script that imports it
+console.log("Start fetching users");
+// const res = await fetch('https://jsonplaceholder.typicode.com/users');
+// const data = await res.json();
+// console.log(data);
+console.log("Finished fetching users");
+const shippingCost = 10;
+const cart = [];
+const addToCart = function(product, quantity) {
+    cart.push({
+        product,
+        quantity
+    });
+    console.log(`${quantity} ${product} added to cart`);
+};
+const totalPrice = 237;
+const totalQuantity = 23;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -23895,41 +23930,6 @@ var nativeMax = Math.max, nativeMin = Math.min;
     };
 }
 exports.default = getView;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l6bJl":[function(require,module,exports) {
-// Exporting module
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "cart", ()=>cart);
-parcelHelpers.export(exports, "addToCart", ()=>addToCart);
-parcelHelpers.export(exports, "totalPrice", ()=>totalPrice);
-parcelHelpers.export(exports, "totalQuantity", ()=>totalQuantity);
-parcelHelpers.export(exports, "default", ()=>function(product, quantity) {
-        cart.push({
-            product,
-            quantity
-        });
-        console.log(`${quantity} ${product} added to cart`);
-    });
-console.log("Exporting module");
-// Blocking code
-// The code in script js will need to await for the promise to be fullfilled as we are using top level await and its blocking the code in this script but also on the script that imports it
-console.log("Start fetching users");
-// const res = await fetch('https://jsonplaceholder.typicode.com/users');
-// const data = await res.json();
-// console.log(data);
-console.log("Finished fetching users");
-const shippingCost = 10;
-const cart = [];
-const addToCart = function(product, quantity) {
-    cart.push({
-        product,
-        quantity
-    });
-    console.log(`${quantity} ${product} added to cart`);
-};
-const totalPrice = 237;
-const totalQuantity = 23;
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["3yPwA","6rimH"], "6rimH", "parcelRequire7e89")
 
