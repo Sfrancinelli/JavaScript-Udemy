@@ -16,11 +16,10 @@
 // console.log(ShoppingCart.totalPrice);
 
 // console.log(shippingCost) // Not defined because variables are module scoped if not exported
-import add from './shoppingCart.js';
+// import add from './shoppingCart.js';
 // Importing the default export no matter how the default export its called (in this case it doesnt have a name)
-add('pizza', 2);
+// add('pizza', 2);
 
-/*
 import add, {
   addToCart,
   totalPrice as price,
@@ -34,7 +33,7 @@ add('bread', 5);
 add('apples', 4);
 
 console.log(cart); // Prove that the import/export its a live connection. The cart was an empty array when exported and now, when logged to the console after adding the objects, it changed.
-
+/*
 // Top level await blocks the execution of the rest of the code
 // const res = await fetch('https://jsonplaceholder.typicode.com/posts/1');
 // const data = await res.json();
@@ -134,3 +133,27 @@ console.log(stateClone);
 if (module.hot) {
   module.hot.accept();
 }
+
+class Person {
+  greeting = 'Hey';
+  constructor(name) {
+    this.name = name;
+    console.log(`${this.greeting}, ${this.name}`);
+  }
+}
+
+const jonas = new Person('Jonas');
+
+console.log('Jonas' ?? null);
+
+console.log(cart.find(el => el.quantity >= 2));
+
+Promise.resolve('TEST').then(x => console.log(x));
+
+// Poliffiling array methods
+import 'core-js/stable';
+// import 'core-js/stable/array/find';
+// import 'core-js/stable/promise';
+
+// Polifilling async functions
+import 'regenerator-runtime/runtime';
