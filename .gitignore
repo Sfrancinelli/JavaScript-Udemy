@@ -1,2 +1,5 @@
 package-lock.json
 node_modules
+dist
+.parcel-cache
+17-Modern-JS-Modules-Tooling\starter\dist
