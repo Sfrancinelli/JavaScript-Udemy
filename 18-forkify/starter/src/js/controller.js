@@ -39,6 +39,12 @@ controlRecipes();
 
 // window.addEventListener('hashchange', showRecipe);
 // window.addEventListener('load', showRecipe);
-['hashchange', 'load'].forEach(ev =>
-  window.addEventListener(ev, controlRecipes)
-);
+// ['hashchange', 'load'].forEach(ev =>
+//   window.addEventListener(ev, controlRecipes)
+// );
+
+// This event hanlder is transported to the view where it belongs
+const init = function () {
+  recipeView.addHanlderRender(controlRecipes);
+};
+init();
