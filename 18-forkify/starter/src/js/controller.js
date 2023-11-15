@@ -32,7 +32,7 @@ const controlRecipes = async function () {
     recipeView.render(recipe);
   } catch (err) {
     console.error(err);
-    recipeView.renderError(err.message);
+    recipeView.renderError(); // Don't pass argument for the rendering of the error cause the view has its own private property specifing the error message
   }
 };
 
