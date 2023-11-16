@@ -4,6 +4,7 @@ import 'regenerator-runtime/runtime'; // Pollifilling async await
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
+import resultView from './views/resultsView.js';
 
 // https://forkify-api.herokuapp.com/v2
 
@@ -43,6 +44,7 @@ const controSearchResults = async function () {
     await model.loadSearchResults(query);
 
     // 3) Render results
+    resultView.render(model.state.search.results);
     console.log(model.state.search.results);
   } catch (err) {
     console.error(`${err}`);
