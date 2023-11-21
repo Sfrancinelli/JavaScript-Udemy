@@ -69,10 +69,17 @@ const controSearchResults = async function () {
 //   window.addEventListener(ev, controlRecipes)
 // );
 
+const controlPagination = function (goToPage) {
+  console.log(goToPage);
+  resultView.render(model.getSearchResultsPage(goToPage));
+  paginationView.render(model.state.search);
+};
+
 // This event hanlder is transported to the view where it belongs
 const init = function () {
   recipeView.addHanlderRender(controlRecipes);
   searchView.addHandlerSearch(controSearchResults);
   // controSearchResults();
+  paginationView.addHandlerClick(controlPagination);
 };
 init();
