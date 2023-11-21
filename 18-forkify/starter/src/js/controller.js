@@ -10,11 +10,14 @@ import resultView from './views/resultsView.js';
 
 ///////////////////////////////////////
 
+if (module.hot) {
+  module.hot.accept();
+}
+
 const controlRecipes = async function () {
   try {
     // Getting the id from the hash
     const id = window.location.hash.slice(1);
-    console.log(id);
 
     // If no id found, return the function for no error throw
     if (!id) return;
@@ -24,7 +27,6 @@ const controlRecipes = async function () {
     // 1. Loading recipe
     await model.loadRecipe(id);
     const { recipe } = model.state;
-    console.log(recipe);
 
     // 2. Rendering recipel
     recipeView.render(recipe);
@@ -36,6 +38,8 @@ const controlRecipes = async function () {
 
 const controSearchResults = async function () {
   try {
+    resultView.renderSpinner();
+
     // 1) Get search query
     const query = searchView.getQuery();
     if (!query) return;
@@ -47,7 +51,7 @@ const controSearchResults = async function () {
     resultView.render(model.state.search.results);
     console.log(model.state.search.results);
   } catch (err) {
-    console.error(`${err}`);
+    resultView.renderError();
   }
 };
 // window.addEventListener('hashchange', showRecipe);
