@@ -44,6 +44,10 @@ export const loadSearchResults = async function (query) {
         imageUrl: rec.image_url,
       };
     });
+
+    // if (state.search.results.length === 0) {
+    //   throw new Error('No recipes found.');
+    // }
     // console.log(state.search.results);
   } catch (err) {
     console.error(`${err} 💥`);
