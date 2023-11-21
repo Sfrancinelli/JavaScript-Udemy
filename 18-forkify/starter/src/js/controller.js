@@ -4,7 +4,9 @@ import 'regenerator-runtime/runtime'; // Pollifilling async await
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
+// Page 1, and there are other pages
 import resultView from './views/resultsView.js';
+import paginationView from './views/paginationView.js';
 
 // https://forkify-api.herokuapp.com/v2
 
@@ -50,10 +52,13 @@ const controSearchResults = async function () {
     // 3) Render results
     // This will render the whole results wihtout pagination
     // resultView.render(model.state.search.results);
-    // console.log(model.state.search.results);
+    console.log(model.state.search.results);
 
     // To render with pages, we use the function that calculates it
     resultView.render(model.getSearchResultsPage(1));
+
+    // 4) Render initial pagination buttons
+    paginationView.render(model.state.search);
   } catch (err) {
     resultView.renderError();
   }
