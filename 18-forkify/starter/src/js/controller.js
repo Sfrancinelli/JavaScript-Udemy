@@ -48,8 +48,12 @@ const controSearchResults = async function () {
     await model.loadSearchResults(query);
 
     // 3) Render results
-    resultView.render(model.state.search.results);
-    console.log(model.state.search.results);
+    // This will render the whole results wihtout pagination
+    // resultView.render(model.state.search.results);
+    // console.log(model.state.search.results);
+
+    // To render with pages, we use the function that calculates it
+    resultView.render(model.getSearchResultsPage(1));
   } catch (err) {
     resultView.renderError();
   }
