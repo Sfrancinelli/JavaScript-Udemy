@@ -51,6 +51,7 @@ export const loadSearchResults = async function (query) {
     //   throw new Error('No recipes found.');
     // }
     // console.log(state.search.results);
+    console.log(state.recipe);
   } catch (err) {
     console.error(`${err} 💥`);
     throw err;
@@ -64,4 +65,13 @@ export const getSearchResultsPage = function (page = state.search.page) {
   const end = page * state.search.resultsPerPage; // 9
 
   return state.search.results.slice(start, end);
+};
+
+export const updateServings = function (newServings) {
+  state.recipe.ingredients.forEach(ing => {
+    ing.quantity = ing.quantity * (newServings / state.recipe.servings);
+    // newQt = oldQt * newServings / oldServings
+  });
+
+  state.recipe.servings = newServings;
 };
