@@ -51,7 +51,7 @@ export const loadSearchResults = async function (query) {
     //   throw new Error('No recipes found.');
     // }
     // console.log(state.search.results);
-    console.log(state.recipe);
+    // console.log(state.recipe);
   } catch (err) {
     console.error(`${err} 💥`);
     throw err;

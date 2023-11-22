@@ -1,13 +1,11 @@
 import View from './View.js';
 import { Fraction } from 'fractional';
-
 class ResultView extends View {
   _parentEl = document.querySelector('.results');
   _errorMessage = 'No recipes found for that query!. Please try another one!';
   _message = '';
 
   _generateMarkup() {
-    console.log(this._data);
     return this._data.map(this._generateMarkupPreview).join('');
   }
 
@@ -16,9 +14,9 @@ class ResultView extends View {
 
     return `
     <li class="preview">
-      <a class="preview__link" ${
+      <a class="preview__link ${
         result.id === id ? 'preview__link--active' : ''
-      } href="#${result.id}">
+      }" href="#${result.id}">
         <figure class="preview__fig">
           <img src="${result.imageUrl}" alt="${result.title}" />
         </figure>

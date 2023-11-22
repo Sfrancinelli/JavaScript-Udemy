@@ -23,7 +23,7 @@ const controlRecipes = async function () {
     recipeView.renderSpinner();
 
     // 0) Update results view to mark selected search result
-    resultView.render(model.getSearchResultsPage(1));
+    resultView.render(model.getSearchResultsPage());
 
     // 1. Loading recipe
     await model.loadRecipe(id);
@@ -51,10 +51,10 @@ const controSearchResults = async function () {
     // 3) Render results
     // This will render the whole results wihtout pagination
     // resultView.render(model.state.search.results);
-    console.log(model.state.search.results);
+    // console.log(model.state.search.results);
 
     // To render with pages, we use the function that calculates it
-    resultView.render(model.getSearchResultsPage(1));
+    resultView.render(model.getSearchResultsPage());
 
     // 4) Render initial pagination buttons
     paginationView.render(model.state.search);
