@@ -1,6 +1,4 @@
 import View from './View.js';
-
-import icons from 'url:../../img/icons.svg'; // Importing icons from dist
 import { Fraction } from 'fractional';
 
 class ResultView extends View {
@@ -8,24 +6,19 @@ class ResultView extends View {
   _errorMessage = 'No recipes found for that query!. Please try another one!';
   _message = '';
 
-  // render(data) {
-  //   console.log(data);
-  //   this._data = data;
-  //   this._clear();
-  //   this._data.forEach(result => {
-  //     const markup = this._generateMarkupResults(result);
-  //     this._parentEl.insertAdjacentHTML('afterbegin', markup);
-  //   });
-  // }
-
   _generateMarkup() {
+    console.log(this._data);
     return this._data.map(this._generateMarkupPreview).join('');
   }
 
   _generateMarkupPreview(result) {
+    const id = window.location.hash.slice(1);
+
     return `
     <li class="preview">
-      <a class="preview__link" href="#${result.id}">
+      <a class="preview__link" ${
+        result.id === id ? 'preview__link--active' : ''
+      } href="#${result.id}">
         <figure class="preview__fig">
           <img src="${result.imageUrl}" alt="${result.title}" />
         </figure>

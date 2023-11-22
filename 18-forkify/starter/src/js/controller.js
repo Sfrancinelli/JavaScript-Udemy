@@ -12,10 +12,6 @@ import paginationView from './views/paginationView.js';
 
 ///////////////////////////////////////
 
-if (module.hot) {
-  module.hot.accept();
-}
-
 const controlRecipes = async function () {
   try {
     // Getting the id from the hash
@@ -25,6 +21,9 @@ const controlRecipes = async function () {
     if (!id) return;
     // Render spinner while loading async
     recipeView.renderSpinner();
+
+    // 0) Update results view to mark selected search result
+    resultView.render(model.getSearchResultsPage(1));
 
     // 1. Loading recipe
     await model.loadRecipe(id);
@@ -70,7 +69,6 @@ const controSearchResults = async function () {
 // );
 
 const controlPagination = function (goToPage) {
-  console.log(goToPage);
   resultView.render(model.getSearchResultsPage(goToPage));
   paginationView.render(model.state.search);
 };
@@ -80,7 +78,8 @@ const controlServings = function (newServings) {
   model.updateServings(newServings);
 
   // Update the recipe view
-  recipeView.render(model.state.recipe);
+  // recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
 };
 
 // This event hanlder is transported to the view where it belongs
