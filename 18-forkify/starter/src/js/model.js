@@ -47,6 +47,8 @@ export const loadSearchResults = async function (query) {
       };
     });
 
+    state.search.page  = 1
+
     // if (state.search.results.length === 0) {
     //   throw new Error('No recipes found.');
     // }
