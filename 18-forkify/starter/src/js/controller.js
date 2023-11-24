@@ -82,10 +82,19 @@ const controlServings = function (newServings) {
   recipeView.update(model.state.recipe);
 };
 
+const controlAddBookmark = function () {
+  if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
+  else model.deleteBookmark(model.state.recipe.id);
+
+  console.log(model.state.recipe);
+  recipeView.update(model.state.recipe);
+};
+
 // This event hanlder is transported to the view where it belongs
 const init = function () {
   recipeView.addHanlderRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
+  recipeView.addHanlderBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controSearchResults);
   // controSearchResults();
   paginationView.addHandlerClick(controlPagination);
