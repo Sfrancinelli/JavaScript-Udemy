@@ -5,6 +5,7 @@ import icons from 'url:../../img/icons.svg'; // Importing icons from dist
 
 class AddRecipeView extends View {
   _parentEl = document.querySelector('.upload');
+  _message = 'Recipe was successfully uploaded :)';
 
   _window = document.querySelector('.add-recipe-window');
   _overlay = document.querySelector('.overlay');

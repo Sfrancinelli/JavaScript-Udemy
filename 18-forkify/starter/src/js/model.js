@@ -23,6 +23,8 @@ const createRecipeObject = function (data) {
     publisher: recipe.publisher,
     servings: recipe.servings,
     sourceUrl: recipe.source_url,
+    // Using and operator for short circuiting. If there's no recipe.key, it wont be stored. If there IS a recipe.key, it will go the the part where it stores the key ({key:recipe.key})
+    ...(recipe.key && { key: recipe.key }),
   };
 };
 
@@ -150,6 +152,7 @@ export const uploadRecipe = async function (newRecipe) {
     console.log(recipe);
     const data = await sendJSON(`${API_URL}?key=${API_KEY}`, recipe);
     state.recipe = createRecipeObject(data);
+    addBookmark(state.recipe);
   } catch (err) {
     throw err;
   }
