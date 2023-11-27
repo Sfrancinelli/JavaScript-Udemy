@@ -104,6 +104,12 @@ const controlBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlAddRecipe = function (newRecipe) {
+  console.log(newRecipe);
+
+  // Upload the new recipe data
+};
+
 // This event hanlder is transported to the view where it belongs
 const init = function () {
   bookmarksView.addHanlderRender(controlBookmarks);
@@ -113,5 +119,6 @@ const init = function () {
   searchView.addHandlerSearch(controSearchResults);
   // controSearchResults();
   paginationView.addHandlerClick(controlPagination);
+  addRecipeView.addHandlerUpload(controlAddRecipe);
 };
 init();
