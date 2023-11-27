@@ -37,6 +37,7 @@ class AddRecipeView extends View {
       e.preventDefault();
       const dataArr = [...new FormData(this)]; // The this keyword is the same as this._parentEl (in this case the form tag)
 
+      // Transforming the array of entries into an object (to upload)
       const data = Object.fromEntries(dataArr);
       handler(data);
     });
