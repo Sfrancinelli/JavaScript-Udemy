@@ -71,7 +71,10 @@ const controSearchResults = async function () {
 // );
 
 const controlPagination = function (goToPage) {
+  // 1) Render NEW results
   resultView.render(model.getSearchResultsPage(goToPage));
+
+  // 2) Render NEW pagination buttons
   paginationView.render(model.state.search);
 };
 
@@ -96,8 +99,13 @@ const controlAddBookmark = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlBookmarks = function () {
+  bookmarksView.render(model.state.bookmarks);
+};
+
 // This event hanlder is transported to the view where it belongs
 const init = function () {
+  bookmarksView.addHanlderRender(controlBookmarks);
   recipeView.addHanlderRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHanlderBookmark(controlAddBookmark);
