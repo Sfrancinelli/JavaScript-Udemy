@@ -5,6 +5,14 @@ export default class View {
   _data;
   _parentEl;
 
+  /**
+   * Render the received object to the DOM
+   * @param {Object | Object[]} data The data to be rendered (e.g. recipe)
+   * @param {boolean} [render = true] If false, creates markup string instead of rendering to the DOM
+   * @returns {undefined | string} A markup string is returned if render = false
+   * @this {Object} View instance
+   * @author Sebastian Francinelli
+   */
   render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
@@ -21,6 +29,11 @@ export default class View {
     this._parentEl.insertAdjacentHTML('afterbegin', markup);
   }
 
+  /**
+   * Generates a Node list of all the elements with the data and compares it to the actual node list of the current DOM and updates it with the new elements.
+   * @param {Object | Object[]} data The new data that will be compared to the actual DOM.
+   * @returns {undefined}
+   */
   update(data) {
     // if (!data || (Array.isArray(data) && data.length === 0))
     //   return this.renderError();

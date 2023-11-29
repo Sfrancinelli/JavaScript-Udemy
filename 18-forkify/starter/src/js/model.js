@@ -13,6 +13,11 @@ export const state = {
   bookmarks: [],
 };
 
+/**
+ * Formats the raw recipe data from the API
+ * @param {Object} data The raw recipe object from the forkify API
+ * @returns {Object} Returns the formated recipe object to store in state.recipe
+ */
 const createRecipeObject = function (data) {
   const { recipe } = data.data;
   return {
@@ -29,6 +34,10 @@ const createRecipeObject = function (data) {
   };
 };
 
+/**
+ * Receives the id of a recipe and gets the JSON data from the forkify API
+ * @param {String} id The id of the recipe to search
+ */
 export const loadRecipe = async function (id) {
   try {
     const data = await AJAX(`${API_URL}${id}?key=${API_KEY}`);
@@ -46,6 +55,10 @@ export const loadRecipe = async function (id) {
   }
 };
 
+/**
+ * Manages the search query to the API and sets the results in the state
+ * @param {String} query The query for the search (e.g. 'pizza')
+ */
 export const loadSearchResults = async function (query) {
   try {
     state.search.query = query;
@@ -58,6 +71,7 @@ export const loadSearchResults = async function (query) {
         title: rec.title,
         publisher: rec.publisher,
         imageUrl: rec.image_url,
+        ...(rec.key && { key: rec.key }),
       };
     });
 
@@ -126,7 +140,8 @@ export const uploadRecipe = async function (newRecipe) {
     const ingredients = Object.entries(newRecipe)
       .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
       .map(ing => {
-        const ingArr = ing[1].replaceAll(' ', '').split(',');
+        const ingArr = ing[1].split(',').map(el => el.trim());
+        // const ingArr = ing[1].replaceAll(' ', '').split(',');
 
         if (ingArr.length !== 3)
           throw new Error(
